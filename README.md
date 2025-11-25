@@ -1,4 +1,4 @@
-# Instant Labor Marketplace
+# Kulabur - Instant Labor Marketplace
 
 A production-ready instant service marketplace connecting customers with workers in real-time.
 
