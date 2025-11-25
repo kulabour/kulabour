@@ -1,0 +1,25 @@
+FAIL components/ui/__tests__/Simple.test.ts
+  ΓùÅ Test suite failed to run
+
+    Caching has already been configured with .never or .forever()
+
+       7 |         ],
+       8 |         plugins: [
+    >  9 |             !api.env('test') && "react-native-reanimated/plugin",
+         |                  ^
+      10 |         ].filter(Boolean),
+      11 |     };
+      12 | };
+
+      at CacheConfigurator.using (node_modules/@babel/core/lib/config/caching.js:188:13)
+      at Object.env (node_modules/@babel/core/lib/config/helpers/config-api.js:19:30)
+      at module.exports (babel.config.js:9:18)
+      at loadPartialConfigSync (node_modules/@babel/core/lib/config/index.js:37:84)
+      at Module._compile (node_modules/pirates/lib/index.js:124:29)
+      at Object.newLoader (node_modules/pirates/lib/index.js:134:7)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.203 s
+Ran all test suites matching components/ui/__tests__/Simple.test.ts.
