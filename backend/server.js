@@ -18,6 +18,7 @@ const servicesRoutes = require('./routes/services');
 const bookingsRoutes = require('./routes/bookings');
 const verificationRoutes = require('./routes/verification');
 const authRoutes = require('./routes/auth');
+const aiRoutes = require('./routes/ai');
 
 const compression = require('compression');
 const helmet = require('helmet');
@@ -43,6 +44,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/services', servicesRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/verification', verificationRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {

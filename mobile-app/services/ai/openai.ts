@@ -3,25 +3,12 @@
  * Real AI integration with GPT-4o for intelligent customer support
  */
 
-import { SUPPORTED_LANGUAGES, FAQ_TRANSLATIONS, LanguageCode, Language } from '../../utils/languages';
-
-const OPENAI_API_KEY = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
-const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+import { FAQ_TRANSLATIONS, LanguageCode } from '../../utils/languages';
+import { apiClient } from '../api/client';
 
 interface ChatMessage {
     role: 'system' | 'user' | 'assistant';
     content: string;
-}
-
-interface OpenAIResponse {
-    choices: Array<{
-        message: {
-            content: string;
-        };
-    }>;
-    usage?: {
-        total_tokens: number;
-    };
 }
 
 /**
@@ -34,48 +21,18 @@ export async function getAIResponse(
     conversationHistory: ChatMessage[] = []
 ): Promise<string> {
     try {
-        // Build system prompt based on user type and language
-        const systemPrompt = buildSystemPrompt(userType, language);
-
-        // Prepare messages for OpenAI
-        const messages: ChatMessage[] = [
-            { role: 'system', content: systemPrompt },
-            ...conversationHistory,
-            { role: 'user', content: userMessage }
-        ];
-
-        // Call OpenAI API
-        const response = await fetch(OPENAI_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`,
-            },
-            body: JSON.stringify({
-                model: 'gpt-4o', // Latest GPT-4 optimized model
-                messages,
-                max_tokens: 300,
-                temperature: 0.7,
-                presence_penalty: 0.6,
-                frequency_penalty: 0.3,
-            }),
+        const response = await apiClient.post<{ message: string }>('/api/ai/chat', {
+            message: userMessage,
+            userType,
+            language,
+            conversationHistory
         });
 
-        if (!response.ok) {
-            const error = await response.json();
-            console.error('OpenAI API Error:', error);
-            // Fallback to FAQ
-            return getFallbackResponse(userMessage, language);
+        if (response.success && response.data?.message) {
+            return response.data.message.trim();
         }
 
-        const data: OpenAIResponse = await response.json();
-        const aiMessage = data.choices[0]?.message?.content;
-
-        if (!aiMessage) {
-            return getFallbackResponse(userMessage, language);
-        }
-
-        return aiMessage.trim();
+        return getFallbackResponse(userMessage, language);
 
     } catch (error) {
         console.error('AI Service Error:', error);
@@ -83,59 +40,6 @@ export async function getAIResponse(
         return getFallbackResponse(userMessage, language);
     }
 }
-
-/**
- * Build system prompt based on context
- */
-function buildSystemPrompt(userType: 'worker' | 'customer', language: LanguageCode): string {
-    const languageName = SUPPORTED_LANGUAGES.find((l: Language) => l.code === language)?.name || 'English';
-
-    const basePrompt = `You are an AI customer support assistant for KULABOUR, an instant labor marketplace app in India.
-
-USER TYPE: ${userType === 'worker' ? 'Service Provider (Worker)' : 'Customer (Service Seeker)'}
-LANGUAGE: ${languageName}
-
-GUIDELINES:
-1. Always respond in ${languageName} language
-2. Be helpful, professional, and concise
-3. Provide actionable solutions
-4. Use culturally appropriate tone for Indian users
-5. Keep responses under 100 words
-6. For technical issues, provide step-by-step solutions
-7. For payment/withdrawal issues, reassure and explain process
-
-CONTEXT:
-- KULABOUR connects customers with workers for instant services
-- Services include: plumbing, electrical, carpentry, painting, cleaning, etc.
-- Workers earn money by completing jobs
-- Customers book services and track workers in real-time
-- Payment is processed after job completion
-- 24/7 support available
-
-${userType === 'worker' ? WORKER_CONTEXT : CUSTOMER_CONTEXT}
-
-Remember: Always be empathetic and solution-oriented!`;
-
-    return basePrompt;
-}
-
-const WORKER_CONTEXT = `
-WORKER-SPECIFIC HELP:
-- Job Acceptance: Workers get 30 seconds to accept job requests
-- Earnings: Withdraw to bank account (2-3 business days)
-- Ratings: Maintain 4+ star rating for more jobs
-- Documents: KYC required for payouts
-- Support: Available 24/7 for any issues
-`;
-
-const CUSTOMER_CONTEXT = `
-CUSTOMER-SPECIFIC HELP:
-- Booking: Select service → Choose time → Make payment
-- Tracking: Real-time worker location and ETA
-- Payment: UPI/Card/Wallet/Cash after service
-- Cancellation: Free within 5 minutes of booking
-- Ratings: Rate workers after job completion
-`;
 
 /**
  * Fallback to FAQ-based responses

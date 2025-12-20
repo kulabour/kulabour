@@ -39,11 +39,11 @@ cd src && npm install && npm run dev
 - 🏠 Service browsing with real-time data
 - 📅 Booking creation and management
 - 🗺️ Live worker tracking with maps
-- 💬 AI chatbot support
+- 💬 **Secure AI Chatbot:** Backend-proxied OpenAI integration
 - 🔔 Real-time status updates via WebSocket (Authenticated)
 
 ### Worker App
-- 🆔 KYC verification flow
+- 🆔 KYC verification flow (Secure Uploads)
 - 💼 Job management
 - 💰 Earnings tracking
 
@@ -90,10 +90,11 @@ cd src && npm install && npm run dev
 
 This project has been hardened with the following security measures:
 1.  **Rate Limiting:** Protects against brute-force attacks (100 req/15min).
-2.  **Input Validation:** Strict request validation using `Joi` on auth routes.
+2.  **Input Validation:** Strict request validation using `Joi` on all critical routes (Auth, Bookings, Verification, AI).
 3.  **Secure OTP:** 6-digit random OTPs stored in memory with expiration (replaces hardcoded mocks).
 4.  **WebSocket Auth:** Socket connections now require a valid JWT handshake.
 5.  **Secure Storage:** Mobile app uses `expo-secure-store` for token storage.
+6.  **Backend Proxy for AI:** OpenAI API keys are kept secure on the backend; mobile app communicates via a protected endpoint.
 
 ## 🌐 API Endpoints
 
@@ -106,6 +107,9 @@ This project has been hardened with the following security measures:
 - `POST /api/bookings` - Create booking
 - `GET /api/bookings/:id` - Get booking
 - `PUT /api/bookings/:id/status` - Update status
+
+### AI Support
+- `POST /api/ai/chat` - Secure AI chat interface
 
 ## 🤝 Contributing
 
