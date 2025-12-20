@@ -6,7 +6,7 @@ A production-ready instant service marketplace connecting customers with workers
 
 ### Prerequisites
 - Node.js 18+
-- MongoDB (optional - works without it)
+- MongoDB (Recommended for persistence)
 - Android Studio / Xcode (for mobile)
 
 ### Start Backend
@@ -27,53 +27,78 @@ start-mobile.bat
 cd mobile-app && npx expo start
 ```
 
+### Start Web App (Landing/Admin)
+```bash
+cd src && npm install && npm run dev
+```
+
 ## ✨ Features
 
 ### Customer App
-- 📱 OTP Authentication with JWT
+- 📱 **Secure Auth:** OTP Authentication with JWT & SecureStore
 - 🏠 Service browsing with real-time data
 - 📅 Booking creation and management
 - 🗺️ Live worker tracking with maps
 - 💬 AI chatbot support
-- 💳 Payment integration (mock)
-- 🔔 Real-time status updates via WebSocket
+- 🔔 Real-time status updates via WebSocket (Authenticated)
 
 ### Worker App
 - 🆔 KYC verification flow
 - 💼 Job management
 - 💰 Earnings tracking
-- 📊 Performance analytics
 
 ### Backend
-- 🔐 JWT authentication
+- 🔐 **Enhanced Security:** Rate limiting, Input Validation (Joi), Helmet, Secure Headers
 - 🗄️ MongoDB persistence
-- 🔌 WebSocket real-time updates
+- 🔌 **Secure WebSocket:** Authenticated real-time updates
 - 📡 RESTful API
-- ☁️ Docker-ready
 
 ## 🏗️ Tech Stack
 
 **Mobile**: React Native (Expo), TypeScript, TailwindCSS
+**Web**: Next.js, React (located in `src/`)
 **Backend**: Node.js, Express, MongoDB, Socket.IO
+**Security**: Helmet, Joi, Rate-Limit, JWT
 **Real-time**: WebSocket (Socket.IO)
-**Auth**: JWT, OTP verification
-**Maps**: React Native Maps
 
-## 📚 Documentation
+## 📦 Project Structure
 
-See `deployment_testing_guide.md` for complete setup and testing instructions.
+```
+.
+├── backend/             # Node.js/Express Backend
+│   ├── config/          # Database, environment
+│   ├── middleware/      # Auth, validation, rate-limiting
+│   ├── models/          # Mongoose schemas
+│   ├── routes/          # API endpoints
+│   ├── websocket.js     # Secure Socket.IO server
+│   └── server.js        # Main entry
+│
+├── mobile-app/          # React Native Mobile App
+│   ├── app/             # Expo Router screens
+│   ├── components/      # Reusable components
+│   ├── services/        # API, WebSocket clients
+│   └── global.css       # Tailwind styles
+│
+├── src/                 # Next.js Web Application
+│   ├── app/             # App Router
+│   └── components/      # Web components
+│
+└── start-*.bat          # Startup scripts
+```
 
-## 🧪 Testing
+## 🔒 Security Enhancements
 
-1. Start backend: `npm start` in `/backend`
-2. Start mobile: `npx expo start` in `/mobile-app`
-3. Create booking → Track in real-time
-4. Test API endpoints via curl (see guide)
+This project has been hardened with the following security measures:
+1.  **Rate Limiting:** Protects against brute-force attacks (100 req/15min).
+2.  **Input Validation:** Strict request validation using `Joi` on auth routes.
+3.  **Secure OTP:** 6-digit random OTPs stored in memory with expiration (replaces hardcoded mocks).
+4.  **WebSocket Auth:** Socket connections now require a valid JWT handshake.
+5.  **Secure Storage:** Mobile app uses `expo-secure-store` for token storage.
 
 ## 🌐 API Endpoints
 
 ### Authentication
-- `POST /api/auth/send-otp` - Send OTP
+- `POST /api/auth/send-otp` - Send 6-digit OTP
 - `POST /api/auth/verify-otp` - Verify OTP & get JWT
 - `POST /api/auth/refresh` - Refresh token
 
@@ -81,61 +106,6 @@ See `deployment_testing_guide.md` for complete setup and testing instructions.
 - `POST /api/bookings` - Create booking
 - `GET /api/bookings/:id` - Get booking
 - `PUT /api/bookings/:id/status` - Update status
-- `GET /api/bookings/user/:userId` - User's bookings
-
-### Services
-- `GET /api/services` - List all services
-
-### Verification
-- `POST /api/verification/documents` - Submit worker docs
-- `GET /api/verification/status/:workerId` - Check status
-
-## 🔌 WebSocket Events
-
-**Client → Server**:
-- `join_booking` - Subscribe to booking updates
-- `leave_booking` - Unsubscribe
-
-**Server → Client**:
-- `booking:status_changed` - Status update
-- `booking:assigned` - Worker assigned
-- `worker:location_update` - GPS update
-
-## 📦 Project Structure
-
-```
-.
-├── backend/
-│   ├── config/          # Database, environment
-│   ├── middleware/      # Auth, validation
-│   ├── models/          # Mongoose schemas
-│   ├── routes/          # API endpoints
-│   ├── websocket.js     # Socket.IO server
-│   └── server.js        # Main entry
-│
-├── mobile-app/
-│   ├── app/             # Expo Router screens
-│   ├── components/      # Reusable components
-│   ├── services/        # API, WebSocket clients
-│   └── global.css       # Tailwind styles
-│
-└── start-*.bat          # Startup scripts
-```
-
-## 🚢 Deployment
-
-**Backend** (Railway/Render):
-```bash
-railway login
-cd backend
-railway up
-```
-
-**Mobile** (EAS Build):
-```bash
-eas build --platform android
-eas build --platform ios
-```
 
 ## 🤝 Contributing
 
@@ -150,4 +120,4 @@ MIT
 
 ---
 
-**Built with ❤️ using Expo, Express, and MongoDB**
+**Built with ❤️ using Expo, Express, Next.js, and MongoDB**
