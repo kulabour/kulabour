@@ -21,8 +21,18 @@ const authRoutes = require('./routes/auth');
 
 const compression = require('compression');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
+// Rate limiting: 100 requests per 15 minutes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+});
 
 // Middleware
+app.use(limiter);
 app.use(helmet());
 app.use(compression());
 app.use(cors());
@@ -33,6 +43,15 @@ app.use('/api/auth', authRoutes);
 app.use('/api/services', servicesRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/verification', verificationRoutes);
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal Server Error',
+    error: process.env.NODE_ENV === 'development' ? err : {}
+  });
+});
 
 app.get('/', (req, res) => {
     res.json({ message: 'Instant Labor Backend is running!' });

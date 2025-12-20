@@ -1,4 +1,5 @@
 const { Server } = require('socket.io');
+const jwt = require('jsonwebtoken');
 
 let io;
 
@@ -10,8 +11,24 @@ const initializeWebSocket = (server) => {
         },
     });
 
+    // Authentication Middleware
+    io.use((socket, next) => {
+        const token = socket.handshake.auth.token;
+        if (!token) {
+            return next(new Error('Authentication error'));
+        }
+
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            socket.user = decoded;
+            next();
+        } catch (err) {
+            next(new Error('Authentication error'));
+        }
+    });
+
     io.on('connection', (socket) => {
-        console.log(`✅ Client connected: ${socket.id}`);
+        console.log(`✅ Client connected: ${socket.id} (User: ${socket.user.id})`);
 
         // Join booking room
         socket.on('join_booking', (bookingId) => {
