@@ -1,8 +1,5 @@
 import { io, Socket } from 'socket.io-client';
 import { Platform } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
-
-const TOKEN_KEY = 'auth_token';
 
 const getSocketURL = () => {
     if (process.env.EXPO_PUBLIC_SOCKET_URL) {
@@ -21,22 +18,10 @@ const getSocketURL = () => {
 class SocketClient {
     private socket: Socket | null = null;
 
-    async connect() {
+    connect() {
         if (this.socket?.connected) {
             console.log('✅ Socket already connected');
             return this.socket;
-        }
-
-        let token = null;
-        if (Platform.OS === 'web') {
-            token = localStorage.getItem(TOKEN_KEY);
-        } else {
-            token = await SecureStore.getItemAsync(TOKEN_KEY);
-        }
-
-        if (!token) {
-            console.warn('⚠️ No token found, skipping socket connection');
-            return null;
         }
 
         const url = getSocketURL();
@@ -45,9 +30,6 @@ class SocketClient {
             reconnection: true,
             reconnectionDelay: 1000,
             reconnectionAttempts: 5,
-            auth: {
-                token,
-            },
         });
 
         this.socket.on('connect', () => {

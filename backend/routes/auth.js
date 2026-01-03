@@ -1,51 +1,42 @@
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi');
 const { generateAccessToken, generateRefreshToken } = require('../middleware/auth');
 
 // In-memory OTP storage (replace with Redis in production)
 const otpStore = new Map();
 
-// Joi Schemas
-const sendOtpSchema = Joi.object({
-    mobile: Joi.string().length(10).pattern(/^[0-9]+$/).required()
-});
-
-const verifyOtpSchema = Joi.object({
-    mobile: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
-    otp: Joi.string().length(6).required(),
-    userType: Joi.string().valid('customer', 'worker').optional()
-});
-
-// Send OTP
+// Send OTP (simulated)
 router.post('/send-otp', (req, res) => {
-    const { error } = sendOtpSchema.validate(req.body);
-    if (error) return res.status(400).json({ success: false, error: error.details[0].message });
-
     const { mobile } = req.body;
 
-    // Generate 6-digit OTP (More secure than 4)
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    if (!mobile || mobile.length !== 10) {
+        return res.status(400).json({ success: false, error: 'Invalid mobile number' });
+    }
+
+    // Generate 4-digit OTP
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
 
     // Store OTP (expires in 5 minutes)
     otpStore.set(mobile, { otp, expires: Date.now() + 5 * 60 * 1000 });
 
     // In production, send SMS via Twilio/AWS SNS
-    console.log(`[SECURE LOG] OTP for ${mobile}: ${otp}`);
+    console.log(`[AUTH] OTP for ${mobile}: ${otp}`);
 
     res.json({
         success: true,
         message: 'OTP sent successfully',
-        expiresIn: 300 // 5 minutes
+        // For development only - remove in production!
+        debug: { otp },
     });
 });
 
 // Verify OTP and return JWT
 router.post('/verify-otp', (req, res) => {
-    const { error } = verifyOtpSchema.validate(req.body);
-    if (error) return res.status(400).json({ success: false, error: error.details[0].message });
+    const { mobile, otp, userType } = req.body; // userType: 'customer' | 'worker'
 
-    const { mobile, otp, userType } = req.body;
+    if (!mobile || !otp) {
+        return res.status(400).json({ success: false, error: 'Mobile and OTP required' });
+    }
 
     const storedData = otpStore.get(mobile);
 
