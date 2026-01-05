@@ -1,0 +1,55 @@
+/**
+ * Multi-Language Support Utilities (Backend)
+ */
+
+export const SUPPORTED_LANGUAGES = {
+    hi: { name: 'Hindi', native: 'हिन्दी', code: 'hi-IN' },
+    en: { name: 'English', native: 'English', code: 'en-IN' },
+    ta: { name: 'Tamil', native: 'தமிழ்', code: 'ta-IN' },
+    te: { name: 'Telugu', native: 'తెలుగు', code: 'te-IN' },
+    kn: { name: 'Kannada', native: 'ಕನ್ನಡ', code: 'kn-IN' },
+    ml: { name: 'Malayalam', native: 'മലയാളം', code: 'ml-IN' },
+    bn: { name: 'Bengali', native: 'বাংলা', code: 'bn-IN' },
+    mr: { name: 'Marathi', native: 'मराठी', code: 'mr-IN' },
+    gu: { name: 'Gujarati', native: 'ગુજરાતી', code: 'gu-IN' },
+    pa: { name: 'Punjabi', native: 'ਪੰਜਾਬੀ', code: 'pa-IN' },
+    or: { name: 'Odia', native: 'ଓଡ଼ିଆ', code: 'or-IN' },
+    as: { name: 'Assamese', native: 'অসমীয়া', code: 'as-IN' },
+    ur: { name: 'Urdu', native: 'اردو', code: 'ur-IN' },
+    sa: { name: 'Sanskrit', native: 'संस्कृत', code: 'sa-IN' },
+    ks: { name: 'Kashmiri', native: 'कश्मीरी', code: 'ks-IN' },
+    ne: { name: 'Nepali', native: 'नेपाली', code: 'ne-IN' },
+    sd: { name: 'Sindhi', native: 'سنڌي', code: 'sd-IN' },
+    kok: { name: 'Konkani', native: 'कोंकणी', code: 'kok-IN' },
+    mai: { name: 'Maithili', native: 'मैथिली', code: 'mai-IN' },
+    mni: { name: 'Manipuri', native: 'মৈতৈলোন্', code: 'mni-IN' },
+    sat: { name: 'Santali', native: 'ᱥᱟᱱᱛᱟᱲᱤ', code: 'sat-IN' },
+    doi: { name: 'Dogri', native: 'डोगरी', code: 'doi-IN' },
+} as const;
+
+export type LanguageCode = keyof typeof SUPPORTED_LANGUAGES;
+
+/**
+ * Auto-detect language from text script
+ */
+export function detectLanguage(text: string): LanguageCode {
+    const scripts = {
+        hi: /[\u0900-\u097F]/, // Devanagari (Hindi, Marathi, Sanskrit)
+        ta: /[\u0B80-\u0BFF]/, // Tamil
+        te: /[\u0C00-\u0C7F]/, // Telugu
+        kn: /[\u0C80-\u0CFF]/, // Kannada
+        ml: /[\u0D00-\u0D7F]/, // Malayalam
+        bn: /[\u0980-\u09FF]/, // Bengali
+        gu: /[\u0A80-\u0AFF]/, // Gujarati
+        pa: /[\u0A00-\u0A7F]/, // Punjabi (Gurmukhi)
+        or: /[\u0B00-\u0B7F]/, // Odia
+    };
+
+    for (const [lang, regex] of Object.entries(scripts)) {
+        if (regex.test(text)) {
+            return lang as LanguageCode;
+        }
+    }
+
+    return 'en';
+}

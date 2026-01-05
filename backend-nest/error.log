@@ -1,0 +1,17 @@
+
+> kulabour-backend-nest@0.0.1 start:prod
+> node dist/src/main
+
+[32m[Nest] 27528  - [39m02/01/2026, 10:49:00 pm [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[Nest] 27528  - 02/01/2026, 10:49:00 pm   ERROR [ExceptionHandler] Missing credentials. Please pass an `apiKey`, or set the `OPENAI_API_KEY` environment variable.
+Error: Missing credentials. Please pass an `apiKey`, or set the `OPENAI_API_KEY` environment variable.
+    at new OpenAI (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\openai\client.js:92:19)
+    at new AdvancedVoiceAgent (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\dist\src\voice\advanced-voice-agent.service.js:23:23)
+    at Injector.instantiateClass (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:373:19)
+    at callback (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:65:45)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:145:24)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\instance-loader.js:56:13
+    at async Promise.all (index 4)
+    at async InstanceLoader.createInstancesOfProviders (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\instance-loader.js:55:9)

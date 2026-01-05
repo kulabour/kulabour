@@ -1,0 +1,19 @@
+app/(customer)/(tabs)/orders.tsx(177,17): error TS2322: Type '{ data: { id: number; service: string; worker: string; status: string; date: string; price: string; address: string; }[]; renderItem: ({ item }: { item: { id: number; service: string; worker: string; status: string; date: string; price: string; address: string; }; }) => Element; estimatedItemSize: number; ListHeader...' is not assignable to type 'IntrinsicAttributes & FlashListProps<{ id: number; service: string; worker: string; status: string; date: string; price: string; address: string; }> & { ...; }'.
+  Property 'estimatedItemSize' does not exist on type 'IntrinsicAttributes & FlashListProps<{ id: number; service: string; worker: string; status: string; date: string; price: string; address: string; }> & { ...; }'.
+app/(customer)/auth/otp.tsx(39,56): error TS2339: Property 'accessToken' does not exist on type '{}'.
+app/(customer)/auth/otp.tsx(59,36): error TS2339: Property 'debug' does not exist on type '{}'.
+app/(customer)/auth/otp.tsx(60,79): error TS2339: Property 'debug' does not exist on type '{}'.
+app/(customer)/booking.tsx(66,52): error TS2339: Property 'id' does not exist on type '{}'.
+app/(customer)/index.tsx(30,29): error TS2345: Argument of type '{}' is not assignable to parameter of type 'SetStateAction<any[]>'.
+services/api/apm.ts(4,36): error TS2307: Cannot find module '@opentelemetry/sdk-trace-node' or its corresponding type declarations.
+services/api/apm.ts(5,37): error TS2307: Cannot find module '@opentelemetry/sdk-trace-base' or its corresponding type declarations.
+services/api/apm.ts(6,37): error TS2307: Cannot find module '@opentelemetry/sdk-trace-base' or its corresponding type declarations.
+services/api/apm.ts(7,42): error TS2307: Cannot find module '@opentelemetry/instrumentation' or its corresponding type declarations.
+services/api/apm.ts(8,37): error TS2307: Cannot find module '@opentelemetry/instrumentation-http' or its corresponding type declarations.
+services/api/apm.ts(9,40): error TS2307: Cannot find module '@opentelemetry/instrumentation-express' or its corresponding type declarations.
+services/api/cache.ts(3,19): error TS2307: Cannot find module 'ioredis' or its corresponding type declarations.
+services/api/server.ts(3,21): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+services/api/server.ts(4,25): error TS7016: Could not find a declaration file for module 'compression'. 'C:/Users/JADAV ANIL/.gemini/antigravity/playground/ecliptic-nadir/mobile-app/node_modules/compression/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/compression` if it exists or add a new declaration (.d.ts) file containing `declare module 'compression';`
+services/api/server.ts(15,21): error TS7006: Parameter 'req' implicitly has an 'any' type.
+services/api/server.ts(15,26): error TS7006: Parameter 'res' implicitly has an 'any' type.

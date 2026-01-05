@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import Card from '../../components/ui/GlassCard';
 import Button from '../../components/ui/Button';
-import PaymentModal from '../../components/payment/PaymentModal';
+import PaymentModal from '../../components/PaymentModal';
 import '../../global.css';
 
 const paymentMethods = [
@@ -14,8 +14,12 @@ const paymentMethods = [
     { id: 'cod', name: 'Pay After Service', icon: '💵', popular: true },
 ];
 
+import { paymentAPI } from '../../api/client';
+import { useLocalSearchParams } from 'expo-router';
+
 export default function Payment() {
     const router = useRouter();
+    const { bookingId } = useLocalSearchParams();
     const [selectedMethod, setSelectedMethod] = useState('upi');
     const [promoCode, setPromoCode] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
@@ -25,8 +29,12 @@ export default function Payment() {
     const discount = promoCode ? 50 : 0;
     const total = serviceAmount + platformFee - discount;
 
-    const handlePayment = () => {
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [currentOrderId, setCurrentOrderId] = useState<string | null>(null);
+
+    const handlePayment = async () => {
         if (selectedMethod === 'cod') {
+            // ... existing COD logic ...
             Alert.alert(
                 'Confirm Booking',
                 'Pay ₹' + total + ' after the service is completed.',
@@ -34,22 +42,56 @@ export default function Payment() {
                     { text: 'Cancel', style: 'cancel' },
                     {
                         text: 'Confirm',
-                        onPress: () => router.push('/(customer)/confirmation')
+                        onPress: () => router.push({
+                            pathname: '/(customer)/confirmation',
+                            params: { txnId: 'COD-' + Date.now(), amount: total }
+                        })
                     }
                 ]
             );
         } else {
             setIsProcessing(true);
-        }
-    };
+            try {
+                // 1. Create Order
+                const { data: order } = await paymentAPI.createOrder(bookingId as string || 'mock_booking', total);
+                console.log('Order created:', order);
+                setCurrentOrderId(order.id);
 
-    const handlePaymentSuccess = (txnId: string) => {
-        setIsProcessing(false);
-        // Navigate to confirmation with transaction details
-        router.push({
-            pathname: '/(customer)/confirmation',
-            params: { txnId, amount: total }
-        });
+                // 2. Open Payment Modal (Mock Razorpay)
+                setIsProcessing(false);
+                setShowPaymentModal(true);
+            } catch (error) {
+                console.error(error);
+                setIsProcessing(false);
+                handlePaymentFailure('Could not initiate payment');
+            }
+        }
+    }
+
+
+    const handlePaymentSuccess = async (txnId: string) => {
+        setIsProcessing(true);
+        try {
+            // 3. Verify Payment
+            const mockPaymentResponse = {
+                orderId: currentOrderId || 'mock_order',
+                paymentId: txnId,
+                signature: 'mock_signature',
+                bookingId: bookingId as string || 'mock_booking'
+            };
+
+            const { data: verification } = await paymentAPI.verifyPayment(mockPaymentResponse);
+            console.log('Payment verified:', verification);
+
+            setIsProcessing(false);
+            // Navigate to confirmation with transaction details
+            router.push({
+                pathname: '/(customer)/confirmation',
+                params: { txnId, amount: total }
+            });
+        } catch (error) {
+            handlePaymentFailure('Verification failed');
+        }
     };
 
     const handlePaymentFailure = (error: string) => {
@@ -186,12 +228,11 @@ export default function Payment() {
 
             {/* Payment Modal */}
             <PaymentModal
-                visible={isProcessing}
+                visible={showPaymentModal}
                 amount={total}
-                method={selectedMethod}
                 onSuccess={handlePaymentSuccess}
-                onFailure={handlePaymentFailure}
-                onClose={() => setIsProcessing(false)}
+                onError={handlePaymentFailure}
+                onClose={() => setShowPaymentModal(false)}
             />
         </SafeAreaView>
     );

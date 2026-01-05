@@ -1,3 +1,9 @@
 node_modules
 npm-debug.log
 .env
+.git
+.gitignore
+tests
+__tests__
+coverage
+README.md

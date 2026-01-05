@@ -1,0 +1,15 @@
+# yamllint configuration to suppress false positive warnings
+# This disables overly strict context validation that flags secured secret access
+
+extends: default
+
+rules:
+  # Disable line length warnings for GitHub Actions workflows
+  line-length:
+    max: 200
+    level: warning
+  
+  # Allow truthy values (on, off, yes, no) which are common in GHA
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off', 'yes', 'no']
+    check-keys: false

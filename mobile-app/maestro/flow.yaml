@@ -1,0 +1,11 @@
+appId: com.kulabour.app
+---
+- launchApp:
+    clearState: true
+- tapOn: "Skip Login" # Assuming we have this or user logs in via OTP
+- tapOn: "Electrician"
+- assertVisible: "Book Now"
+- tapOn: "Book Now"
+- assertVisible: "Select Worker"
+- tapOn: "Confirm Booking"
+- assertVisible: "Payment"

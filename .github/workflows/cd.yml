@@ -1,0 +1,60 @@
+name: CD - Build & Deploy
+
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  # Reuse the CI workflow to ensure quality before deploying
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    name: Build & Deploy
+    needs: ci
+    runs-on: ubuntu-latest
+
+    if: github.repository == 'Ronny0609/kulabour'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+
+      - name: Build Preview (Develop)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          cd mobile-app
+          npm ci
+          npx eas-cli build --profile preview --platform all --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+
+      - name: Build & Deploy Production (Main)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd mobile-app
+          npm ci
+          npx eas-cli build --profile production --platform all --non-interactive
+          npx eas-cli submit --platform all --latest --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+
+      - name: Deploy Backend (Main)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+

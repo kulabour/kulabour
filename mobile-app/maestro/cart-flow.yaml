@@ -1,0 +1,71 @@
+appId: com.kulabour.app
+name: Cart Feature E2E Test
+---
+# Test: Add multiple services to cart and checkout
+
+- launchApp:
+    clearState: true
+
+# Navigate to home screen (skip login for testing)
+- tapOn: "Skip Login"
+- assertVisible: "क्या चाहिए?"
+
+# Add first service to cart
+- tapOn:
+    text: "बिजली वाला"
+- assertVisible: "₹"
+- tapOn:
+    id: "add-to-cart-btn"
+
+# Verify cart button appears with count
+- assertVisible:
+    text: "1"
+
+# Add second service
+- tapOn:
+    text: "नल वाला"
+- tapOn:
+    id: "add-to-cart-btn"
+
+# Verify cart count updated  
+- assertVisible:
+    text: "2"
+
+# Add third service
+- tapOn:
+    text: "सफाई"
+- tapOn:
+    id: "add-to-cart-btn"
+
+# Open cart
+- tapOn:
+    id: "floating-cart-btn"
+
+# Verify cart screen
+- assertVisible: "मेरा कार्ट"
+- assertVisible: "3 सर्विस"
+
+# Verify price breakdown
+- assertVisible: "सर्विस चार्ज"
+- assertVisible: "प्लेटफॉर्म फीस"
+- assertVisible: "GST"
+- assertVisible: "कुल रकम"
+
+# Select schedule
+- tapOn:
+    text: "आज"
+
+# Increase quantity of first item
+- tapOn:
+    id: "quantity-increase-1"
+
+# Verify quantity updated
+- assertVisible:
+    text: "2"
+
+# Proceed to payment
+- tapOn:
+    text: "पेमेंट करो"
+
+# Verify payment screen
+- assertVisible: "Payment"

@@ -11,6 +11,7 @@ const MapView = (props: any) => {
 
 export const Marker = (props: any) => null;
 export const Callout = (props: any) => null;
+export const Polyline = (props: any) => null;
 export const PROVIDER_GOOGLE = 'google';
 export const PROVIDER_DEFAULT = 'default';
 

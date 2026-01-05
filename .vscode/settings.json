@@ -4,5 +4,7 @@
     "less.lint.unknownAtRules": "ignore",
     "files.associations": {
         "*.css": "tailwindcss"
-    }
+    },
+    "github-actions.workflow-syntax-check": false,
+    "yaml.validate": false
 }

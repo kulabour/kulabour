@@ -1,3 +1,78 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        /* Brand - Royal Blue 500 #1A3B5D */
+        --color-brand-primary: 26 59 93;
+        /* Brand - Royal Blue 700 #10253A */
+        --color-brand-secondary: 16 37 58;
+        /* Brand - Orange 500 #FF6B35 */
+        --color-brand-accent: 255 107 53;
+
+        /* Surface - White */
+        --color-surface-base: 255 255 255;
+        /* Surface - Neutral 50 #F8FAFC */
+        --color-surface-subtle: 248 250 252;
+        /* Surface - Neutral 100 #F1F5F9 */
+        --color-surface-muted: 241 245 249;
+        /* Surface - Glass (White 0.7) */
+        --color-surface-glass: 255 255 255;
+
+        /* Text - Neutral 900 #0F172A */
+        --color-text-primary: 15 23 42;
+        /* Text - Neutral 600 #475569 */
+        --color-text-secondary: 71 85 105;
+        /* Text - Neutral 400 #94A3B8 */
+        --color-text-tertiary: 148 163 184;
+        /* Text - White */
+        --color-text-inverse: 255 255 255;
+        /* Text - Brand #1A3B5D */
+        --color-text-brand: 26 59 93;
+
+        /* Border - Neutral 200 #E2E8F0 */
+        --color-border-subtle: 226 232 240;
+        /* Border - Neutral 300 #CBD5E1 */
+        --color-border-default: 203 213 225;
+        /* Border - Royal Blue 400 #5A9BD5 */
+        --color-border-focus: 90 155 213;
+
+        /* Feedback - Error #EF4444 */
+        --color-feedback-error: 239 68 68;
+        /* Feedback - Success #10B981 */
+        --color-feedback-success: 16 185 129;
+    }
+
+    .dark {
+        /* Brand - Royal Blue 400 #5A9BD5 (Lighter for dark mode) */
+        --color-brand-primary: 90 155 213;
+        /* Brand - Royal Blue 600 #15304B */
+        --color-brand-secondary: 21 48 75;
+
+        /* Surface - Neutral 900 #0F172A */
+        --color-surface-base: 15 23 42;
+        /* Surface - Neutral 800 #1E293B */
+        --color-surface-subtle: 30 41 59;
+        /* Surface - Neutral 700 #334155 */
+        --color-surface-muted: 51 65 85;
+        /* Surface - Glass (White 0.1) */
+        --color-surface-glass: 255 255 255;
+
+        /* Text - White */
+        --color-text-primary: 255 255 255;
+        /* Text - Neutral 400 #94A3B8 */
+        --color-text-secondary: 148 163 184;
+        /* Text - Neutral 500 #64748B */
+        --color-text-tertiary: 100 116 139;
+        /* Text - Neutral 900 #0F172A */
+        --color-text-inverse: 15 23 42;
+        /* Text - Brand #5A9BD5 */
+        --color-text-brand: 90 155 213;
+
+        /* Border - Neutral 700 #334155 */
+        --color-border-subtle: 51 65 85;
+        /* Border - Neutral 600 #475569 */
+        --color-border-default: 71 85 105;
+    }
+}

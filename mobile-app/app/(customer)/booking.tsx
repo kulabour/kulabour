@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import StatusBadge from '../../components/ui/StatusBadge';
-import { apiClient } from '../../services/api/client';
+import { apiClient, BookingResponse } from '../../services/api/client';
 import '../../global.css';
 
 const services = [
@@ -58,12 +58,12 @@ export default function Booking() {
                 totalAmount: calculateTotal(),
             };
 
-            const response = await apiClient.post('/api/bookings', bookingData);
+            const response = await apiClient.post<BookingResponse>('/api/bookings', bookingData);
 
             if (response.success) {
                 Alert.alert(
                     'Booking Confirmed! 🎉',
-                    `Booking ID: #${response.data?.id}\nTotal: ₹${calculateTotal()}\n\nSearching for nearby worker...`,
+                    `Booking ID: #${response.data?.id || 'N/A'}\nTotal: ₹${calculateTotal()}\n\nSearching for nearby worker...`,
                     [
                         {
                             text: 'Track Order',
@@ -72,7 +72,7 @@ export default function Booking() {
                     ]
                 );
             } else {
-                Alert.alert('Booking Failed', response.error || 'Please try again');
+                Alert.alert('Booking Failed', response.error?.message || 'Please try again');
             }
         } catch (error) {
             Alert.alert('Error', 'Could not create booking. Please check your connection.');

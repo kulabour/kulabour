@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../../../components/ui/Button';
 import OTPInput from '../../../components/ui/OTPInput';
-import { apiClient } from '../../../services/api/client';
+import { apiClient, OtpVerifyResponse } from '../../../services/api/client';
 import '../../../global.css';
 
 export default function OTP() {
@@ -28,7 +28,7 @@ export default function OTP() {
         setIsLoading(true);
 
         try {
-            const response = await apiClient.post('/api/auth/verify-otp', {
+            const response = await apiClient.post<OtpVerifyResponse>('/api/auth/verify-otp', {
                 mobile,
                 otp,
                 userType: 'customer',
@@ -41,7 +41,7 @@ export default function OTP() {
                 // Navigate to Home
                 router.replace('/(customer)/index');
             } else {
-                Alert.alert('Verification Failed', response.error || 'Invalid OTP');
+                Alert.alert('Verification Failed', response.error?.message || 'Invalid OTP');
             }
         } catch (error) {
             Alert.alert('Error', 'Could not verify OTP. Please try again.');
@@ -52,7 +52,7 @@ export default function OTP() {
 
     const handleResend = async () => {
         try {
-            const response = await apiClient.post('/api/auth/send-otp', { mobile });
+            const response = await apiClient.post<OtpVerifyResponse>('/api/auth/send-otp', { mobile });
             if (response.success) {
                 setTimer(30);
                 // Show OTP in development

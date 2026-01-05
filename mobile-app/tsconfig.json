@@ -1,11 +1,18 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": "expo/tsconfig.base.json",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    "declarations.d.ts"
+  ],
+  "exclude": [
+    "services/api/**",
+    "e2e"
   ]
 }

@@ -1,16 +1,19 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
-import { FlashList } from '@shopify/flash-list';
-import JobCard from '../../../components/worker/JobCard';
-import Avatar from '../../../components/ui/Avatar';
-import StatusBadge from '../../../components/ui/StatusBadge';
-import Button from '../../../components/ui/Button';
-import Card from '../../../components/ui/Card';
-import '../../../global.css';
+import { Ionicons } from '@expo/vector-icons';
 
-const jobs = [
+// Enterprise Design System
+import { Box } from '../../../components/primitives/Box';
+import { Text } from '../../../components/primitives/Text';
+import { Card } from '../../../components/design-system/Card';
+import { Button } from '../../../components/design-system/Button';
+
+import '../../../global.css';
+import { Config } from '../../../Config';
+
+const MOCK_JOBS = [
     {
         id: 1,
         title: 'Emergency Pipe Repair',
@@ -18,7 +21,7 @@ const jobs = [
         customerName: 'Rajesh Mehta',
         location: 'Koramangala, 4th Block, Flat 402',
         time: 'Now • 2.3 km away',
-        priority: 'urgent' as const,
+        priority: 'urgent',
         category: 'Plumbing',
     },
     {
@@ -27,148 +30,139 @@ const jobs = [
         price: '₹1,299',
         customerName: 'Priya Sharma',
         location: 'Indiranagar, Brigade Road, Villa 12',
-        time: 'Today at 3:00 PM • 5.1 km',
-        priority: 'medium' as const,
+        time: '3:00 PM • 5.1 km',
+        priority: 'medium',
         category: 'Cleaning',
-    },
-    {
-        id: 3,
-        title: 'Ceiling Fan Installation',
-        price: '₹399',
-        customerName: 'Amit Patel',
-        location: 'HSR Layout, Sector 2, Apartment 203',
-        time: 'Tomorrow at 10:00 AM • 3.7 km',
-        priority: 'medium' as const,
-        category: 'Electrical',
     },
 ];
 
 export default function WorkerHome() {
     const [isOnline, setIsOnline] = useState(true);
     const router = useRouter();
+    const [refreshing, setRefreshing] = useState(false);
+    const [jobs, setJobs] = useState(Config.FEATURES.USE_MOCK_DATA ? MOCK_JOBS : []);
 
-    const renderHeader = useCallback(() => (
-        <View className="px-6 pt-4 pb-2">
-            {/* Header */}
-            <View className="flex-row justify-between items-start mb-8">
-                <View className="flex-row items-center">
-                    <Avatar name="John Doe" size="lg" online={isOnline} />
-                    <View className="ml-4">
-                        <Text className="text-white/60 text-sm mb-1">Welcome back,</Text>
-                        <Text className="text-white text-2xl font-bold">John Doe</Text>
-                        <StatusBadge status={isOnline ? 'online' : 'offline'} size="sm" />
-                    </View>
-                </View>
-                <TouchableOpacity
-                    className={`px-4 py-2.5 rounded-pill ${isOnline ? 'bg-success/20 border-2 border-success' : 'bg-white/5 border-2 border-white/20'}`}
-                    onPress={() => setIsOnline(!isOnline)}
-                >
-                    <Text className={`font-bold text-sm ${isOnline ? 'text-success' : 'text-white/50'}`}>
-                        {isOnline ? 'GO OFFLINE' : 'GO ONLINE'}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
-            {/* Stats Cards */}
-            <View className="flex-row gap-3 mb-6">
-                <Card className="flex-1" shadow="md">
-                    <Text className="text-white/50 text-xs mb-2 uppercase tracking-wide">Today's Jobs</Text>
-                    <Text className="text-white text-3xl font-bold mb-1">7</Text>
-                    <Text className="text-success text-sm font-semibold">+2 from yesterday</Text>
-                </Card>
-                <Card className="flex-1" shadow="md">
-                    <Text className="text-white/50 text-xs mb-2 uppercase tracking-wide">Earnings</Text>
-                    <Text className="text-neon-green text-3xl font-bold mb-1">₹3.2K</Text>
-                    <Text className="text-white/50 text-sm">Today</Text>
-                </Card>
-            </View>
-
-            {/* Rating Card */}
-            <Card variant="gradient" shadow="md" className="mb-8">
-                <View className="flex-row justify-between items-center">
-                    <View>
-                        <Text className="text-white/60 text-sm mb-1">Your Rating</Text>
-                        <Text className="text-white text-4xl font-bold">4.9</Text>
-                    </View>
-                    <View className="items-end">
-                        <Text className="text-yellow-400 text-3xl mb-1">⭐⭐⭐⭐⭐</Text>
-                        <Text className="text-white/60 text-sm">248 reviews</Text>
-                    </View>
-                </View>
-                <TouchableOpacity className="mt-4 bg-neon-blue/20 rounded-pill py-2 items-center">
-                    <Text className="text-neon-blue font-semibold text-sm">View Reviews</Text>
-                </TouchableOpacity>
-            </Card>
-
-            {/* Available Jobs Header */}
-            <View className="flex-row justify-between items-center mb-4">
-                <View>
-                    <Text className="text-white text-2xl font-bold">Available Jobs</Text>
-                    <Text className="text-white/50 text-sm mt-1">{jobs.length} jobs near you</Text>
-                </View>
-                <TouchableOpacity>
-                    <Text className="text-neon-blue text-sm font-semibold">See All</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    ), [isOnline]);
-
-    const renderItem = ({ item }: { item: typeof jobs[0] }) => (
-        <View className="px-6 mb-4">
-            <TouchableOpacity onPress={() => router.push(`/(worker)/job/${item.id}`)} activeOpacity={0.8}>
-                <Card shadow="md">
-                    {/* Header */}
-                    <View className="flex-row justify-between items-start mb-4">
-                        <View className="flex-1">
-                            <View className="flex-row items-center mb-2">
-                                <StatusBadge status={item.priority} size="sm" />
-                                <View className="ml-2 bg-neon-blue/20 px-2 py-1 rounded-md">
-                                    <Text className="text-neon-blue text-xs font-bold">{item.category}</Text>
-                                </View>
-                            </View>
-                            <Text className="text-white text-lg font-bold mb-1">{item.title}</Text>
-                            <Text className="text-white/60 text-sm">{item.customerName}</Text>
-                        </View>
-                        <View className="bg-neon-green/20 px-4 py-2 rounded-xl">
-                            <Text className="text-neon-green font-bold text-lg">{item.price}</Text>
-                        </View>
-                    </View>
-
-                    {/* Details */}
-                    <View className="space-y-2">
-                        <View className="flex-row items-center">
-                            <Text className="text-xl mr-2">📍</Text>
-                            <Text className="text-white/70 text-sm flex-1">{item.location}</Text>
-                        </View>
-                        <View className="flex-row items-center">
-                            <Text className="text-xl mr-2">⏰</Text>
-                            <Text className="text-white/70 text-sm">{item.time}</Text>
-                        </View>
-                    </View>
-
-                    {/* Action */}
-                    <View className="mt-4">
-                        <Button variant="primary" size="md" glow fullWidth>
-                            Accept Job
-                        </Button>
-                    </View>
-                </Card>
-            </TouchableOpacity>
-        </View>
-    );
+        if (Config.FEATURES.USE_MOCK_DATA) {
+            setJobs([...MOCK_JOBS].sort(() => Math.random() - 0.5)); // Shuffle for effect
+        } else {
+            console.log('Fetching real jobs...');
+        }
+        setRefreshing(false);
+    }, []);
 
     return (
-        <SafeAreaView className="flex-1 bg-dark-navy">
-            <FlashList<typeof jobs[0]>
-                data={jobs}
-                renderItem={renderItem}
-                // @ts-ignore: estimatedItemSize is missing from types in v2.0.2
-                estimatedItemSize={280}
-                ListHeaderComponent={renderHeader}
-                contentContainerStyle={CONTENT_CONTAINER_STYLE}
-            />
-        </SafeAreaView >
+        <Box className="flex-1 bg-surface-base">
+            <SafeAreaView style={{ flex: 1 }}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: 24 }}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#1A3B5D" />
+                    }
+                >
+
+                    {/* Header Section */}
+                    <Box className="px-lg pt-sm pb-lg bg-brand-primary rounded-b-[32px] mb-lg shadow-lg">
+                        <Box className="flex-row justify-between items-center mb-lg">
+                            <Box className="flex-row items-center gap-md">
+                                <Box className="w-12 h-12 rounded-full bg-white/20 items-center justify-center border border-white/30">
+                                    <Text className="text-2xl">👷</Text>
+                                </Box>
+                                <Box>
+                                    <Text variant="caption" className="text-white/80">Welcome back,</Text>
+                                    <Text variant="h3" className="text-white font-bold">John Doe</Text>
+                                </Box>
+                            </Box>
+                            <Button
+                                size="sm"
+                                variant={isOnline ? 'solid' : 'outline'}
+                                label={isOnline ? 'ONLINE' : 'OFFLINE'}
+                                className={isOnline ? 'bg-feedback-success border-transparent' : 'border-white/40'}
+                                onPress={() => setIsOnline(!isOnline)}
+                                accessibilityLabel={isOnline ? 'Go Offline' : 'Go Online'}
+                            />
+                        </Box>
+
+                        {/* Stats Row */}
+                        <Box className="flex-row gap-md">
+                            <Card variant="glass" className="flex-1 bg-white/10 border-white/20">
+                                <Text variant="caption" className="text-white/70 uppercase tracking-widest mb-xs">Today</Text>
+                                <Text variant="h2" className="text-white font-bold mb-xs">₹3.2K</Text>
+                                <Text variant="caption" className="text-feedback-success font-bold">Earnings</Text>
+                            </Card>
+                            <Card variant="glass" className="flex-1 bg-white/10 border-white/20">
+                                <Text variant="caption" className="text-white/70 uppercase tracking-widest mb-xs">Rating</Text>
+                                <Text variant="h2" className="text-white font-bold mb-xs">4.9</Text>
+                                <Text variant="caption" className="text-brand-accent font-bold">⭐⭐⭐⭐⭐</Text>
+                            </Card>
+                        </Box>
+                    </Box>
+
+                    {/* Jobs Section */}
+                    <Box className="px-lg">
+                        <Box className="flex-row justify-between items-center mb-md">
+                            <Text variant="h3" className="text-text-primary">Available Jobs ({jobs.length})</Text>
+                            <Button variant="ghost" label="See All" size="sm" className="!px-0" />
+                        </Box>
+
+                        <Box className="space-y-md">
+                            {jobs.length === 0 ? (
+                                <Box className="p-xl items-center justify-center bg-surface-subtle rounded-xl border border-dashed border-border-subtle">
+                                    <Text className="text-text-tertiary mb-sm">No jobs available</Text>
+                                    <Button variant="outline" size="sm" label="Refresh" onPress={onRefresh} />
+                                </Box>
+                            ) : (
+                                jobs.map((job) => (
+                                    <TouchableOpacity
+                                        key={job.id}
+                                        activeOpacity={0.9}
+                                        onPress={() => router.push(`/(worker)/job/${job.id}`)}
+                                        accessibilityLabel={`View job: ${job.title}`}
+                                    >
+                                        <Card variant="elevated" className="border-l-4 border-l-brand-primary">
+                                            <Box className="flex-row justify-between items-start mb-sm">
+                                                <Box className="bg-brand-primary/10 px-sm py-xs rounded-md">
+                                                    <Text variant="caption" className="text-brand-primary font-bold uppercase">{job.category}</Text>
+                                                </Box>
+                                                <Text variant="h3" className="text-brand-primary font-bold">{job.price}</Text>
+                                            </Box>
+
+                                            <Text variant="h3" className="mb-xs text-text-primary">{job.title}</Text>
+                                            <Text variant="body" className="text-text-secondary mb-md">{job.customerName}</Text>
+
+                                            <Box className="space-y-xs pt-sm border-t border-border-subtle">
+                                                <Box className="flex-row items-center gap-xs">
+                                                    <Text className="text-sm">📍</Text>
+                                                    <Text variant="caption" className="text-text-tertiary flex-1" numberOfLines={1}>{job.location}</Text>
+                                                </Box>
+                                                <Box className="flex-row items-center gap-xs">
+                                                    <Text className="text-sm">⏰</Text>
+                                                    <Text variant="caption" className="text-text-tertiary">{job.time}</Text>
+                                                </Box>
+                                            </Box>
+
+                                            <Button
+                                                label="Accept Job"
+                                                variant="solid"
+                                                fullWidth
+                                                className="mt-md"
+                                                onPress={() => router.push(`/(worker)/job/${job.id}`)}
+                                                accessibilityLabel={`Accept ${job.title}`}
+                                            />
+                                        </Card>
+                                    </TouchableOpacity>
+                                ))
+                            )}
+                        </Box>
+                    </Box>
+
+                </ScrollView>
+            </SafeAreaView>
+        </Box>
     );
 }
-
-const CONTENT_CONTAINER_STYLE = { paddingBottom: 24 };

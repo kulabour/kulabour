@@ -1,0 +1,54 @@
+appId: com.kulabour.app
+name: Voice Assistant E2E Test
+---
+# Test: Voice assistant interaction
+
+- launchApp:
+    clearState: true
+
+# Skip login
+- tapOn: "Skip Login"
+- waitForAnimationToEnd
+
+# Open voice assistant
+- tapOn:
+    id: "voice-assistant-btn"
+
+# Verify voice UI appears
+- assertVisible: "मैं सुन रहा हूं"
+
+# Simulate voice command (mock)
+- inputText:
+    text: "प्लंबर चाहिए"
+    id: "voice-input-mock"
+
+# Submit mock voice command
+- tapOn:
+    id: "submit-voice-btn"
+
+# Wait for processing
+- waitForAnimationToEnd
+
+# Verify service found response
+- assertVisible: "प्लंबर"
+- assertVisible: "कार्ट में जोड़ दिया"
+
+# Test language switch
+- tapOn:
+    id: "language-selector"
+
+# Select English
+- tapOn:
+    text: "English"
+
+# Verify language changed
+- assertVisible: "I am listening"
+
+# Test Marathi
+- tapOn:
+    id: "language-selector"
+- tapOn:
+    text: "मराठी"
+
+# Verify Marathi
+- assertVisible: "मी ऐकत आहे"

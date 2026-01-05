@@ -14,11 +14,11 @@ const getBaseUrl = () => {
 
     // Android Emulator needs 10.0.2.2 to access host localhost
     if (Platform.OS === 'android') {
-        return 'http://10.0.2.2:5000';
+        return 'http://10.0.2.2:3001'; // NestJS Port
     }
 
     // iOS Simulator and Web can use localhost
-    return 'http://localhost:5000';
+    return 'http://localhost:3001'; // NestJS Port
 };
 
 const API_BASE_URL = getBaseUrl();
@@ -27,14 +27,11 @@ interface RequestConfig extends RequestInit {
     token?: string;
 }
 
-interface APIResponse<T> {
-    success: boolean;
-    data?: T;
-    error?: string;
-    message?: string;
-}
+import { ApiResponse, ApiError, ErrorCodes } from '../../utils/apiResponse';
+import { performanceMonitor } from '../PerformanceMonitor';
 
-// New response interfaces
+// ... (keep Token key and getBaseUrl logic) ...
+
 export interface OtpVerifyResponse {
     accessToken: string;
     debug?: { otp?: string };
@@ -54,7 +51,6 @@ export interface BookingResponse {
     // add other fields as needed
 }
 
-
 class APIClient {
     private baseURL: string;
     private token: string | null = null;
@@ -71,6 +67,7 @@ class APIClient {
         if (this.isInitialized) return;
 
         try {
+            const traceId = performanceMonitor.startTrace('api_init');
             let token: string | null = null;
             if (Platform.OS === 'web') {
                 token = localStorage.getItem(TOKEN_KEY);
@@ -82,6 +79,7 @@ class APIClient {
                 this.token = token;
                 console.log('[API] Session restored from secure storage');
             }
+            performanceMonitor.stopTrace(traceId);
         } catch (error) {
             console.warn('[API] Failed to restore session:', error);
         } finally {
@@ -124,13 +122,14 @@ class APIClient {
     }
 
     /**
-     * Make HTTP request
+     * Make HTTP request with standardized response
      */
     private async request<T>(
         endpoint: string,
         config: RequestConfig = {}
-    ): Promise<APIResponse<T>> {
+    ): Promise<ApiResponse<T>> {
         const { token, ...fetchConfig } = config;
+        const traceId = performanceMonitor.startTrace(`api_request_${endpoint}`);
 
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
@@ -143,38 +142,96 @@ class APIClient {
             headers['Authorization'] = `Bearer ${authToken}`;
         }
 
+        const startTime = Date.now();
+
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 ...fetchConfig,
                 headers,
             });
 
-            const data = await response.json();
+            // Normalize response to standardized format
+            const rawData = await response.json();
+
+            performanceMonitor.stopTrace(traceId);
 
             if (!response.ok) {
                 // Handle 401 Unauthorized globally
                 if (response.status === 401) {
                     await this.clearToken();
                     console.warn('[API] Session expired, token cleared');
+                    return {
+                        success: false,
+                        data: null,
+                        error: {
+                            code: ErrorCodes.AUTH_EXPIRED.code,
+                            message: rawData.message || ErrorCodes.AUTH_EXPIRED.message,
+                            hindiMessage: ErrorCodes.AUTH_EXPIRED.hindi
+                        },
+                        metadata: {
+                            timestamp: new Date().toISOString(),
+                            requestId: rawData.metadata?.requestId || `${Date.now()}`,
+                            version: '1.0.0',
+                            latencyMs: Date.now() - startTime
+                        }
+                    };
                 }
 
                 return {
                     success: false,
-                    error: data.error || 'Request failed',
-                    message: data.message,
+                    data: null,
+                    error: {
+                        code: rawData.error?.code || 'API_ERROR',
+                        message: rawData.message || rawData.error || 'Request failed',
+                        hindiMessage: rawData.error?.hindiMessage,
+                        details: rawData.error?.details
+                    },
+                    metadata: {
+                        timestamp: new Date().toISOString(),
+                        requestId: rawData.metadata?.requestId || `${Date.now()}`,
+                        version: '1.0.0',
+                        latencyMs: Date.now() - startTime
+                    }
                 };
             }
 
+            // Success response
+            // Handle if backend already returns standardized format
+            if (rawData.metadata && rawData.success !== undefined) {
+                return rawData as ApiResponse<T>;
+            }
+
+            // Wrap legacy response
             return {
                 success: true,
-                data: data.data || data,
-                message: data.message,
+                data: (rawData.data || rawData) as T,
+                error: null,
+                metadata: {
+                    timestamp: new Date().toISOString(),
+                    requestId: `${Date.now()}`,
+                    version: '1.0.0',
+                    latencyMs: Date.now() - startTime
+                }
             };
-        } catch (error) {
+
+        } catch (error: any) {
+            performanceMonitor.stopTrace(traceId);
             console.error('API Request Error:', error);
+
             return {
                 success: false,
-                error: error instanceof Error ? error.message : 'Network error',
+                data: null,
+                error: {
+                    code: error.name === 'AbortError' ? ErrorCodes.TIMEOUT.code : ErrorCodes.NETWORK_ERROR.code,
+                    message: error.message || 'Network error',
+                    hindiMessage: ErrorCodes.NETWORK_ERROR.hindi
+                },
+                metadata: {
+                    timestamp: new Date().toISOString(),
+                    requestId: `${Date.now()}`,
+                    version: '1.0.0',
+                    latencyMs: Date.now() - startTime
+                }
             };
         }
     }
@@ -182,7 +239,7 @@ class APIClient {
     /**
      * GET request
      */
-    async get<T>(endpoint: string, config?: RequestConfig): Promise<APIResponse<T>> {
+    async get<T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, { ...config, method: 'GET' });
     }
 
@@ -193,7 +250,7 @@ class APIClient {
         endpoint: string,
         body?: any,
         config?: RequestConfig
-    ): Promise<APIResponse<T>> {
+    ): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, {
             ...config,
             method: 'POST',
@@ -208,7 +265,7 @@ class APIClient {
         endpoint: string,
         body?: any,
         config?: RequestConfig
-    ): Promise<APIResponse<T>> {
+    ): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, {
             ...config,
             method: 'PUT',
@@ -219,8 +276,23 @@ class APIClient {
     /**
      * DELETE request
      */
-    async delete<T>(endpoint: string, config?: RequestConfig): Promise<APIResponse<T>> {
+    async delete<T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, { ...config, method: 'DELETE' });
+    }
+
+    /**
+     * PATCH request
+     */
+    async patch<T>(
+        endpoint: string,
+        body?: any,
+        config?: RequestConfig
+    ): Promise<ApiResponse<T>> {
+        return this.request<T>(endpoint, {
+            ...config,
+            method: 'PATCH',
+            body: JSON.stringify(body),
+        });
     }
 
     /**
@@ -228,10 +300,11 @@ class APIClient {
      */
     async upload<T>(
         endpoint: string,
-        file: File | Blob,
+        file: File | Blob, // Ensure File/Blob types are available in RN if used directly
         additionalData?: Record<string, any>
-    ): Promise<APIResponse<T>> {
+    ): Promise<ApiResponse<T>> {
         const formData = new FormData();
+        // @ts-ignore - React Native handling of FormData
         formData.append('file', file);
 
         if (additionalData) {
@@ -240,10 +313,15 @@ class APIClient {
             });
         }
 
-        const headers: HeadersInit = {};
+        const headers: Record<string, string> = {
+            // Content-Type should be left undefined for FormData to set boundary
+        } as Record<string, string>;
+
         if (this.token) {
             headers['Authorization'] = `Bearer ${this.token}`;
         }
+
+        const startTime = Date.now();
 
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
@@ -257,18 +335,45 @@ class APIClient {
             if (!response.ok) {
                 return {
                     success: false,
-                    error: data.error || 'Upload failed',
+                    data: null,
+                    error: {
+                        code: 'UPLOAD_FAILED',
+                        message: data.message || 'Upload failed',
+                    },
+                    metadata: {
+                        timestamp: new Date().toISOString(),
+                        requestId: `${Date.now()}`,
+                        version: '1.0.0',
+                        latencyMs: Date.now() - startTime
+                    }
                 };
             }
 
             return {
                 success: true,
                 data: data.data || data,
+                error: null,
+                metadata: {
+                    timestamp: new Date().toISOString(),
+                    requestId: `${Date.now()}`,
+                    version: '1.0.0',
+                    latencyMs: Date.now() - startTime
+                }
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                error: error instanceof Error ? error.message : 'Upload error',
+                data: null,
+                error: {
+                    code: 'NETWORK_ERROR',
+                    message: error.message || 'Upload error',
+                },
+                metadata: {
+                    timestamp: new Date().toISOString(),
+                    requestId: `${Date.now()}`,
+                    version: '1.0.0',
+                    latencyMs: Date.now() - startTime
+                }
             };
         }
     }
@@ -276,6 +381,7 @@ class APIClient {
 
 // Export singleton instance
 export const apiClient = new APIClient();
+export const api = apiClient;
 
 // Export class for custom instances
 export default APIClient;
