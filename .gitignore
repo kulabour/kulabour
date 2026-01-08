@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+    
+# Expo
+.expo/
+dist/
+web-build/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
