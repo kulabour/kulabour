@@ -1,0 +1,40 @@
+#! mongodb-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: mongodb
+    namespace: kulabour
+    labels:
+        com.docker.compose.project: kulabour
+        com.docker.compose.service: mongodb
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: kulabour
+            com.docker.compose.service: mongodb
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: kulabour
+                com.docker.compose.service: mongodb
+                com.docker.compose.network.default: "true"
+        spec:
+            restartPolicy: Always
+            containers:
+                - name: kulabour-mongo
+                  image: mongo:latest
+                  imagePullPolicy: IfNotPresent
+                  ports:
+                    - name: mongodb-27017
+                      containerPort: 27017
+                  volumeMounts:
+                    - name: data-db
+                      mountPath: /data/db
+            volumes:
+                - name: data-db
+                  persistentVolumeClaim:
+                    claimName: mongodb-mongodb-data

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile-app",
-    "slug": "mobile-app",
+    "name": "Kulabour",
+    "slug": "jadav-anil",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -51,6 +51,12 @@
     ],
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "370a8af6-041c-41de-8333-36892c5dfac5"
+      }
+    },
+    "owner": "kulabour"
   }
 }
