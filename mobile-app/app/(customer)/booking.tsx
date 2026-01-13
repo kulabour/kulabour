@@ -1,11 +1,17 @@
 import { Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+<<<<<<< HEAD
 import { useState, useRef, useEffect } from 'react';
 import { apiClient } from '../../services/api/client';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Animated, View } from 'react-native';
+=======
+import { useState } from 'react';
+import StatusBadge from '../../components/ui/StatusBadge';
+import { apiClient, BookingResponse } from '../../services/api/client';
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
 import '../../global.css';
 
 const services = [
@@ -80,12 +86,28 @@ export default function Booking() {
                 totalAmount: calculateTotal(),
             };
 
+<<<<<<< HEAD
             const response = await apiClient.post<{ bookingId: string }>('/api/bookings', bookingData);
 
             if (response.success) {
                 router.push('/(customer)/confirmation');
+=======
+            const response = await apiClient.post<BookingResponse>('/api/bookings', bookingData);
+
+            if (response.success) {
+                Alert.alert(
+                    'Booking Confirmed! 🎉',
+                    `Booking ID: #${response.data?.id || 'N/A'}\nTotal: ₹${calculateTotal()}\n\nSearching for nearby worker...`,
+                    [
+                        {
+                            text: 'Track Order',
+                            onPress: () => router.push('/(customer)/track'),
+                        },
+                    ]
+                );
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
             } else {
-                Alert.alert('Booking Failed', response.error || 'Please try again');
+                Alert.alert('Booking Failed', response.error?.message || 'Please try again');
             }
         } catch { // Removed unused 'error' variable
             Alert.alert('Error', 'Could not create booking. Please check your connection.');

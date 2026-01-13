@@ -2,9 +2,9 @@
 import { View, ViewProps, Platform } from 'react-native';
 
 interface CardProps extends ViewProps {
-    variant?: 'default' | 'glass' | 'gradient' | 'outline';
+    variant?: 'default' | 'glass' | 'gradient' | 'outline' | 'elevated';
     glassmorphism?: boolean;
-    shadow?: 'none' | 'sm' | 'md' | 'lg' | '3d';
+    shadow?: 'none' | 'sm' | 'md' | 'lg' | '3d' | 'medium';
     className?: string;
 }
 
@@ -26,6 +26,8 @@ export default function Card({
                 return 'bg-gradient-to-br from-dark-charcoal to-dark-navy border border-white/10';
             case 'outline':
                 return 'bg-transparent border border-white/20';
+            case 'elevated':
+                return 'bg-dark-charcoal border border-white/10';
             default:
                 return 'bg-dark-charcoal border border-white/5';
         }
@@ -37,6 +39,7 @@ export default function Card({
             case 'sm': return 'shadow-sm';
             case 'lg': return 'shadow-lg';
             case '3d': return 'shadow-card-3d'; // Custom 3D shadow
+            case 'medium': return 'shadow-md';
             default: return 'shadow-md';
         }
     };

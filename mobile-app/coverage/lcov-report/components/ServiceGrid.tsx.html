@@ -1,0 +1,400 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for components/ServiceGrid.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">components</a> ServiceGrid.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/4</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { ServiceCard } from './ServiceCard';
+&nbsp;
+const SERVICE_CATEGORIES = <span class="cstat-no" title="statement not covered" >[</span>
+    {
+        title: "योजना | Planning",
+        data: [
+            { hindi: "आर्किटेक्ट", english: "Architect", price: "999", imageUri: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/architect", rating: 4.8, verified: true },
+            { hindi: "इंजीनियर", english: "Engineer", price: "499", imageUri: "https://images.unsplash.com/photo-1581094794329-cd1361ddee2d?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/civil_engineer", rating: 4.7, verified: true },
+            { hindi: "वास्तु", english: "Vastu", price: "501", imageUri: "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/vastu", rating: 4.6, verified: true },
+            { hindi: "सर्वेयर", english: "Surveyor", price: "799", imageUri: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/surveyor", rating: 4.5, verified: true },
+            { hindi: "मिट्टी टेस्ट", english: "Soil Test", price: "1200", imageUri: "https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/soil_test", rating: 4.7, verified: true },
+        ]
+    },
+    {
+        title: "निर्माण | Construction",
+        data: [
+            { hindi: "मिस्त्री", english: "Mason", price: "600", imageUri: "https://images.unsplash.com/photo-1590579491624-f98f36d4c763?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/mason", rating: 4.9, verified: true },
+            { hindi: "बेलदार", english: "Labor", price: "450", imageUri: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/laborer", rating: 4.6, verified: true },
+            { hindi: "सरिया वाला", english: "Bar Bender", price: "550", imageUri: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/bar_bender", rating: 4.7, verified: true },
+            { hindi: "शटरिंग", english: "Shuttering", price: "500", imageUri: "https://images.unsplash.com/photo-1535732820275-9ffd998cac22?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/shuttering", rating: 4.5, verified: true },
+            { hindi: "पत्थर वाला", english: "Stone Layer", price: "650", imageUri: "https://images.unsplash.com/photo-1599619351208-3e6c839d6828?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/stone", rating: 4.8, verified: true },
+        ]
+    },
+    {
+        title: "मशीन | Machinery",
+        data: [
+            { hindi: "जेसीबी", english: "JCB Operator", price: "1200/घंटा", imageUri: "https://images.unsplash.com/photo-1579621970563-ebec7560eb3e?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/jcb", rating: 4.8, verified: true },
+            { hindi: "क्रेन", english: "Crane", price: "1500/घंटा", imageUri: "https://images.unsplash.com/photo-1580901368919-7738efb0f87e?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/crane", rating: 4.9, verified: true },
+            { hindi: "बोरिंग", english: "Borewell", price: "80/फुट", imageUri: "https://images.unsplash.com/photo-1574689211272-bc14e289e223?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/driller", rating: 4.7, verified: true },
+            { hindi: "मिक्सर", english: "Mixer", price: "800/दिन", imageUri: "https://images.unsplash.com/photo-1590054767850-97922d05f692?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/mixer", rating: 4.6, verified: true },
+        ]
+    },
+    {
+        title: "फिनिशिंग | Finishing",
+        data: [
+            { hindi: "बिजली वाला", english: "Electrician", price: "200", imageUri: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/electrician", rating: 4.8, verified: true },
+            { hindi: "नल वाला", english: "Plumber", price: "250", imageUri: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/plumber", rating: 4.9, verified: true },
+            { hindi: "बढ़ई", english: "Carpenter", price: "300", imageUri: "https://images.unsplash.com/photo-1611021061285-19a873c9d2f6?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/carpenter", rating: 4.7, verified: true },
+            { hindi: "रंग वाला", english: "Painter", price: "15/sqft", imageUri: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/painter", rating: 4.8, verified: true },
+            { hindi: "वेल्डर", english: "Welder", price: "350", imageUri: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/welder", rating: 4.6, verified: true },
+            { hindi: "शीशा वाला", english: "Glass Worker", price: "400", imageUri: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/glass", rating: 4.7, verified: true },
+            { hindi: "पीओपी", english: "POP/Ceiling", price: "40/sqft", imageUri: "https://images.unsplash.com/photo-1594818379496-da1e345b0ded?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/pop", rating: 4.5, verified: true },
+            { hindi: "टाइल्स", english: "Tile", price: "35/sqft", imageUri: "https://images.unsplash.com/photo-1584622050111-993a426fbf0a?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/tile", rating: 4.8, verified: true },
+        ]
+    },
+    {
+        title: "सजावट | Decor",
+        data: [
+            { hindi: "डिजाइनर", english: "Interior Designer", price: "2000", imageUri: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/interior", rating: 4.9, verified: true },
+            { hindi: "वॉलपेपर", english: "Wallpaper", price: "25/sqft", imageUri: "https://images.unsplash.com/photo-1615873968403-89e068629265?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/wallpaper", rating: 4.6, verified: true },
+            { hindi: "पर्दा", english: "Curtain", price: "150", imageUri: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/curtain", rating: 4.7, verified: true },
+            { hindi: "फर्नीचर", english: "Furniture", price: "500", imageUri: "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/furniture", rating: 4.8, verified: true },
+            { hindi: "पॉलिश", english: "Polish", price: "20/sqft", imageUri: "https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/polish", rating: 4.5, verified: true },
+        ]
+    },
+    {
+        title: "घर सेवा | Home Services",
+        data: [
+            { hindi: "एसी वाला", english: "AC Repair", price: "499", imageUri: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/ac", rating: 4.7, verified: true },
+            { hindi: "आरओ", english: "RO Service", price: "299", imageUri: "https://images.unsplash.com/photo-1585837575652-267c041d77d4?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/ro", rating: 4.8, verified: true },
+            { hindi: "सफाई", english: "Cleaning", price: "999", imageUri: "https://images.unsplash.com/photo-1581578731117-104f8a3d3dfa?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/cleaning", rating: 4.9, verified: true },
+            { hindi: "कीड़े", english: "Pest Control", price: "799", imageUri: "https://images.unsplash.com/photo-1633511090164-b43840ea1607?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/pest", rating: 4.6, verified: true },
+            { hindi: "रिपेयर", english: "Appliance Repair", price: "199", imageUri: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/appliance", rating: 4.7, verified: true },
+            { hindi: "टैंक सफाई", english: "Tank Cleaning", price: "499", imageUri: "https://images.unsplash.com/photo-1603712725038-e9334ae8f39f?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/tank", rating: 4.8, verified: true },
+            { hindi: "सोलर", english: "Solar", price: "2500", imageUri: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/solar", rating: 4.9, verified: true },
+        ]
+    },
+    {
+        title: "लॉजिस्टिक्स | Logistics",
+        data: [
+            { hindi: "टेम्पो", english: "Tempo", price: "500", imageUri: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/tempo", rating: 4.7, verified: true },
+            { hindi: "लोडिंग", english: "Loading", price: "300", imageUri: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=200&amp;h=200&amp;fit=crop", href: "/(customer)/booking/loading", rating: 4.6, verified: true },
+        ]
+    }
+];
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >ServiceGrid(</span>) {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+        &lt;View className="pb-20"&gt;
+            {SERVICE_CATEGORIES.map(<span class="fstat-no" title="function not covered" >(c</span>ategory, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                &lt;View key={index} className="mb-6"&gt;</span>
+                    &lt;Text className="text-base font-bold text-secondary mb-3 ml-1 tracking-wide"&gt;{category.title}&lt;/Text&gt;
+                    &lt;ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-2"&gt;
+                        {category.data.map(<span class="fstat-no" title="function not covered" >(s</span>ervice, idx) =&gt; (
+<span class="cstat-no" title="statement not covered" >                            &lt;ServiceCard</span>
+                                key={idx}
+                                title={service.hindi}
+                                hindi={service.hindi}
+                                english={service.english}
+                                imageUri={service.imageUri}
+                                href={service.href}
+                                price={service.price}
+                                rating={service.rating}
+                                verified={service.verified}
+                                delay={idx * 80}
+                            /&gt;
+                        ))}
+                    &lt;/ScrollView&gt;
+                &lt;/View&gt;
+            ))}
+        &lt;/View&gt;
+    );
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-12-20T17:27:29.138Z
+            </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
+</html>
+    

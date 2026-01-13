@@ -5,8 +5,10 @@ import { useState } from 'react';
 import { FlashList } from '@shopify/flash-list';
 import Card from '../../../components/ui/GlassCard';
 import StatusBadge from '../../../components/ui/StatusBadge';
-import Avatar from '../../../components/ui/Avatar';
+import { WorkerAvatar3D } from '../../../components/WorkerAvatar3D'; // Updated import
 import FilterChip from '../../../components/ui/FilterChip';
+import Pressable3D from '../../../components/3d/Pressable3D';
+import Layout3D from '../../../components/3d/Layout3D'; // New import
 import '../../../global.css';
 
 const ordersData = [
@@ -14,6 +16,8 @@ const ordersData = [
         id: 1,
         service: 'Emergency Plumbing',
         worker: 'Rajesh Kumar',
+        workerSkill: 'Plumber',
+        workerRating: 4.8,
         status: 'active',
         date: 'Today, 3:00 PM',
         price: '₹549',
@@ -106,8 +110,16 @@ export default function Orders() {
                     {/* Worker Info */}
                     {item.worker && (
                         <View className="flex-row items-center mb-3">
-                            <Avatar name={item.worker} size="sm" />
-                            <View className="ml-3 flex-1">
+                            <View style={{ height: 60, width: 60, marginRight: 12, justifyContent: 'center', alignItems: 'center' }}>
+                                <WorkerAvatar3D
+                                    name={item.worker}
+                                    skill={item.workerSkill || 'Expert'}
+                                    rating={item.workerRating || 4.5}
+                                    isOnline={item.status === 'active'}
+                                    size="small"
+                                />
+                            </View>
+                            <View className="flex-1">
                                 <Text className="text-white/50 text-xs mb-1">
                                     Worker
                                 </Text>
@@ -170,6 +182,7 @@ export default function Orders() {
     );
 
     return (
+<<<<<<< HEAD
         <SafeAreaView className="flex-1 bg-dark-navy">
             <FlashList
                 data={filteredOrders}
@@ -180,6 +193,18 @@ export default function Orders() {
                 ListEmptyComponent={renderEmpty}
                 contentContainerStyle={{ paddingBottom: 24 }}
             />
+=======
+        <SafeAreaView className="flex-1 bg-black/30">
+            <Layout3D>
+                <FlashList
+                    data={filteredOrders}
+                    renderItem={renderItem}
+                    ListHeaderComponent={renderHeader}
+                    ListEmptyComponent={renderEmpty}
+                    contentContainerStyle={{ paddingBottom: 24 }}
+                />
+            </Layout3D>
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
         </SafeAreaView>
     );
 }

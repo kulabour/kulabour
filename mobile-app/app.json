@@ -1,7 +1,12 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "Kulabour",
     "slug": "jadav-anil",
+=======
+    "name": "KULABOUR",
+    "slug": "kulabour",
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +23,10 @@
       "infoPlist": {
         "NSCameraUsageDescription": "KULABOUR needs camera access to let you upload job photos.",
         "NSPhotoLibraryUsageDescription": "KULABOUR needs photo library access to let you select job photos.",
-        "NSLocationWhenInUseUsageDescription": "KULABOUR needs your location to track jobs and workers."
+        "NSLocationWhenInUseUsageDescription": "KULABOUR needs your location to track jobs and workers.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
       }
     },
     "android": {
@@ -30,7 +38,7 @@
       "package": "com.kulabour.instant",
       "config": {
         "googleMaps": {
-          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+          "apiKey": "GOOGLE_MAPS_API_KEY"
         }
       },
       "permissions": [
@@ -50,6 +58,7 @@
       "web"
     ],
     "plugins": [
+<<<<<<< HEAD
       "expo-secure-store"
     ],
     "extra": {
@@ -58,5 +67,21 @@
       }
     },
     "owner": "kulabour"
+=======
+      "expo-secure-store",
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "kulabour",
+          "project": "kulabour-mobile"
+        }
+      ],
+      "expo-router"
+    ],
+    "extra": {
+      "sentryOrganization": "kulabour",
+      "sentryProject": "kulabour-mobile"
+    }
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
   }
 }

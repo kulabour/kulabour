@@ -1,102 +1,73 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /** @type {import('tailwindcss').Config} */
+const { GlobalTokens, SemanticTokens } = require('./theme/tokens');
+
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Dark backgrounds - exact spec colors
-        'dark-navy': '#0A0F1A',
-        'dark-charcoal': '#11151E',
-        'dark-obsidian': '#0C0E14',
-        'surface-deep': '#0C0E14',
-
-        // Neon accents - exact spec colors
-        'neon-blue': '#2D73FF',
-        'accent-blue': '#2D73FF',
-        'neon-teal': '#1CC9A0',
-        'accent-teal': '#1CC9A0',
-        'neon-green': '#00FFAF',
-        'accent-neon-green': '#00FFAF',
-
-        // Status colors
-        success: '#00FFAF',
-        warning: '#FFB020',
-        error: '#FF4D6D',
-        info: '#2D73FF',
-
-        // Glass surfaces with varying opacity
-        'glass-white': 'rgba(255, 255, 255, 0.1)',
-        'glass-blue': 'rgba(45, 115, 255, 0.1)',
-        'glass-teal': 'rgba(28, 201, 160, 0.08)',
-      },
-      boxShadow: {
-        // Glow effects for interactive elements
-        'glow-blue': '0 0 20px rgba(45, 115, 255, 0.5)',
-        'glow-blue-lg': '0 0 40px rgba(45, 115, 255, 0.6)',
-        'glow-teal': '0 0 20px rgba(28, 201, 160, 0.5)',
-        'glow-green': '0 0 20px rgba(0, 255, 175, 0.5)',
-        'glow-green-lg': '0 0 40px rgba(0, 255, 175, 0.6)',
-        'glow-red': '0 0 20px rgba(255, 77, 109, 0.5)',
-        'glow-yellow': '0 0 20px rgba(255, 176, 32, 0.5)',
-
-        // Cinematic shadows for depth
-        'card-float': '0 8px 32px rgba(0, 0, 0, 0.4)',
-        'card-hover': '0 12px 48px rgba(0, 0, 0, 0.6)',
-        'card-3d': '0 20px 60px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3)',
-        'soft': '0 4px 16px rgba(0, 0, 0, 0.2)',
-        'medium': '0 8px 24px rgba(0, 0, 0, 0.3)',
-        'hard': '0 16px 48px rgba(0, 0, 0, 0.5)',
-      },
-      backdropBlur: {
-        glass: '12px',
-        'glass-lg': '16px',
-        'glass-xl': '24px',
-      },
-      borderRadius: {
-        'sm': '8px',
-        'md': '12px',
-        'lg': '16px',
-        'xl': '20px',
-        '2xl': '24px',
-        'card': '16px',
-        'card-lg': '24px',
-        'pill': '999px',
+        // Semantic Token Mapping (Dynamic via CSS Vars)
+        brand: {
+          primary: 'rgb(var(--color-brand-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-brand-secondary) / <alpha-value>)',
+          accent: 'rgb(var(--color-brand-accent) / <alpha-value>)',
+        },
+        surface: {
+          base: 'rgb(var(--color-surface-base) / <alpha-value>)',
+          subtle: 'rgb(var(--color-surface-subtle) / <alpha-value>)',
+          muted: 'rgb(var(--color-surface-muted) / <alpha-value>)',
+          // Special case for overlay/glass which might not need alpha variable if hardcoded in var
+          // But our var is just rgb channels, so we can use opacity.
+          glass: 'rgb(var(--color-surface-glass) / 0.7)', // Enforce 0.7 opacity for glass
+        },
+        text: {
+          primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
+          tertiary: 'rgb(var(--color-text-tertiary) / <alpha-value>)',
+          inverse: 'rgb(var(--color-text-inverse) / <alpha-value>)',
+          brand: 'rgb(var(--color-text-brand) / <alpha-value>)',
+        },
+        border: {
+          subtle: 'rgb(var(--color-border-subtle) / <alpha-value>)',
+          default: 'rgb(var(--color-border-default) / <alpha-value>)',
+          strong: 'rgb(var(--color-border-default) / <alpha-value>)', // Fallback or separate var
+          focus: 'rgb(var(--color-border-focus) / <alpha-value>)',
+        },
+        feedback: {
+          success: 'rgb(var(--color-feedback-success) / <alpha-value>)',
+          warning: 'rgb(var(--color-feedback-warning) / <alpha-value>)',
+          error: 'rgb(var(--color-feedback-error) / <alpha-value>)',
+          info: 'rgb(var(--color-feedback-info) / <alpha-value>)',
+        }
       },
       spacing: {
-        // iOS grid spacing
-        '18': '4.5rem',
-        '88': '22rem',
+        // Enforcing 8pt Grid from GlobalTokens
+        0: '0px',
+        xs: `${GlobalTokens.spacing.xs}px`,   // 4px
+        sm: `${GlobalTokens.spacing.sm}px`,   // 8px
+        md: `${GlobalTokens.spacing.md}px`,   // 16px
+        lg: `${GlobalTokens.spacing.lg}px`,   // 24px
+        xl: `${GlobalTokens.spacing.xl}px`,   // 32px
+        '2xl': `${GlobalTokens.spacing['2xl']}px`, // 48px
+        '3xl': `${GlobalTokens.spacing['3xl']}px`, // 64px
+      },
+      borderRadius: {
+        sm: `${GlobalTokens.borderRadius.sm}px`, // 4px
+        md: `${GlobalTokens.borderRadius.md}px`, // 8px
+        lg: `${GlobalTokens.borderRadius.lg}px`, // 16px
+        full: '9999px',
+      },
+      boxShadow: {
+        // Fluent Depth System (Retained but renamed for semantic clarity if needed)
+        'elevation-sm': '0 0.3px 0.9px rgba(0,0,0,0.108), 0 1.6px 3.6px rgba(0,0,0,0.132)',
+        'elevation-md': '0 1.2px 3.6px rgba(0,0,0,0.108), 0 6.4px 14.4px rgba(0,0,0,0.132)',
+        'elevation-lg': '0 9.6px 28.8px rgba(0,0,0,0.108), 0 51.2px 115.2px rgba(0,0,0,0.132)',
       },
       fontFamily: {
-        // Geometric sans-serif family
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-      },
-      animation: {
-        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
-        'float': 'float 3s ease-in-out infinite',
-        'slide-up': 'slide-up 0.3s ease-out',
-        'fade-in': 'fade-in 0.2s ease-in',
-        'spin-slow': 'spin 3s linear infinite',
-      },
-      keyframes: {
-        'glow-pulse': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.7' },
-        },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        'slide-up': {
-          '0%': { transform: 'translateY(100%)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
+        sans: ['Inter', 'Roboto', 'System', 'sans-serif'], // Prioritize Custom Fonts
       },
     },
   },

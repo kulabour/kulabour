@@ -1,0 +1,79 @@
+app/(customer)/(tabs)/orders.tsx(190,21): error TS2322: Type '{ data: ({ id: number; service: string; worker: string; workerSkill: string; workerRating: number; status: string; date: string; price: string; address: string; } | { id: number; service: string; worker: string; ... 5 more ...; workerRating?: undefined; })[]; ... 4 more ...; contentContainerStyle: { ...; }; }' is not assignable to type 'IntrinsicAttributes & FlashListProps<{ id: number; service: string; worker: string; workerSkill: string; workerRating: number; status: string; date: string; price: string; address: string; } | { ...; }> & { ...; }'.
+  Property 'estimatedItemSize' does not exist on type 'IntrinsicAttributes & FlashListProps<{ id: number; service: string; worker: string; workerSkill: string; workerRating: number; status: string; date: string; price: string; address: string; } | { ...; }> & { ...; }'.
+app/(customer)/chat/[id].tsx(15,25): error TS2307: Cannot find module '../../../context/AuthContext' or its corresponding type declarations.
+components/ui/SkeletonLoaders.tsx(59,17): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ViewProps): View', gave the following error.
+    Type '{ width: string | number; height: number; borderRadius: number; }' is not assignable to type 'Falsy | ViewStyle | RegisteredStyle<ViewStyle> | RecursiveArray<Falsy | ViewStyle | RegisteredStyle<ViewStyle>> | readonly (Falsy | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'width' are incompatible.
+        Type 'string | number' is not assignable to type 'DimensionValue | undefined'.
+          Type 'string' is not assignable to type 'DimensionValue | undefined'.
+  Overload 2 of 2, '(props: ViewProps, context: any): View', gave the following error.
+    Type '{ width: string | number; height: number; borderRadius: number; }' is not assignable to type 'Falsy | ViewStyle | RegisteredStyle<ViewStyle> | RecursiveArray<Falsy | ViewStyle | RegisteredStyle<ViewStyle>> | readonly (Falsy | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'width' are incompatible.
+        Type 'string | number' is not assignable to type 'DimensionValue | undefined'.
+          Type 'string' is not assignable to type 'DimensionValue | undefined'.
+database/index.ts(25,9): error TS2322: Type 'typeof Booking' is not assignable to type 'Model | Class<Model>'.
+  Types of construct signatures are incompatible.
+    Type 'new (collection: Collection<Model>, raw: _RawRecord) => Booking' is not assignable to type 'new (...args: any[]) => Model'.
+      Construct signature return types 'Booking' and 'Model' are incompatible.
+        The types of 'syncStatus' are incompatible between these types.
+          Type 'string | undefined' is not assignable to type 'SyncStatus'.
+            Type 'undefined' is not assignable to type 'SyncStatus'.
+database/index.ts(32,19): error TS2554: Expected 1 arguments, but got 0.
+database/model/Booking.ts(8,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(9,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(10,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(11,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(12,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(13,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(15,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(16,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(16,16): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(17,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(17,16): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(19,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(20,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Booking.ts(20,27): error TS2416: Property 'syncStatus' in type 'Booking' is not assignable to the same property in base type 'Model'.
+  Type 'string | undefined' is not assignable to type 'SyncStatus'.
+    Type 'undefined' is not assignable to type 'SyncStatus'.
+database/model/Booking.ts(20,27): error TS2610: 'syncStatus' is defined as an accessor in class 'Model', but is overridden here in 'Booking' as an instance property.
+database/model/Booking.ts(22,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(7,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(8,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(9,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(10,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(11,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(12,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(12,16): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(13,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/model/Service.ts(13,16): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+database/sync.ts(11,13): error TS2322: Type '({ lastPulledAt }: { lastPulledAt?: number | undefined; schemaVersion: number; migration: MigrationSyncChanges; }) => Promise<unknown>' is not assignable to type '(_: { lastPulledAt?: number | undefined; schemaVersion: number; migration: MigrationSyncChanges; }) => Promise<SyncPullResult>'.
+  Type 'Promise<unknown>' is not assignable to type 'Promise<SyncPullResult>'.
+    Type 'unknown' is not assignable to type 'SyncPullResult'.
+services/OfflineQueueService.ts(8,39): error TS2307: Cannot find module '@react-native-community/netinfo' or its corresponding type declarations.
+services/OfflineQueueService.ts(212,34): error TS2339: Property 'patch' does not exist on type 'APIClient'.
+services/RealVoiceService.ts(180,46): error TS2307: Cannot find module '@react-native-voice/voice' or its corresponding type declarations.
+services/security/BiometricService.ts(6,38): error TS2307: Cannot find module 'expo-local-authentication' or its corresponding type declarations.

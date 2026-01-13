@@ -1,0 +1,13 @@
+@echo off
+echo Starting KULABOUR Ecosystem...
+
+echo Starting Backend (Port 3000)...
+start "KULABOUR Backend" cmd /k "cd backend-nest && npm run start:dev"
+
+echo Starting Admin Web...
+start "KULABOUR Admin" cmd /k "cd admin-web && npm run dev"
+
+echo Starting Mobile App...
+start "KULABOUR Mobile" cmd /k "cd mobile-app && npm exec expo start -- --clear"
+
+echo All services launched in new windows!

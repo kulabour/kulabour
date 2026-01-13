@@ -1,21 +1,73 @@
 {
     "cli": {
+<<<<<<< HEAD
         "version": ">= 3.0.0"
+=======
+        "version": ">= 7.0.0",
+        "appVersionSource": "remote"
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
     },
     "build": {
         "development": {
             "developmentClient": true,
+<<<<<<< HEAD
             "distribution": "internal"
+=======
+            "distribution": "internal",
+            "android": {
+                "gradleCommand": ":app:assembleDebug",
+                "buildType": "apk"
+            },
+            "ios": {
+                "simulator": true
+            }
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
         },
         "preview": {
             "distribution": "internal",
             "android": {
                 "buildType": "apk"
+<<<<<<< HEAD
             }
         },
         "production": {}
     },
     "submit": {
         "production": {}
+=======
+            },
+            "ios": {
+                "simulator": false
+            },
+            "env": {
+                "APP_VARIANT": "preview",
+                "API_URL": "https://staging-api.kulabour.com"
+            }
+        },
+        "production": {
+            "distribution": "store",
+            "android": {
+                "buildType": "app-bundle"
+            },
+            "ios": {
+                "resourceClass": "m-medium"
+            },
+            "env": {
+                "APP_VARIANT": "production",
+                "API_URL": "https://api.kulabour.com"
+            }
+        }
+    },
+    "submit": {
+        "production": {
+            "android": {
+                "track": "production",
+                "releaseStatus": "completed"
+            },
+            "ios": {
+                "ascAppId": "YOUR_APP_STORE_CONNECT_APP_ID"
+            }
+        }
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
     }
 }

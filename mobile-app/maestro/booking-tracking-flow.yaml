@@ -1,0 +1,65 @@
+appId: com.kulabour.app
+name: Booking and Tracking E2E Test
+---
+# Test: Complete booking flow with live tracking
+
+- launchApp:
+    clearState: true
+
+# Login flow
+- tapOn: "Skip Login"
+- waitForAnimationToEnd
+
+# Navigate to service
+- tapOn:
+    text: "बिजली वाला"
+
+# Add to cart
+- tapOn:
+    id: "add-to-cart-btn"
+
+# Open cart
+- tapOn:
+    id: "floating-cart-btn"
+
+# Verify cart
+- assertVisible: "मेरा कार्ट"
+
+# Select today
+- tapOn:
+    text: "आज"
+
+# Proceed to payment
+- tapOn:
+    text: "पेमेंट करो"
+
+# Complete payment (mock)
+- tapOn:
+    text: "Pay with UPI"
+- waitForAnimationToEnd
+
+# Verify booking confirmation
+- assertVisible: "Booking Confirmed"
+
+# Navigate to tracking
+- tapOn:
+    text: "Track Order"
+
+# Verify live map
+- assertVisible: "ETA"
+- assertVisible: "आ रहे हैं"
+
+# Test call button
+- tapOn:
+    text: "कॉल करो"
+- assertVisible: "Call Worker"
+
+# Cancel dialog
+- tapOn:
+    text: "Cancel"
+
+# Wait for worker movement simulation
+- wait: 5000
+
+# Verify ETA updates
+- assertVisible: "मिनट"

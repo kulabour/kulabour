@@ -28,6 +28,7 @@ function MockCallout({ children }: { children?: React.ReactNode }) {
 
 export const Marker = MockMarker;
 export const Callout = MockCallout;
+export const Polyline = (_props: object) => null;
 export const PROVIDER_GOOGLE = 'google';
 export const PROVIDER_DEFAULT = 'default';
 

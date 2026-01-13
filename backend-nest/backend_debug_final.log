@@ -1,0 +1,426 @@
+
+> kulabour-backend-nest@0.0.1 start:dev
+> nest start --watch
+
+[2J[3J[H[[90m1:31:41 am[0m] Starting compilation in watch mode...
+
+[[90m1:32:01 am[0m] Found 0 errors. Watching for file changes.
+
+ΓÜá∩╕Å  Mock Mode: Push Notifications will be logged to console only.
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNotificationsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25196  - [39m24/12/2025, 1:32:11 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[Nest] 25196  - 24/12/2025, 1:32:11 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+Error: Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async Injector.lookupComponentInImports (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:297:17)
+    at async Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:260:33)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+[2J[3J[H[[90m1:37:26 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:37:35 am[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m1:37:36 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:37:45 am[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m1:37:53 am[0m] File change detected. Starting incremental compilation...
+
+[96msrc/notifications/push-notification.service.ts[0m:[93m136[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'usersService' does not exist on type 'PushNotificationService'.
+
+[7m136[0m         const worker = await this.usersService.findById(workerId);
+[7m   [0m [91m                                  ~~~~~~~~~~~~[0m
+
+[96msrc/notifications/push-notification.service.ts[0m:[93m152[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'usersService' does not exist on type 'PushNotificationService'.
+
+[7m152[0m         const customer = await this.usersService.findById(customerId);
+[7m   [0m [91m                                    ~~~~~~~~~~~~[0m
+
+[96msrc/notifications/push-notification.service.ts[0m:[93m168[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'usersService' does not exist on type 'PushNotificationService'.
+
+[7m168[0m         const customer = await this.usersService.findById(customerId);
+[7m   [0m [91m                                    ~~~~~~~~~~~~[0m
+
+[[90m1:37:55 am[0m] Found 3 errors. Watching for file changes.
+
+[2J[3J[H[[90m1:37:59 am[0m] File change detected. Starting incremental compilation...
+
+[96msrc/notifications/push-notification.service.ts[0m:[93m8[0m:[93m39[0m - [91merror[0m[90m TS2304: [0mCannot find name 'UsersService'.
+
+[7m8[0m     constructor(private usersService: UsersService) {
+[7m [0m [91m                                      ~~~~~~~~~~~~[0m
+
+[[90m1:38:01 am[0m] Found 1 error. Watching for file changes.
+
+[2J[3J[H[[90m1:38:03 am[0m] File change detected. Starting incremental compilation...
+
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +29ms[39m
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 23808  - [39m24/12/2025, 1:38:03 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[Nest] 23808  - 24/12/2025, 1:38:03 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the PushNotificationService (?). Please make sure that the argument Object at index [0] is available in the NotificationsModule context.
+
+Potential solutions:
+- Is NotificationsModule a valid NestJS module?
+- If Object is a provider, is it part of the current NotificationsModule?
+- If Object is exported from a separate @Module, is that module imported within NotificationsModule?
+  @Module({
+    imports: [ /* the Module containing Object */ ]
+  })
+
+Error: Nest can't resolve dependencies of the PushNotificationService (?). Please make sure that the argument Object at index [0] is available in the NotificationsModule context.
+
+Potential solutions:
+- Is NotificationsModule a valid NestJS module?
+- If Object is a provider, is it part of the current NotificationsModule?
+- If Object is exported from a separate @Module, is that module imported within NotificationsModule?
+  @Module({
+    imports: [ /* the Module containing Object */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\instance-loader.js:56:13
+    at async Promise.all (index 3)
+    at async InstanceLoader.createInstancesOfProviders (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\instance-loader.js:55:9)
+[[90m1:38:07 am[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21236  - [39m24/12/2025, 1:38:21 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[Nest] 21236  - 24/12/2025, 1:38:21 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the PushNotificationService (?). Please make sure that the argument UsersService at index [0] is available in the NotificationsModule context.
+
+Potential solutions:
+- Is NotificationsModule a valid NestJS module?
+- If UsersService is a provider, is it part of the current NotificationsModule?
+- If UsersService is exported from a separate @Module, is that module imported within NotificationsModule?
+  @Module({
+    imports: [ /* the Module containing UsersService */ ]
+  })
+
+Error: Nest can't resolve dependencies of the PushNotificationService (?). Please make sure that the argument UsersService at index [0] is available in the NotificationsModule context.
+
+Potential solutions:
+- Is NotificationsModule a valid NestJS module?
+- If UsersService is a provider, is it part of the current NotificationsModule?
+- If UsersService is exported from a separate @Module, is that module imported within NotificationsModule?
+  @Module({
+    imports: [ /* the Module containing UsersService */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\instance-loader.js:56:13
+    at async Promise.all (index 3)
+    at async InstanceLoader.createInstancesOfProviders (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\instance-loader.js:55:9)
+[2J[3J[H[[90m1:38:22 am[0m] File change detected. Starting incremental compilation...
+
+[96msrc/notifications/notifications.module.ts[0m:[93m6[0m:[93m15[0m - [91merror[0m[90m TS2304: [0mCannot find name 'UsersModule'.
+
+[7m6[0m     imports: [UsersModule],
+[7m [0m [91m              ~~~~~~~~~~~[0m
+
+[[90m1:38:24 am[0m] Found 1 error. Watching for file changes.
+
+[2J[3J[H[[90m1:38:25 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:38:26 am[0m] Found 0 errors. Watching for file changes.
+
+ΓÜá∩╕Å  Mock Mode: Push Notifications will be logged to console only.
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 13212  - [39m24/12/2025, 1:38:42 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +1ms[39m
+[Nest] 13212  - 24/12/2025, 1:38:42 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+Error: Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async Injector.lookupComponentInImports (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:297:17)
+    at async Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:260:33)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+[2J[3J[H[[90m1:40:00 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:40:02 am[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m1:40:17 am[0m] File change detected. Starting incremental compilation...
+
+[96msrc/services/services.module.ts[0m:[93m14[0m:[93m1[0m - [91merror[0m[90m TS1137: [0mExpression or comma expected.
+
+[7m14[0m import { MockServiceModel } from './mocks/service.model.mock';
+[7m  [0m [91m~~~~~~[0m
+
+[96msrc/services/services.module.ts[0m:[93m14[0m:[93m8[0m - [91merror[0m[90m TS1005: [0m':' expected.
+
+[7m14[0m import { MockServiceModel } from './mocks/service.model.mock';
+[7m  [0m [91m       ~[0m
+
+[96msrc/services/services.module.ts[0m:[93m14[0m:[93m29[0m - [91merror[0m[90m TS1005: [0m',' expected.
+
+[7m14[0m import { MockServiceModel } from './mocks/service.model.mock';
+[7m  [0m [91m                            ~~~~[0m
+
+[96msrc/services/services.module.ts[0m:[93m14[0m:[93m34[0m - [91merror[0m[90m TS1005: [0m',' expected.
+
+[7m14[0m import { MockServiceModel } from './mocks/service.model.mock';
+[7m  [0m [91m                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/services/services.module.ts[0m:[93m14[0m:[93m62[0m - [91merror[0m[90m TS1005: [0m':' expected.
+
+[7m14[0m import { MockServiceModel } from './mocks/service.model.mock';
+[7m  [0m [91m                                                             ~[0m
+
+[96msrc/services/services.module.ts[0m:[93m25[0m:[93m5[0m - [91merror[0m[90m TS1136: [0mProperty assignment expected.
+
+[7m25[0m     ],
+[7m  [0m [91m    ~[0m
+
+[96msrc/services/services.module.ts[0m:[93m25[0m:[93m6[0m - [91merror[0m[90m TS1136: [0mProperty assignment expected.
+
+[7m25[0m     ],
+[7m  [0m [91m     ~[0m
+
+[[90m1:40:18 am[0m] Found 7 errors. Watching for file changes.
+
+ΓÜá∩╕Å  Mock Mode: Push Notifications will be logged to console only.
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[Nest] 10708  - 24/12/2025, 1:40:23 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+Error: Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async Injector.lookupComponentInImports (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:297:17)
+    at async Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:260:33)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 10708  - [39m24/12/2025, 1:40:23 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[2J[3J[H[[90m1:40:43 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:40:44 am[0m] Found 0 errors. Watching for file changes.
+
+C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\src\services\mocks\service.model.mock.ts:4
+    static find = jest.fn().mockReturnValue({ exec: jest.fn().mockResolvedValue([]) });
+                  ^
+
+
+ReferenceError: jest is not defined
+    at Object.<anonymous> (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\src\services\mocks\service.model.mock.ts:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at require (node:internal/modules/helpers:135:16)
+    at Object.<anonymous> (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\src\services\services.module.ts:6:1)
+
+Node.js v22.17.1
+[2J[3J[H[[90m1:41:09 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:41:10 am[0m] Found 0 errors. Watching for file changes.
+
+C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\src\services\mocks\service.model.mock.ts:4
+    static find = jest.fn().mockReturnValue({ exec: jest.fn().mockResolvedValue([]) });
+                  ^
+
+
+ReferenceError: jest is not defined
+    at Object.<anonymous> (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\src\services\mocks\service.model.mock.ts:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at require (node:internal/modules/helpers:135:16)
+    at Object.<anonymous> (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\src\services\services.module.ts:6:1)
+
+Node.js v22.17.1
+[2J[3J[H[[90m1:42:14 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:42:16 am[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m1:42:17 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:42:19 am[0m] Found 0 errors. Watching for file changes.
+
+ΓÜá∩╕Å  Mock Mode: Push Notifications will be logged to console only.
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:48 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:48 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +13ms[39m
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:49 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +15ms[39m
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:49 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:49 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +8ms[39m
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:49 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +5ms[39m
+[32m[Nest] 25064  - [39m24/12/2025, 1:42:49 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +2ms[39m
+[Nest] 25064  - 24/12/2025, 1:42:49 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+Error: Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async Injector.lookupComponentInImports (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:297:17)
+    at async Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:260:33)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+[2J[3J[H[[90m1:45:13 am[0m] File change detected. Starting incremental compilation...
+
+[[90m1:45:20 am[0m] Found 0 errors. Watching for file changes.
+
+ΓÜá∩╕Å  Mock Mode: Push Notifications will be logged to console only.
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +10ms[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChatModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21376  - [39m24/12/2025, 1:45:37 am [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWorkersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[Nest] 21376  - 24/12/2025, 1:45:37 am   ERROR [ExceptionHandler] Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+Error: Nest can't resolve dependencies of the ServiceModel (?). Please make sure that the argument "DatabaseConnection" at index [0] is available in the MongooseModule context.
+
+Potential solutions:
+- Is MongooseModule a valid NestJS module?
+- If "DatabaseConnection" is a provider, is it part of the current MongooseModule?
+- If "DatabaseConnection" is exported from a separate @Module, is that module imported within MongooseModule?
+  @Module({
+    imports: [ /* the Module containing "DatabaseConnection" */ ]
+  })
+
+    at Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:262:19)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)
+    at async resolveParam (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:129:38)
+    at async Promise.all (index 0)
+    at async Injector.resolveConstructorParams (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:144:27)
+    at async Injector.loadInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:70:13)
+    at async Injector.loadProvider (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:98:9)
+    at async Injector.lookupComponentInImports (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:297:17)
+    at async Injector.lookupComponentInParentModules (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:260:33)
+    at async Injector.resolveComponentInstance (C:\Users\JADAV ANIL\.gemini\antigravity\playground\ecliptic-nadir\backend-nest\node_modules\@nestjs\core\injector\injector.js:215:33)

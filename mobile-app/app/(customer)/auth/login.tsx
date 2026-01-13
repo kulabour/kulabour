@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+=======
+import { KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+>>>>>>> a1da97853617b063e925290de903e16ff3c3c152
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
+
+// Enterprise Design System
+import { Button } from '../../../components/design-system/Button';
+import { Input } from '../../../components/design-system/Input';
+import { Box } from '../../../components/primitives/Box';
+import { Text } from '../../../components/primitives/Text';
+
 import '../../../global.css';
 
 export default function Login() {
@@ -27,59 +36,74 @@ export default function Login() {
     };
 
     return (
-        <SafeAreaView className="flex-1 bg-dark-navy">
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                className="flex-1 px-6"
-            >
-                <TouchableOpacity
-                    onPress={() => router.back()}
-                    className="mt-4 w-10 h-10 items-center justify-center rounded-full bg-white/5"
+        <Box className="flex-1 bg-brand-primary">
+            <SafeAreaView style={{ flex: 1 }}>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={{ flex: 1, paddingHorizontal: 24 }}
                 >
-                    <Ionicons name="arrow-back" size={24} color="white" />
-                </TouchableOpacity>
-
-                <View className="mt-8 mb-10">
-                    <Text className="text-white text-3xl font-bold mb-2">Welcome Back 👋</Text>
-                    <Text className="text-white/60 text-lg">Enter your mobile number to continue</Text>
-                </View>
-
-                <View className="space-y-6">
-                    <Input
-                        label="Mobile Number"
-                        placeholder="Enter 10 digit number"
-                        value={mobile}
-                        onChangeText={setMobile}
-                        keyboardType="numeric"
-                        maxLength={10}
-                        leftIcon={<Text className="text-white/60 text-base ml-1">+91</Text>}
-                    />
-
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        glow
-                        fullWidth
-                        loading={isLoading}
-                        disabled={mobile.length < 10}
-                        onPress={handleSendOTP}
+                    {/* Back Button */}
+                    <TouchableOpacity
+                        onPress={() => router.back()}
+                        accessibilityLabel="Go back"
+                        accessibilityRole="button"
+                        className="mt-4 w-10 h-10 items-center justify-center rounded-full bg-white/10"
                     >
-                        Send OTP
-                    </Button>
-                </View>
+                        <Ionicons name="arrow-back" size={24} color="white" />
+                    </TouchableOpacity>
 
-                <View className="mt-8 items-center">
-                    <Text className="text-white/40 mb-6">Or continue with</Text>
-                    <View className="flex-row gap-4">
-                        <TouchableOpacity className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 items-center justify-center">
-                            <Ionicons name="logo-google" size={24} color="white" />
-                        </TouchableOpacity>
-                        <TouchableOpacity className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 items-center justify-center">
-                            <Ionicons name="logo-apple" size={24} color="white" />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </KeyboardAvoidingView>
-        </SafeAreaView>
+                    {/* Header */}
+                    <Box className="mt-8 mb-10">
+                        <Text variant="h1" className="text-white mb-2">Welcome Back 👋</Text>
+                        <Text variant="body" className="text-white/80">Enter your mobile number to continue</Text>
+                    </Box>
+
+                    {/* Form */}
+                    <Box className="space-y-6">
+                        <Box className="bg-surface-base rounded-lg p-md shadow-lg">
+                            <Input
+                                label="Mobile Number"
+                                placeholder="Enter 10 digit number"
+                                value={mobile}
+                                onChangeText={setMobile}
+                                keyboardType="numeric"
+                                maxLength={10}
+                                leftIcon={<Text variant="body" className="text-text-secondary mr-1">+91</Text>}
+                                containerClassName="mb-0 border-0"
+                            />
+                        </Box>
+
+                        <Button
+                            label="Send OTP"
+                            variant="solid"
+                            size="lg"
+                            fullWidth
+                            isLoading={isLoading}
+                            isDisabled={mobile.length < 10}
+                            onPress={handleSendOTP}
+                        />
+                    </Box>
+
+                    {/* Social Login */}
+                    <Box className="mt-8 items-center">
+                        <Text variant="caption" className="text-white/60 mb-6">Or continue with</Text>
+                        <Box className="flex-row gap-4">
+                            <Button
+                                variant="outline"
+                                accessibilityLabel="Continue with Google"
+                                className="w-14 h-14 !px-0 rounded-xl border-white/20 bg-white/5"
+                                icon={<Ionicons name="logo-google" size={24} color="white" />}
+                            />
+                            <Button
+                                variant="outline"
+                                accessibilityLabel="Continue with Apple"
+                                className="w-14 h-14 !px-0 rounded-xl border-white/20 bg-white/5"
+                                icon={<Ionicons name="logo-apple" size={24} color="white" />}
+                            />
+                        </Box>
+                    </Box>
+                </KeyboardAvoidingView>
+            </SafeAreaView>
+        </Box>
     );
 }

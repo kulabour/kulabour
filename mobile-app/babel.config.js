@@ -6,15 +6,15 @@ module.exports = function (api) {
             "nativewind/babel",
         ],
         plugins: [
-            process.env.NODE_ENV !== 'test' && "react-native-reanimated/plugin",
             [
                 "module-resolver",
                 {
                     alias: {
-                        "react-native-maps": "./components/ui/MapMock.tsx",
+                        // "react-native-maps": "./components/ui/MapMock.tsx",
                     },
                 },
             ],
-        ].filter(Boolean),
+            "react-native-reanimated/plugin", // MUST BE LAST
+        ],
     };
 };

@@ -1,0 +1,6 @@
+routes/auth.ts(2,53): error TS2305: Module '"../middleware/auth"' has no exported member 'AuthRequest'.
+routes/bookings.ts(4,35): error TS2305: Module '"../middleware/auth"' has no exported member 'AuthRequest'.
+routes/bookings.ts(107,38): error TS2352: Conversion of type 'ObjectId' to type 'string' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+routes/chat.ts(4,24): error TS2305: Module '"../middleware/auth"' has no exported member 'AuthRequest'.
+routes/payments.ts(2,35): error TS2305: Module '"../middleware/auth"' has no exported member 'AuthRequest'.
+utils/security.ts(13,13): error TS2717: Subsequent property declarations must have the same type.  Property 'user' must be of type 'IUser | undefined', but here has type '{ [key: string]: any; _id: string; } | undefined'.

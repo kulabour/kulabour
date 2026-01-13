@@ -1,0 +1,64 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Restart TypeScript Server",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                "Please use Command Palette (Ctrl+Shift+P) -> 'TypeScript: Restart TS Server'"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Clear All Caches",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                "Remove-Item -Path .expo -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path node_modules\\.cache -Recurse -Force -ErrorAction SilentlyContinue; Write-Host 'Caches cleared successfully' -ForegroundColor Green"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Fix TypeScript Module Resolution",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/fix-types.ps1"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Restart Expo Dev Server",
+            "type": "shell",
+            "command": "npx",
+            "args": [
+                "expo",
+                "start",
+                "--clear"
+            ],
+            "problemMatcher": [],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}

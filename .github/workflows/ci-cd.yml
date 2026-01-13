@@ -1,0 +1,154 @@
+name: Enhanced CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # Mobile App Build & Test
+  mobile-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: mobile-app/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: mobile-app
+        run: npm ci
+      
+      - name: TypeScript check
+        working-directory: mobile-app
+        run: npx tsc --noEmit
+      
+      - name: Run tests
+        working-directory: mobile-app
+        run: npm test -- --coverage
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./mobile-app/coverage
+
+  # Admin Dashboard Build & Test
+  admin-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: admin-web/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: admin-web
+        run: npm ci
+      
+      - name: TypeScript check
+        working-directory: admin-web
+        run: npx tsc --noEmit
+      
+      - name: Lint
+        working-directory: admin-web
+        run: npm run lint
+      
+      - name: Build
+        working-directory: admin-web
+        run: npm run build
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: admin-build
+          path: admin-web/dist
+
+  # Backend Build & Test
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend-nest/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: backend-nest
+        run: npm ci
+      
+      - name: TypeScript check
+        working-directory: backend-nest
+        run: npx tsc --noEmit
+      
+      - name: Run unit tests
+        working-directory: backend-nest
+        run: npm test
+        env:
+          MONGODB_URI: mongodb://localhost:27017/test
+          REDIS_HOST: localhost
+      
+      - name: Run E2E tests
+        working-directory: backend-nest
+        run: npm run test:e2e
+        env:
+          MONGODB_URI: mongodb://localhost:27017/test
+          REDIS_HOST: localhost
+
+  # Security Scan
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run security audit
+        run: |
+          cd mobile-app && npm audit --production
+          cd ../admin-web && npm audit --production
+          cd ../backend-nest && npm audit --production
+
+  # Deploy to Staging (on develop branch)
+  deploy-staging:
+    needs: [mobile-app, admin-dashboard, backend]
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to staging
+        run: echo "Deploy to staging server"
+        # Add actual deployment commands here
+
+  # Deploy to Production (on main branch)
+  deploy-production:
+    needs: [mobile-app, admin-dashboard, backend, security]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to production
+        run: echo "Deploy to production server"
+        # Add actual deployment commands here
