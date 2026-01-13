@@ -16,6 +16,8 @@ interface Service {
     name: string;
     description?: string;
     price?: number;
+    icon?: string;
+    workers?: number | string;
 }
 
 const localImages: Record<string, ImageSourcePropType> = {

@@ -1,4 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';

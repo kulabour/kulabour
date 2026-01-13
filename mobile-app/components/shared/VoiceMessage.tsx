@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Audio } from 'expo-av';
+import { Audio, AVPlaybackStatus } from 'expo-av';
 import { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -41,7 +41,7 @@ export default function VoiceMessage({ uri, duration }: VoiceMessageProps) {
         }
     }
 
-    import { AVPlaybackStatus } from 'expo-av';
+
 
     // ...
 

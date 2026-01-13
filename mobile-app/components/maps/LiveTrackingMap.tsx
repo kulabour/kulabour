@@ -1,52 +1,27 @@
-<<<<<<< HEAD
-import { View, Text } from 'react-native';
-import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
-import { useState, useEffect, useRef, useMemo } from 'react';
-import Card from '../ui/Card';
-
-interface Coordinate {
-    latitude: number;
-    longitude: number;
-}
-=======
-import React from 'react';
-import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
-import { StyleSheet, View, Platform, Image } from 'react-native';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
+import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'; // Added Polyline
+import { StyleSheet, View, Image } from 'react-native';
 import { Box } from '../primitives/Box';
 import { Coordinates } from '../../services/LocationService';
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
 
 interface LiveTrackingMapProps {
     customerLocation: Coordinates;
     workerLocation?: Coordinates;
+    workerName?: string;
+    eta?: number;
     onRegionChange?: (region: any) => void;
 }
 
-<<<<<<< HEAD
-export default function LiveTrackingMap({
-    workerLocation,
+const LiveTrackingMap = ({
     customerLocation,
+    workerLocation,
     workerName,
     eta
-}: LiveTrackingMapProps) {
+}: LiveTrackingMapProps) => {
+
     const mapRef = useRef<MapView>(null);
-    // Use useMemo for initial route to avoid setState in effect
-    const routeCoordinates = useMemo(
-        () => [workerLocation, customerLocation],
-        [workerLocation, customerLocation]
-    );
 
-    const [isMapReady, setIsMapReady] = useState(false);
-
-    useEffect(() => {
-        if (isMapReady && mapRef.current) {
-            mapRef.current.fitToCoordinates([workerLocation, customerLocation], {
-                edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
-                animated: true,
-            });
-=======
-const LiveTrackingMap = ({ customerLocation, workerLocation }: LiveTrackingMapProps) => {
-    // Default region centered between points if both exist, else customer
+    // Initial region logic
     const getInitialRegion = () => {
         if (workerLocation) {
             const lat = (customerLocation.latitude + workerLocation.latitude) / 2;
@@ -60,7 +35,6 @@ const LiveTrackingMap = ({ customerLocation, workerLocation }: LiveTrackingMapPr
                 latitudeDelta: Math.max(deltaLat, 0.01),
                 longitudeDelta: Math.max(deltaLng, 0.01),
             };
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
         }
         return {
             latitude: customerLocation.latitude,

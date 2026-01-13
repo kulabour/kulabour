@@ -98,7 +98,8 @@ export default function Orders() {
                                 {item.service}
                             </Text>
                             <StatusBadge
-                                status={item.status as 'active' | 'completed' | 'cancelled'}
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                status={item.status as any}
                                 size="sm"
                             />
                         </View>

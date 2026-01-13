@@ -3,6 +3,7 @@
  * Base HTTP client for backend API integration with secure token storage
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
@@ -300,17 +301,12 @@ class APIClient {
      */
     async upload<T>(
         endpoint: string,
-<<<<<<< HEAD
-        file: File | Blob,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        file: any, // Use specific type if possible (File | Blob not always available in RN directly)
         additionalData?: Record<string, string | number | boolean>
-    ): Promise<APIResponse<T>> {
-=======
-        file: File | Blob, // Ensure File/Blob types are available in RN if used directly
-        additionalData?: Record<string, any>
     ): Promise<ApiResponse<T>> {
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
         const formData = new FormData();
-        // @ts-ignore - React Native handling of FormData
+        // @ts-expect-error - React Native handling of FormData
         formData.append('file', file);
 
         if (additionalData) {
@@ -366,13 +362,14 @@ class APIClient {
                     latencyMs: Date.now() - startTime
                 }
             };
-        } catch (error: any) {
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Upload error';
             return {
                 success: false,
                 data: null,
                 error: {
                     code: 'NETWORK_ERROR',
-                    message: error.message || 'Upload error',
+                    message: errorMessage,
                 },
                 metadata: {
                     timestamp: new Date().toISOString(),
