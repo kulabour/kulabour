@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import ChatBubble from '../../../components/shared/ChatBubble';
 import ChatInput from '../../../components/shared/ChatInput';
@@ -43,7 +43,7 @@ const initialMessages = [
 
 export default function WorkerChat() {
     const router = useRouter();
-    const params = useLocalSearchParams();
+    const router = useRouter();
     const [messages, setMessages] = useState(initialMessages);
 
     const handleSend = (message: string) => {

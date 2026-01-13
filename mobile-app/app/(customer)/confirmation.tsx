@@ -1,15 +1,15 @@
-import { View, Text, ScrollView, Animated } from 'react-native';
+import { View, Text, Animated, TouchableOpacity, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useEffect, useRef } from 'react';
-import Card from '../../components/ui/GlassCard';
-import Button from '../../components/ui/Button';
+import { useEffect, useMemo } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import '../../global.css';
 
 export default function Confirmation() {
     const router = useRouter();
-    const scaleAnim = useRef(new Animated.Value(0)).current;
-    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const scaleAnim = useMemo(() => new Animated.Value(0), []);
+    const fadeAnim = useMemo(() => new Animated.Value(0), []);
 
     useEffect(() => {
         // Success animation
@@ -22,122 +22,104 @@ export default function Confirmation() {
             }),
             Animated.timing(fadeAnim, {
                 toValue: 1,
-                duration: 300,
+                duration: 500,
                 useNativeDriver: true,
             }),
         ]).start();
-    }, []);
+    }, [scaleAnim, fadeAnim]);
 
     return (
-        <SafeAreaView className="flex-1 bg-dark-navy">
-            <ScrollView
-                className="flex-1"
-                contentContainerClassName="items-center justify-center px-6"
-                showsVerticalScrollIndicator={false}
-            >
+        <View className="flex-1 bg-[#020617]">
+            <StatusBar barStyle="light-content" />
+            <View className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <View className="absolute top-[20%] right-[10%] w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[100px]" />
+            </View>
+
+            <SafeAreaView className="flex-1 items-center justify-center px-6">
                 {/* Success Animation */}
-                <View className="items-center mt-20 mb-8">
+                <View className="items-center mb-10">
                     <Animated.View
                         style={{
                             transform: [{ scale: scaleAnim }],
                         }}
-                        className="w-32 h-32 bg-success/20 rounded-full items-center justify-center shadow-glow-green-lg mb-6"
+                        className="w-32 h-32 bg-emerald-500/10 rounded-full items-center justify-center border border-emerald-500/30 mb-8 relative"
                     >
-                        <Text className="text-7xl">✓</Text>
+                        <View className="absolute inset-0 bg-emerald-400/20 rounded-full blur-xl animate-pulse" />
+                        <Ionicons name="checkmark" size={64} color="#10b981" />
                     </Animated.View>
 
-                    <Animated.View style={{ opacity: fadeAnim }}>
-                        <Text className="text-white text-3xl font-bold text-center mb-2">
+                    <Animated.View style={{ opacity: fadeAnim }} className="items-center">
+                        <Text className="text-white text-3xl font-bold text-center mb-3">
                             Booking Confirmed!
                         </Text>
-                        <Text className="text-white/60 text-center text-base">
-                            Your service has been booked successfully
+                        <Text className="text-slate-400 text-center text-base max-w-[80%]">
+                            We are looking for the nearest expert for your service.
                         </Text>
                     </Animated.View>
                 </View>
 
-                {/* Booking Summary */}
-                <Animated.View style={{ opacity: fadeAnim }} className="w-full mb-6">
-                    <Card variant="elevated" shadow="3d">
-                        <Text className="text-white text-lg font-bold mb-4">
-                            Booking Summary
-                        </Text>
-
-                        <View className="space-y-3">
-                            <View>
-                                <Text className="text-white/50 text-xs mb-1">Service</Text>
-                                <Text className="text-white font-semibold text-base">
-                                    Pipe Replacement
-                                </Text>
+                {/* Booking Summary Card */}
+                <Animated.View style={{ opacity: fadeAnim }} className="w-full mb-8">
+                    <LinearGradient
+                        colors={['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.02)']}
+                        className="rounded-3xl p-1 border border-white/5"
+                    >
+                        <View className="bg-[#0f172a]/60 p-6 rounded-[22px] backdrop-blur-md">
+                            <View className="flex-row justify-between items-center mb-6">
+                                <View>
+                                    <Text className="text-slate-400 text-xs uppercase tracking-wider mb-1">Service</Text>
+                                    <Text className="text-white font-bold text-lg">Pipe Replacement</Text>
+                                </View>
+                                <View className="items-end">
+                                    <Text className="text-slate-400 text-xs uppercase tracking-wider mb-1">Time</Text>
+                                    <Text className="text-white font-bold">14:00 Today</Text>
+                                </View>
                             </View>
 
-                            <View>
-                                <Text className="text-white/50 text-xs mb-1">Booking ID</Text>
-                                <Text className="text-neon-blue font-mono text-base">
-                                    #BK{Date.now().toString().slice(-6)}
-                                </Text>
-                            </View>
+                            <View className="h-px bg-dashed border-t border-dashed border-white/10 my-2" />
 
-                            <View>
-                                <Text className="text-white/50 text-xs mb-1">Address</Text>
-                                <Text className="text-white text-sm">
-                                    Koramangala, 4th Block, Flat 402
-                                </Text>
-                            </View>
-
-                            <View>
-                                <Text className="text-white/50 text-xs mb-1">Scheduled Time</Text>
-                                <Text className="text-white text-sm">Today at 3:00 PM</Text>
-                            </View>
-
-                            <View className="h-px bg-white/10 my-2" />
-
-                            <View className="flex-row justify-between items-center">
-                                <Text className="text-white font-bold text-lg">Total Paid</Text>
-                                <Text className="text-success font-bold text-2xl">₹528</Text>
+                            <View className="flex-row justify-between items-center mt-4">
+                                <View className="flex-row items-center">
+                                    <View className="w-8 h-8 rounded-full bg-slate-700 items-center justify-center mr-3">
+                                        <Text className="text-xs text-white">📍</Text>
+                                    </View>
+                                    <View>
+                                        <Text className="text-white text-sm font-medium">Koramangala</Text>
+                                        <Text className="text-slate-500 text-xs">Bangalore</Text>
+                                    </View>
+                                </View>
+                                <Text className="text-2xl font-bold text-emerald-400">₹528</Text>
                             </View>
                         </View>
-                    </Card>
+                    </LinearGradient>
                 </Animated.View>
 
-                {/* Worker Assignment Card */}
-                <Animated.View style={{ opacity: fadeAnim }} className="w-full mb-6">
-                    <Card variant="glass" shadow="medium">
-                        <View className="items-center">
-                            <View className="w-20 h-20 bg-neon-blue/20 rounded-full items-center justify-center mb-3">
-                                <Text className="text-5xl">👷</Text>
-                            </View>
-                            <Text className="text-white/70 text-sm mb-1">
-                                Finding the best worker for you...
-                            </Text>
-                            <View className="w-full h-2 bg-white/10 rounded-full overflow-hidden mt-3">
-                                <View className="h-full w-1/2 bg-neon-blue animate-pulse" />
-                            </View>
-                        </View>
-                    </Card>
+                {/* Tracking Preview */}
+                <Animated.View style={{ opacity: fadeAnim }} className="w-full mb-8">
+                    <View className="bg-blue-600/10 rounded-2xl p-4 border border-blue-500/20 flex-row items-center">
+                        <View className="w-2 h-2 rounded-full bg-blue-500 animate-pulse mr-3" />
+                        <Text className="text-blue-200 text-sm flex-1">Searching nearby workers...</Text>
+                        <Text className="text-blue-400 font-bold text-xs">EST 2m</Text>
+                    </View>
                 </Animated.View>
 
                 {/* Action Buttons */}
-                <Animated.View style={{ opacity: fadeAnim }} className="w-full gap-3">
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        glow
-                        fullWidth
+                <Animated.View style={{ opacity: fadeAnim }} className="w-full space-y-4">
+                    <TouchableOpacity
+                        className="bg-white rounded-2xl py-4 items-center w-full"
                         onPress={() => router.push('/customer/track')}
                     >
-                        Track Your Order
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="lg"
-                        fullWidth
-                        onPress={() => router.push('/customer')}
+                        <Text className="text-slate-900 font-bold text-lg">Track Order</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        className="bg-transparent py-4 items-center w-full"
+                        onPress={() => router.push('/(customer)')}
                     >
-                        Back to Home
-                    </Button>
+                        <Text className="text-slate-400 font-medium text-base">Back to Home</Text>
+                    </TouchableOpacity>
                 </Animated.View>
-            </ScrollView>
-        </SafeAreaView>
+            </SafeAreaView>
+        </View>
     );
 }

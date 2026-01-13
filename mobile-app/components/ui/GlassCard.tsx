@@ -15,8 +15,7 @@ export interface GlassCardProps extends ViewProps {
 export default function GlassCard({
     children,
     variant = 'default',
-    glassmorphism,
-    shadow,
+
     className = '',
     ...props
 }: GlassCardProps) {

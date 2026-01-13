@@ -5,7 +5,9 @@ import { useRef, useState } from "react";
 import { Mesh } from "three";
 import { Environment, ContactShadows } from "@react-three/drei";
 
-function Box(props: any) {
+import { ThreeElements } from "@react-three/fiber";
+
+function Box(props: ThreeElements['mesh']) {
   const mesh = useRef<Mesh>(null!);
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);

@@ -1,6 +1,8 @@
 import { TouchableOpacity, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 
+import { Href } from 'expo-router';
+
 interface FloatingSupportButtonProps {
     route: string;
 }
@@ -10,7 +12,7 @@ export default function FloatingSupportButton({ route }: FloatingSupportButtonPr
 
     return (
         <TouchableOpacity
-            onPress={() => router.push(route as any)}
+            onPress={() => router.push(route as Href)}
             className="absolute bottom-20 right-6 w-16 h-16 bg-gradient-to-br from-neon-blue to-neon-teal rounded-full items-center justify-center shadow-glow-blue-lg animate-float"
             activeOpacity={0.8}
         >

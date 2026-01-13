@@ -7,7 +7,15 @@ export default function WorkerTabsLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Jobs',
+                    title: 'Home',
+                    tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 20 }}>🏠</Text>,
+                    headerShown: false
+                }}
+            />
+            <Tabs.Screen
+                name="jobs"
+                options={{
+                    title: 'My Jobs',
                     tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 20 }}>📋</Text>,
                     headerShown: false
                 }}

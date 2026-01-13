@@ -1,0 +1,11 @@
+env: load .env
+env: export EXPO_PUBLIC_API_URL
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\booking.tsx
+   1:52  warning  'Image' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+   1:66  warning  'StatusBar' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+   2:10  warning  'SafeAreaView' is defined but never used                                                                     @typescript-eslint/no-unused-vars
+  38:8   warning  React Hook useEffect has a missing dependency: 'fadeAnim'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Γ£û 4 problems (0 errors, 4 warnings)
+

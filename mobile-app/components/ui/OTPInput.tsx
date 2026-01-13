@@ -1,4 +1,4 @@
-import { View, TextInput } from 'react-native';
+import { View, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import { useRef, useState } from 'react';
 
 interface OTPInputProps {
@@ -50,7 +50,7 @@ export default function OTPInput({
         }
     };
 
-    const handleKeyPress = (e: any, index: number) => {
+    const handleKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number) => {
         // Handle backspace
         if (e.nativeEvent.key === 'Backspace' && !value[index] && index > 0) {
             inputRefs.current[index - 1]?.focus();
@@ -66,12 +66,12 @@ export default function OTPInput({
                 return (
                     <View
                         key={index}
-                        className={`w-12 h-14 rounded-xl border-2 items-center justify-center ${hasValue
+                        className={`w - 12 h - 14 rounded - xl border - 2 items - center justify - center ${hasValue
                             ? 'bg-neon-blue/20 border-neon-blue'
                             : isFocused
                                 ? 'bg-dark-charcoal border-neon-blue shadow-glow-blue'
                                 : 'bg-dark-charcoal border-white/20'
-                            }`}
+                            } `}
                     >
                         <TextInput
                             ref={(ref) => {

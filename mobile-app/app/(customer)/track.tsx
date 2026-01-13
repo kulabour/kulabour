@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
-import { Platform } from 'react-native';
 import '../../global.css';
 
 // Only import map on native platforms

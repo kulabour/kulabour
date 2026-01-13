@@ -40,7 +40,7 @@ export default function Wallet() {
                 <View className="px-6 mb-6">
                     <View className="flex-row gap-3">
                         <View className="flex-1">
-                            <Card variant="elevated">
+                            <Card variant="default">
                                 <Text className="text-white/50 text-xs mb-2">
                                     Pending Clearance
                                 </Text>
@@ -53,7 +53,7 @@ export default function Wallet() {
                             </Card>
                         </View>
                         <View className="flex-1">
-                            <Card variant="elevated">
+                            <Card variant="default">
                                 <Text className="text-white/50 text-xs mb-2">
                                     Total Earnings
                                 </Text>

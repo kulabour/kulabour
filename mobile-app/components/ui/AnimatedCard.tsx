@@ -33,12 +33,16 @@ export default function AnimatedCard({
     }));
 
     const handlePressIn = () => {
+        // eslint-disable-next-line react-hooks/immutability
         scale.value = withSpring(0.95, { damping: 15, stiffness: 300 });
+        // eslint-disable-next-line react-hooks/immutability
         opacity.value = withTiming(0.8, { duration: 100 });
     };
 
     const handlePressOut = () => {
+        // eslint-disable-next-line react-hooks/immutability
         scale.value = withSpring(1, { damping: 15, stiffness: 300 });
+        // eslint-disable-next-line react-hooks/immutability
         opacity.value = withTiming(1, { duration: 100 });
     };
 

@@ -1,6 +1,6 @@
 // Job Request Modal
 import { Modal, View, Text, TouchableOpacity, Animated } from 'react-native';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import Button from '../ui/Button';
 import Card from '../ui/GlassCard';
 
@@ -29,8 +29,8 @@ export default function JobRequestModal({
     onReject,
     autoRejectTime = 30,
 }: JobRequestModalProps) {
-    const slideAnim = useRef(new Animated.Value(0)).current;
-    const timerAnim = useRef(new Animated.Value(1)).current;
+    const slideAnim = useMemo(() => new Animated.Value(0), []);
+    const timerAnim = useMemo(() => new Animated.Value(1), []);
 
     useEffect(() => {
         if (visible) {
@@ -55,7 +55,7 @@ export default function JobRequestModal({
             slideAnim.setValue(0);
             timerAnim.setValue(1);
         }
-    }, [visible]);
+    }, [visible, autoRejectTime, onReject, slideAnim, timerAnim]);
 
     if (!job) return null;
 

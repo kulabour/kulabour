@@ -41,7 +41,11 @@ export default function VoiceMessage({ uri, duration }: VoiceMessageProps) {
         }
     }
 
-    function onPlaybackStatusUpdate(status: any) {
+    import { AVPlaybackStatus } from 'expo-av';
+
+    // ...
+
+    function onPlaybackStatusUpdate(status: AVPlaybackStatus) {
         if (status.isLoaded) {
             setPosition(status.positionMillis / 1000);
             if (status.didJustFinish) {

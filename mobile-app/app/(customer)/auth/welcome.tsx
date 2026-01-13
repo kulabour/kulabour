@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import Button from '../../../components/ui/Button';
@@ -42,7 +42,7 @@ export default function Welcome() {
                     fullWidth
                     onPress={() => router.push('/(worker)/auth/login')}
                 >
-                    I'm a Worker
+                    I&apos;m a Worker
                 </Button>
             </View>
         </SafeAreaView>

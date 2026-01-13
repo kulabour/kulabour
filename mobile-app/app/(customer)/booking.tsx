@@ -1,9 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import StatusBadge from '../../components/ui/StatusBadge';
+import { useState, useRef, useEffect } from 'react';
 import { apiClient } from '../../services/api/client';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Animated, View } from 'react-native';
 import '../../global.css';
 
 const services = [
@@ -25,6 +27,17 @@ export default function Booking() {
     const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
     const [isBooking, setIsBooking] = useState(false);
 
+    // Animation refs
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 800,
+            useNativeDriver: true,
+        }).start();
+    }, [fadeAnim]);
+
     const toggleAddon = (id: number) => {
         setSelectedAddons(prev =>
             prev.includes(id) ? prev.filter(a => a !== id) : [...prev, id]
@@ -41,6 +54,15 @@ export default function Booking() {
     };
 
     const handleConfirmBooking = async () => {
+        // Mock data for missing state
+        const selectedTimeSlot = new Date().toISOString();
+        const address = 'Koramangala, Bangalore';
+
+        if (!selectedTimeSlot || !address) {
+            Alert.alert('Missing Details', 'Please select a time and enter your address');
+            return;
+        }
+
         setIsBooking(true);
 
         try {
@@ -49,7 +71,7 @@ export default function Booking() {
                 serviceName: selectedService.name,
                 customerId: 'user123', // TODO: Get from auth context
                 customerName: 'Anil Kumar',
-                address: 'Koramangala, 4th Block, Flat 402, Bangalore',
+                address: address, // Use a default or actual address
                 scheduledTime: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours from now
                 addOns: selectedAddons.map(id => {
                     const addon = addons.find(a => a.id === id);
@@ -58,23 +80,14 @@ export default function Booking() {
                 totalAmount: calculateTotal(),
             };
 
-            const response = await apiClient.post('/api/bookings', bookingData);
+            const response = await apiClient.post<{ bookingId: string }>('/api/bookings', bookingData);
 
             if (response.success) {
-                Alert.alert(
-                    'Booking Confirmed! 🎉',
-                    `Booking ID: #${response.data?.id}\nTotal: ₹${calculateTotal()}\n\nSearching for nearby worker...`,
-                    [
-                        {
-                            text: 'Track Order',
-                            onPress: () => router.push('/(customer)/track'),
-                        },
-                    ]
-                );
+                router.push('/(customer)/confirmation');
             } else {
                 Alert.alert('Booking Failed', response.error || 'Please try again');
             }
-        } catch (error) {
+        } catch { // Removed unused 'error' variable
             Alert.alert('Error', 'Could not create booking. Please check your connection.');
         } finally {
             setIsBooking(false);
@@ -82,150 +95,131 @@ export default function Booking() {
     };
 
     return (
-        <SafeAreaView className="flex-1 bg-dark-navy">
-            <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-                {/* Header */}
-                <View className="px-6 pt-4 pb-6 flex-row items-center">
+        <SafeAreaView className="flex-1 bg-[#020617]">
+            <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
+                {services.map((service) => (
                     <TouchableOpacity
-                        onPress={() => router.back()}
-                        className="w-10 h-10 items-center justify-center mr-4"
+                        key={service.id}
+                        className={`rounded-2xl p-4 mb-3 border relative overflow-hidden transition-all ${selectedService.id === service.id
+                            ? 'bg-blue-600/10 border-blue-500'
+                            : 'bg-slate-800/40 border-white/5'
+                            }`}
+                        onPress={() => setSelectedService(service)}
+                        activeOpacity={0.9}
                     >
-                        <Text className="text-white text-2xl">←</Text>
+                        <View className="flex-row justify-between items-start z-10">
+                            <View className="flex-1 mr-4">
+                                <Text className={`text-base font-bold mb-1 ${selectedService.id === service.id ? 'text-white' : 'text-slate-200'}`}>
+                                    {service.name}
+                                </Text>
+                                <View className="flex-row items-center">
+                                    <Ionicons name="time-outline" size={14} color="#94a3b8" style={{ marginRight: 4 }} />
+                                    <Text className="text-slate-400 text-xs">{service.duration}</Text>
+                                </View>
+                            </View>
+                            <Text className={`font-bold text-lg ${selectedService.id === service.id ? 'text-blue-400' : 'text-white'}`}>
+                                ₹{service.price}
+                            </Text>
+                        </View>
+                        {selectedService.id === service.id && (
+                            <View className="absolute top-0 right-0 p-2">
+                                <View className="w-4 h-4 rounded-full bg-blue-500 items-center justify-center">
+                                    <Ionicons name="checkmark" size={10} color="white" />
+                                </View>
+                            </View>
+                        )}
                     </TouchableOpacity>
-                    <Text className="text-white text-2xl font-bold">Plumbing Services</Text>
-                </View>
+                ))}
 
-                {/* Service Icon */}
-                <View className="items-center py-6">
-                    <View className="w-40 h-40 bg-dark-charcoal rounded-3xl items-center justify-center border border-white/5">
-                        <Image
-                            source={require('../../assets/3d/plumbing_icon_3d_1763842092010.png')}
-                            className="w-32 h-32"
-                            resizeMode="contain"
-                        />
-                    </View>
-                </View>
 
-                {/* Service Selection */}
-                <View className="px-6 mb-6">
-                    <Text className="text-white text-xl font-bold mb-4">Select Service</Text>
-                    {services.map((service) => (
-                        <TouchableOpacity
-                            key={service.id}
-                            className={`bg-dark-charcoal rounded-2xl p-4 mb-3 border ${selectedService.id === service.id
-                                ? 'border-neon-blue'
-                                : 'border-white/5'
-                                }`}
-                            onPress={() => setSelectedService(service)}
-                            activeOpacity={0.8}
-                        >
-                            <View className="flex-row justify-between items-start">
-                                <View className="flex-1">
-                                    <View className="flex-row items-center mb-2">
-                                        <Text className="text-white font-bold text-base">{service.name}</Text>
-                                        {service.popular && (
-                                            <View className="ml-2 bg-warning/20 px-2 py-0.5 rounded-md">
-                                                <Text className="text-warning text-xs font-bold">POPULAR</Text>
-                                            </View>
-                                        )}
-                                    </View>
-                                    <Text className="text-white/50 text-sm">⏱ {service.duration}</Text>
+
+                <View className="px-6 mb-8">
+                    <Text className="text-white text-lg font-bold mb-4">Add-ons</Text>
+                    <View className="flex-row gap-3">
+                        {addons.map((addon) => (
+                            <TouchableOpacity
+                                key={addon.id}
+                                className={`flex-1 rounded-2xl p-3 border ${selectedAddons.includes(addon.id)
+                                    ? 'bg-emerald-500/10 border-emerald-500'
+                                    : 'bg-slate-800/40 border-white/5'
+                                    }`}
+                                onPress={() => toggleAddon(addon.id)}
+                                activeOpacity={0.8}
+                            >
+                                <Text className="text-white font-bold text-sm mb-1">{addon.name}</Text>
+                                <View className="flex-row justify-between items-center mt-2">
+                                    <Text className="text-emerald-400 font-bold">+₹{addon.price}</Text>
+                                    {selectedAddons.includes(addon.id) && (
+                                        <Ionicons name="checkmark-circle" size={18} color="#10b981" />
+                                    )}
                                 </View>
-                                <Text className="text-neon-blue font-bold text-lg">₹{service.price}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                {/* Add-ons */}
-                <View className="px-6 mb-6">
-                    <Text className="text-white text-xl font-bold mb-4">Add-ons (Optional)</Text>
-                    {addons.map((addon) => (
-                        <TouchableOpacity
-                            key={addon.id}
-                            className={`bg-dark-charcoal rounded-2xl p-4 mb-3 border ${selectedAddons.includes(addon.id)
-                                ? 'border-success'
-                                : 'border-white/5'
-                                }`}
-                            onPress={() => toggleAddon(addon.id)}
-                            activeOpacity={0.8}
-                        >
-                            <View className="flex-row justify-between items-center">
-                                <View className="flex-1 flex-row items-center">
-                                    <View className={`w-6 h-6 rounded-md border-2 mr-3 ${selectedAddons.includes(addon.id)
-                                        ? 'bg-success border-success'
-                                        : 'border-white/30'
-                                        } items-center justify-center`}>
-                                        {selectedAddons.includes(addon.id) && (
-                                            <Text className="text-white font-bold text-sm">✓</Text>
-                                        )}
-                                    </View>
-                                    <Text className="text-white font-semibold">{addon.name}</Text>
-                                </View>
-                                <Text className="text-white/70">+₹{addon.price}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                {/* Address */}
-                <View className="px-6 mb-6">
-                    <Text className="text-white text-xl font-bold mb-3">Service Address</Text>
-                    <View className="bg-dark-charcoal rounded-2xl p-4 border border-white/5">
-                        <Text className="text-white font-bold mb-2">Home</Text>
-                        <Text className="text-white/70 text-sm mb-3">
-                            Koramangala, 4th Block{'\n'}Flat 402, Building A{'\n'}Bangalore - 560034
-                        </Text>
-                        <TouchableOpacity>
-                            <Text className="text-neon-blue text-sm font-semibold">Change Address →</Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        ))}
                     </View>
                 </View>
 
                 {/* Price Breakdown */}
-                <View className="px-6 mb-6">
-                    <View className="bg-dark-charcoal rounded-2xl p-5 border border-white/5">
-                        <Text className="text-white text-lg font-bold mb-4">Price Details</Text>
-                        <View className="space-y-3">
+                <View className="px-6 mb-24">
+                    <View className="bg-slate-800/40 rounded-3xl p-6 border border-white/5">
+                        <Text className="text-white text-lg font-bold mb-4">Payment Summary</Text>
+
+                        <View className="space-y-3 mb-4">
                             <View className="flex-row justify-between">
-                                <Text className="text-white/70">{selectedService.name}</Text>
-                                <Text className="text-white">₹{selectedService.price}</Text>
+                                <Text className="text-slate-400 text-sm">{selectedService.name}</Text>
+                                <Text className="text-white font-medium">₹{selectedService.price}</Text>
                             </View>
                             {selectedAddons.map(id => {
                                 const addon = addons.find(a => a.id === id);
                                 return addon ? (
                                     <View key={id} className="flex-row justify-between">
-                                        <Text className="text-white/70">{addon.name}</Text>
-                                        <Text className="text-white">₹{addon.price}</Text>
+                                        <Text className="text-slate-400 text-sm">{addon.name}</Text>
+                                        <Text className="text-white font-medium">₹{addon.price}</Text>
                                     </View>
                                 ) : null;
                             })}
                             <View className="flex-row justify-between">
-                                <Text className="text-white/70">Platform fee</Text>
-                                <Text className="text-white">₹29</Text>
+                                <Text className="text-slate-400 text-sm">Platform fee</Text>
+                                <Text className="text-white font-medium">₹29</Text>
                             </View>
-                            <View className="h-px bg-white/10 my-2" />
-                            <View className="flex-row justify-between">
-                                <Text className="text-white font-bold text-lg">Total Amount</Text>
-                                <Text className="text-neon-green font-bold text-xl">₹{calculateTotal()}</Text>
-                            </View>
+                        </View>
+
+                        <View className="h-px bg-white/10 mb-4" />
+
+                        <View className="flex-row justify-between items-end">
+                            <Text className="text-white font-bold text-lg">Total Amount</Text>
+                            <Text className="text-3xl font-bold text-white">
+                                <Text className="text-2xl text-slate-400 font-normal">₹</Text>
+                                {calculateTotal()}
+                            </Text>
                         </View>
                     </View>
                 </View>
-            </ScrollView>
+            </ScrollView >
 
-            {/* Bottom CTA */}
-            <View className="px-6 py-4 bg-dark-charcoal border-t border-white/10">
+
+            {/* Bottom Action Bar */}
+            < View className="absolute bottom-0 left-0 right-0 bg-[#020617]/90 blur-xl pt-4 pb-8 px-6 border-t border-white/5" >
                 <TouchableOpacity
-                    className={`bg-neon-blue rounded-2xl py-4 items-center ${isBooking ? 'opacity-50' : ''}`}
+                    className={`rounded-2xl py-4 items-center flex-row justify-center relative overflow-hidden ${isBooking ? 'opacity-80' : ''}`}
                     onPress={handleConfirmBooking}
                     disabled={isBooking}
                 >
-                    <Text className="text-white font-bold text-lg">
-                        {isBooking ? 'Creating Booking...' : `Confirm Booking • ₹${calculateTotal()}`}
-                    </Text>
+                    <LinearGradient
+                        colors={['#3b82f6', '#2563eb']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        className="absolute inset-0"
+                    />
+                    {isBooking ? (
+                        <Text className="text-white font-bold text-lg">Processing...</Text>
+                    ) : (
+                        <>
+                            <Text className="text-white font-bold text-lg mr-2">Confirm Booking</Text>
+                            <Ionicons name="arrow-forward" size={20} color="white" />
+                        </>
+                    )}
                 </TouchableOpacity>
-            </View>
-        </SafeAreaView>
+            </View >
+        </SafeAreaView >
     );
 }

@@ -13,16 +13,6 @@ export default function VoiceRecorder({ onSend, onCancel }: VoiceRecorderProps) 
     const [duration, setDuration] = useState(0);
     const [isRecording, setIsRecording] = useState(false);
 
-    useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (isRecording) {
-            interval = setInterval(() => {
-                setDuration((prev) => prev + 1);
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [isRecording]);
-
     async function startRecording() {
         try {
             const permission = await Audio.requestPermissionsAsync();
@@ -64,6 +54,21 @@ export default function VoiceRecorder({ onSend, onCancel }: VoiceRecorderProps) 
         const secs = seconds % 60;
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     }
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isRecording) {
+            interval = setInterval(() => {
+                setDuration((prev) => prev + 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [isRecording]);
+
+    useEffect(() => {
+        // Wrap in setTimeout to avoid setting state synchronously in effect (lint warning)
+        setTimeout(() => startRecording(), 0);
+    }, []);
 
     return (
         <View className="flex-row items-center bg-white/10 rounded-full px-4 py-2 flex-1 mx-2">

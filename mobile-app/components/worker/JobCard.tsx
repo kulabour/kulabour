@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 type JobCardProps = {
     title: string;

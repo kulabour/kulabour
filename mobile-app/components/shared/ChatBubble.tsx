@@ -11,7 +11,6 @@ export default function ChatBubble({
     message,
     isSent,
     timestamp,
-    avatar,
 }: ChatBubbleProps) {
     return (
         <View
@@ -20,8 +19,8 @@ export default function ChatBubble({
             <View className={`max-w-[75%] ${isSent ? 'items-end' : 'items-start'}`}>
                 <View
                     className={`px-4 py-3 rounded-2xl ${isSent
-                            ? 'bg-neon-blue rounded-br-sm'
-                            : 'bg-dark-charcoal border border-white/10 rounded-bl-sm'
+                        ? 'bg-neon-blue rounded-br-sm'
+                        : 'bg-dark-charcoal border border-white/10 rounded-bl-sm'
                         }`}
                 >
                     <Text className="text-white text-base leading-5">{message}</Text>

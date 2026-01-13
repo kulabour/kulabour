@@ -17,7 +17,7 @@ const paymentMethods = [
 export default function Payment() {
     const router = useRouter();
     const [selectedMethod, setSelectedMethod] = useState('upi');
-    const [promoCode, setPromoCode] = useState('');
+    const [promoCode] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 
     const serviceAmount = 499;
@@ -142,7 +142,7 @@ export default function Payment() {
 
                 {/* Price Breakdown */}
                 <View className="px-6 mb-6">
-                    <Card variant="elevated" shadow="3d">
+                    <Card variant="default" shadow="3d">
                         <Text className="text-white text-lg font-bold mb-4">
                             Payment Summary
                         </Text>

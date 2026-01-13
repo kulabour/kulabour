@@ -1,5 +1,5 @@
 import { View, TextInput, Text, Animated } from 'react-native';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 interface InputProps {
     label?: string;
@@ -33,7 +33,8 @@ export default function Input({
     className = '',
 }: InputProps) {
     const [isFocused, setIsFocused] = useState(false);
-    const labelAnimation = useRef(new Animated.Value(value ? 1 : 0)).current;
+    // Use useState for stable animated value (lazy initialization)
+    const [labelAnimation] = useState(() => new Animated.Value(value ? 1 : 0));
 
     useEffect(() => {
         Animated.timing(labelAnimation, {
@@ -41,7 +42,7 @@ export default function Input({
             duration: 200,
             useNativeDriver: false,
         }).start();
-    }, [isFocused, value]);
+    }, [isFocused, value, labelAnimation]);
 
     const labelStyle = {
         top: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }),

@@ -4,7 +4,6 @@
  */
 
 import { apiClient } from './client';
-import { cache } from './cache';
 
 export interface LoginRequest {
     phone: string;
@@ -91,11 +90,7 @@ export async function logout() {
  * Get current user profile
  */
 export async function getCurrentUser() {
-    // Try cache first
-    const cached = await cache.get('auth:currentUser');
-    if (cached) {
-        return { success: true, data: JSON.parse(cached) };
-    }
+    // TODO: Implement proper client-side caching if needed, e.g. using a global store or React Query
 
     // Mock implementation (fallback)
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -113,8 +108,6 @@ export async function getCurrentUser() {
         },
     };
 
-    // Store in cache for 5 minutes
-    await cache.set('auth:currentUser', JSON.stringify(result.data), 300);
     return result;
 
     // Real API call:

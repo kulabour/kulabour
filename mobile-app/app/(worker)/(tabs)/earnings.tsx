@@ -1,8 +1,7 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
-import Card from '../../../components/ui/Card';
-import FilterChip from '../../../components/ui/FilterChip';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import '../../../global.css';
 
 const earningsData = {
@@ -47,129 +46,118 @@ export default function Earnings() {
     const stats = earningsData[period];
 
     return (
-        <SafeAreaView className="flex-1 bg-dark-navy">
-            <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-                {/* Header */}
-                <View className="px-6 pt-4 pb-6">
-                    <Text className="text-white text-3xl font-bold mb-6">Earnings</Text>
+        <View className="flex-1 bg-[#020617]">
+            <StatusBar barStyle="light-content" />
+            {/* Background Effects */}
+            <View className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <View className="absolute top-0 right-0 w-[400px] h-[300px] bg-emerald-500/10 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2" />
+            </View>
 
-                    {/* Period Filter */}
-                    <View className="flex-row gap-2">
-                        <FilterChip
-                            label="Today"
-                            selected={period === 'today'}
-                            onPress={() => setPeriod('today')}
-                        />
-                        <FilterChip
-                            label="This Week"
-                            selected={period === 'week'}
-                            onPress={() => setPeriod('week')}
-                        />
-                        <FilterChip
-                            label="This Month"
-                            selected={period === 'month'}
-                            onPress={() => setPeriod('month')}
-                        />
-                    </View>
-                </View>
+            <SafeAreaView className="flex-1">
+                <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+                    {/* Header */}
+                    <View className="px-6 pt-4 pb-6">
+                        <View className="flex-row justify-between items-center mb-6">
+                            <Text className="text-white text-3xl font-bold">Earnings</Text>
+                            <TouchableOpacity className="bg-slate-800 p-2 rounded-full border border-white/10">
+                                <Ionicons name="download-outline" size={20} color="#94a3b8" />
+                            </TouchableOpacity>
+                        </View>
 
-                {/* Total Earnings Card */}
-                <View className="px-6 mb-6">
-                    <Card variant="gradient" shadow="3d">
-                        <View className="items-center py-4">
-                            <Text className="text-white/60 text-sm mb-2 uppercase tracking-wide">
-                                Total Earnings
-                            </Text>
-                            <Text className="text-neon-green text-5xl font-bold mb-4">
-                                ₹{stats.amount.toLocaleString('en-IN')}
-                            </Text>
-                            <View className="flex-row gap-4">
-                                <View className="items-center">
-                                    <Text className="text-white text-2xl font-bold">
-                                        {stats.jobs}
+                        {/* Period Filter */}
+                        <View className="flex-row gap-2 bg-slate-800/50 p-1 rounded-2xl border border-white/5 self-start mb-6">
+                            {(['today', 'week', 'month'] as const).map((p) => (
+                                <TouchableOpacity
+                                    key={p}
+                                    onPress={() => setPeriod(p)}
+                                    className={`px-4 py-1.5 rounded-xl ${period === p ? 'bg-slate-700 shadow-sm' : 'bg-transparent'}`}
+                                >
+                                    <Text className={`text-sm font-semibold capitalize ${period === p ? 'text-white' : 'text-slate-500'}`}>
+                                        {p === 'today' ? 'Today' : p === 'week' ? 'Week' : 'Month'}
                                     </Text>
-                                    <Text className="text-white/50 text-xs">Jobs</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+
+                        {/* Total Earnings Card */}
+                        <LinearGradient
+                            colors={['rgba(16, 185, 129, 0.1)', 'rgba(16, 185, 129, 0.05)']}
+                            className="rounded-3xl p-1 border border-emerald-500/20 mb-8"
+                        >
+                            <View className="bg-[#0f172a]/80 backdrop-blur-md rounded-[22px] p-6 relative overflow-hidden">
+                                <View className="absolute right-0 top-0 p-6 opacity-20">
+                                    <Ionicons name="trending-up" size={80} color="#10b981" />
                                 </View>
-                                <View className="w-px bg-white/20 h-10" />
-                                <View className="items-center">
-                                    <Text className="text-success text-2xl font-bold">
-                                        {stats.trend}
-                                    </Text>
-                                    <Text className="text-white/50 text-xs">Growth</Text>
+
+                                <Text className="text-slate-400 text-sm mb-2 font-medium uppercase tracking-wider">Total Earnings</Text>
+                                <Text className="text-5xl font-bold text-white mb-6">
+                                    ₹{stats.amount.toLocaleString('en-IN')}
+                                </Text>
+
+                                <View className="flex-row gap-8 border-t border-white/5 pt-4">
+                                    <View>
+                                        <Text className="text-slate-400 text-xs mb-1">Jobs Completed</Text>
+                                        <Text className="text-white text-xl font-bold">{stats.jobs}</Text>
+                                    </View>
+                                    <View>
+                                        <Text className="text-slate-400 text-xs mb-1">Growth</Text>
+                                        <Text className="text-emerald-400 text-xl font-bold">{stats.trend}</Text>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    </Card>
-                </View>
+                        </LinearGradient>
 
-                {/* Stats Grid */}
-                <View className="px-6 mb-6">
-                    <View className="flex-row gap-3">
-                        <View className="flex-1">
-                            <Card>
-                                <Text className="text-white/50 text-xs mb-2">Avg/Job</Text>
+                        {/* Stats Grid */}
+                        <View className="flex-row gap-3 mb-8">
+                            <View className="flex-1 bg-slate-800/40 rounded-2xl p-4 border border-white/5">
+                                <Text className="text-slate-500 text-xs mb-2 uppercase font-bold">Avg/Job</Text>
                                 <Text className="text-white text-2xl font-bold">
                                     ₹{Math.round(stats.amount / stats.jobs)}
                                 </Text>
-                            </Card>
-                        </View>
-                        <View className="flex-1">
-                            <Card>
-                                <Text className="text-white/50 text-xs mb-2">Completed</Text>
-                                <Text className="text-success text-2xl font-bold">
-                                    {stats.jobs}
+                            </View>
+                            <View className="flex-1 bg-slate-800/40 rounded-2xl p-4 border border-white/5">
+                                <Text className="text-slate-500 text-xs mb-2 uppercase font-bold">Pending</Text>
+                                <Text className="text-amber-400 text-2xl font-bold">
+                                    ₹1,250
                                 </Text>
-                            </Card>
+                            </View>
                         </View>
-                    </View>
-                </View>
 
-                {/* Earnings Graph Placeholder */}
-                <View className="px-6 mb-6">
-                    <Card variant="elevated" shadow="medium">
-                        <Text className="text-white font-bold text-lg mb-4">
-                            Earnings Trend
-                        </Text>
-                        <View className="h-48 items-center justify-center bg-dark-obsidian rounded-xl">
-                            <Text className="text-white/30 text-sm mb-2">📈</Text>
-                            <Text className="text-white/50 text-xs">Graph visualization</Text>
-                        </View>
-                    </Card>
-                </View>
-
-                {/* Recent Transactions */}
-                <View className="px-6 pb-6">
-                    <Text className="text-white text-xl font-bold mb-4">
-                        Recent Transactions
-                    </Text>
-                    {transactions.map((transaction) => (
-                        <TouchableOpacity key={transaction.id} activeOpacity={0.8}>
-                            <Card className="mb-3">
-                                <View className="flex-row justify-between items-start">
-                                    <View className="flex-1">
-                                        <Text className="text-white font-bold text-base mb-1">
-                                            {transaction.service}
-                                        </Text>
-                                        <Text className="text-white/50 text-sm">
-                                            {transaction.date}
-                                        </Text>
-                                    </View>
-                                    <View className="items-end">
-                                        <Text className="text-success font-bold text-xl">
-                                            +₹{transaction.amount}
-                                        </Text>
-                                        <View className="bg-success/20 px-2 py-0.5 rounded-md mt-1">
-                                            <Text className="text-success text-xs font-bold uppercase">
-                                                Paid
-                                            </Text>
+                        {/* Recent Transactions */}
+                        <Text className="text-white text-lg font-bold mb-4">Recent Transactions</Text>
+                        <View className="space-y-3">
+                            {transactions.map((transaction) => (
+                                <TouchableOpacity
+                                    key={transaction.id}
+                                    activeOpacity={0.7}
+                                    className="bg-slate-800/40 rounded-2xl p-4 border border-white/5 flex-row items-center justify-between"
+                                >
+                                    <View className="flex-row items-center flex-1">
+                                        <View className="w-10 h-10 rounded-full bg-slate-700/50 items-center justify-center mr-3 border border-white/5">
+                                            <Ionicons
+                                                name={transaction.service.includes("Pipe") ? "water-outline" : "flash-outline"}
+                                                size={18}
+                                                color="#cbd5e1"
+                                            />
+                                        </View>
+                                        <View className="flex-1 mr-2">
+                                            <Text className="text-white font-bold text-sm mb-0.5">{transaction.service}</Text>
+                                            <Text className="text-slate-500 text-xs">{transaction.date}</Text>
                                         </View>
                                     </View>
-                                </View>
-                            </Card>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                                    <View className="items-end">
+                                        <Text className="text-emerald-400 font-bold text-lg">+₹{transaction.amount}</Text>
+                                        <View className="bg-emerald-500/10 px-1.5 py-0.5 rounded ml-auto mt-0.5 border border-emerald-500/20">
+                                            <Text className="text-emerald-500 text-[10px] uppercase font-bold">Paid</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </View>
     );
 }

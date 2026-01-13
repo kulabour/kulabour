@@ -1,6 +1,5 @@
-import { View, ActivityIndicator } from 'react-native';
-import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
+import { useEffect, useState } from 'react';
 
 interface LoaderProps {
     size?: 'sm' | 'md' | 'lg';
@@ -8,7 +7,7 @@ interface LoaderProps {
 }
 
 export default function Loader({ size = 'md', color = 'blue' }: LoaderProps) {
-    const rotateAnimation = useRef(new Animated.Value(0)).current;
+    const [rotateAnimation] = useState(() => new Animated.Value(0));
 
     useEffect(() => {
         Animated.loop(
@@ -18,7 +17,7 @@ export default function Loader({ size = 'md', color = 'blue' }: LoaderProps) {
                 useNativeDriver: true,
             })
         ).start();
-    }, []);
+    }, [rotateAnimation]);
 
     const rotate = rotateAnimation.interpolate({
         inputRange: [0, 1],

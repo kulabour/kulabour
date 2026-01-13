@@ -1,0 +1,57 @@
+env: load .env
+env: export EXPO_PUBLIC_API_URL
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\auth\welcome.tsx
+  1:22  warning  'TouchableOpacity' is defined but never used  @typescript-eslint/no-unused-vars
+  1:40  warning  'ScrollView' is defined but never used        @typescript-eslint/no-unused-vars
+  1:52  warning  'Dimensions' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\booking.tsx
+  93:8  error  Parsing error: JSX expressions must have one parent element
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\index.tsx
+  191:21  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\chat\[customerId].tsx
+  10:21  warning  'useLocalSearchParams' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\job\[id].tsx
+  3:21  warning  'useLocalSearchParams' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceRecorder.tsx
+  69:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceRecorder.tsx:69:9
+  67 |
+  68 |     useEffect(() => {
+> 69 |         startRecording();
+     |         ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  70 |     }, []);
+  71 |
+  72 |     return (  react-hooks/set-state-in-effect
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\GlassCard.tsx
+  18:5  warning  'glass' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  19:5  warning  'blur' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  20:5  warning  'opacity' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  21:5  warning  'border' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx
+  2:31  warning  'useMemo' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx
+  1:21  warning  'useMemo' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\MapMock.tsx
+   4:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  12:67  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 17 problems (6 errors, 11 warnings)
+

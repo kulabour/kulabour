@@ -1,6 +1,6 @@
-import { View, Text, Image, Platform } from 'react-native';
+import { View, Text } from 'react-native';
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Card from '../ui/Card';
 
 interface Coordinate {
@@ -22,14 +22,13 @@ export default function LiveTrackingMap({
     eta
 }: LiveTrackingMapProps) {
     const mapRef = useRef<MapView>(null);
-    const [routeCoordinates, setRouteCoordinates] = useState<Coordinate[]>([]);
+    // Use useMemo for initial route to avoid setState in effect
+    const routeCoordinates = useMemo(
+        () => [workerLocation, customerLocation],
+        [workerLocation, customerLocation]
+    );
 
     const [isMapReady, setIsMapReady] = useState(false);
-
-    useEffect(() => {
-        // Simulate route calculation (straight line for now)
-        setRouteCoordinates([workerLocation, customerLocation]);
-    }, [workerLocation, customerLocation]);
 
     useEffect(() => {
         if (isMapReady && mapRef.current) {

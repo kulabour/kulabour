@@ -28,7 +28,7 @@ export default function OTP() {
         setIsLoading(true);
 
         try {
-            const response = await apiClient.post('/api/auth/verify-otp', {
+            const response = await apiClient.post<{ accessToken: string }>('/api/auth/verify-otp', {
                 mobile,
                 otp,
                 userType: 'customer',
@@ -43,7 +43,7 @@ export default function OTP() {
             } else {
                 Alert.alert('Verification Failed', response.error || 'Invalid OTP');
             }
-        } catch (error) {
+        } catch {
             Alert.alert('Error', 'Could not verify OTP. Please try again.');
         } finally {
             setIsLoading(false);
@@ -52,7 +52,7 @@ export default function OTP() {
 
     const handleResend = async () => {
         try {
-            const response = await apiClient.post('/api/auth/send-otp', { mobile });
+            const response = await apiClient.post<{ debug?: { otp: string } }>('/api/auth/send-otp', { mobile });
             if (response.success) {
                 setTimer(30);
                 // Show OTP in development
@@ -60,7 +60,7 @@ export default function OTP() {
                     Alert.alert('OTP Sent', `Development OTP: ${response.data.debug.otp}`);
                 }
             }
-        } catch (error) {
+        } catch {
             Alert.alert('Error', 'Could not resend OTP');
         }
     };

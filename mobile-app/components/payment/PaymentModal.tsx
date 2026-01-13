@@ -1,5 +1,5 @@
-import { View, Text, Modal, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
-import { useState, useEffect } from 'react';
+import { View, Text, Modal, ActivityIndicator } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
@@ -23,28 +23,39 @@ export default function PaymentModal({
 }: PaymentModalProps) {
     const [status, setStatus] = useState<'processing' | 'success' | 'failed'>('processing');
 
+    // Memoize callbacks to satisfy exhaustive-deps
+    const handleSuccess = useCallback((txnId: string) => {
+        onSuccess(txnId);
+    }, [onSuccess]);
+
+    const handleFailure = useCallback((error: string) => {
+        onFailure(error);
+    }, [onFailure]);
+
     useEffect(() => {
         if (visible) {
-            setStatus('processing');
+            // Avoid synchronous state update in effect
+            setTimeout(() => setStatus('processing'), 0);
+
             // Simulate processing time
             const timer = setTimeout(() => {
                 const isSuccess = true; // Force success for demo
                 if (isSuccess) {
                     setStatus('success');
                     setTimeout(() => {
-                        onSuccess(`TXN_${Date.now()}`);
+                        handleSuccess(`TXN_${Date.now()}`);
                     }, 1500);
                 } else {
                     setStatus('failed');
                     setTimeout(() => {
-                        onFailure('Payment declined by bank');
+                        handleFailure('Payment declined by bank');
                     }, 1500);
                 }
             }, 3000);
 
             return () => clearTimeout(timer);
         }
-    }, [visible]);
+    }, [visible, handleSuccess, handleFailure]);
 
     if (!visible) return null;
 

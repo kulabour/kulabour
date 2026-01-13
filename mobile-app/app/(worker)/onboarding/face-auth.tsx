@@ -7,7 +7,7 @@ export default function FaceAuthScreen() {
         <SafeAreaView className="flex-1 bg-white p-6">
             <View className="flex-1 items-center justify-center">
                 <Text className="text-2xl font-bold text-gray-900 mb-2 text-center">Face Verification</Text>
-                <Text className="text-gray-500 mb-8 text-center">We need to verify it's really you</Text>
+                <Text className="text-gray-500 mb-8 text-center">We need to verify it&apos;s really you</Text>
 
                 {/* Camera Simulation */}
                 <View className="w-64 h-64 bg-gray-900 rounded-full overflow-hidden border-4 border-primary mb-8 relative">

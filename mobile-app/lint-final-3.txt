@@ -1,0 +1,26 @@
+env: load .env
+env: export EXPO_PUBLIC_API_URL
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\booking.tsx
+  191:10  error  Parsing error: Expected corresponding JSX closing tag for 'View'
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\chat\[customerId].tsx
+  10:21  warning  'useLocalSearchParams' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\job\[id].tsx
+  3:21  warning  'useLocalSearchParams' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\GlassCard.tsx
+  18:5  warning  'glass' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  19:5  warning  'blur' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  20:5  warning  'opacity' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  21:5  warning  'border' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx
+  2:20  warning  'useRef' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx
+  1:21  warning  'useMemo' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 9 problems (1 error, 8 warnings)
+

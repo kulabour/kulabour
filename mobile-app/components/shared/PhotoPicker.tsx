@@ -90,7 +90,7 @@ export default function PhotoPicker({ onImageSelected, label = 'Upload Photo', i
         <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
             <Card variant="glass" className="items-center justify-center h-48 border-dashed border-2 border-white/20">
                 {image ? (
-                    <Image source={image} className="w-full h-full rounded-xl" contentFit="cover" />
+                    <Image source={image} className="w-full h-full rounded-xl" contentFit="cover" alt="Selected photo" />
                 ) : (
                     <View className="items-center">
                         <View className="w-12 h-12 rounded-full bg-white/10 items-center justify-center mb-2">

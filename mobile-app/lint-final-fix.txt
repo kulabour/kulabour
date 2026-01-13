@@ -1,0 +1,13 @@
+env: load .env
+env: export EXPO_PUBLIC_API_URL
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\booking.tsx
+  193:10  error  Parsing error: Expected corresponding JSX closing tag for 'View'
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx
+  1:10  warning  'View' is defined but never used    @typescript-eslint/no-unused-vars
+  1:26  warning  'Easing' is defined but never used  @typescript-eslint/no-unused-vars
+  2:31  warning  'useRef' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 4 problems (1 error, 3 warnings)
+

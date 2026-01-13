@@ -1,0 +1,214 @@
+env: load .env
+env: export EXPO_PUBLIC_API_URL
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\auth\welcome.tsx
+  1:22  warning  'Image' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\booking.tsx
+  129:20  error  Parsing error: ')' expected
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\index.tsx
+   40:50  error    Unexpected any. Specify a different type                                                                     @typescript-eslint/no-explicit-any
+  155:53  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\payment.tsx
+  20:23  warning  'setPromoCode' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\earnings.tsx
+  4:8  warning  'Card' is defined but never used        @typescript-eslint/no-unused-vars
+  5:8  warning  'FilterChip' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\index.tsx
+  191:21  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\jobs.tsx
+   8:10  warning  'BlurView' is defined but never used              @typescript-eslint/no-unused-vars
+  40:15  warning  'isCompleted' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  41:15  warning  'isCancelled' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\chat\[customerId].tsx
+  46:11  warning  'params' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\job\[id].tsx
+  28:11  warning  'params' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\onboarding\index.tsx
+  1:40  warning  'ScrollView' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\payment\PaymentModal.tsx
+  38:19  warning  'resetTimer' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceRecorder.tsx
+  27:9  error  Error: Cannot access variable before it is declared
+
+`startRecording` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceRecorder.tsx:27:9
+  25 |
+  26 |     useEffect(() => {
+> 27 |         startRecording();
+     |         ^^^^^^^^^^^^^^ `startRecording` accessed before it is declared
+  28 |         return () => {
+  29 |             // Cleanup handled by component unmount mostly, but stopRecording handles state
+  30 |         };
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceRecorder.tsx:33:5
+  31 |     }, []);
+  32 |
+> 33 |     async function startRecording() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 34 |         try {
+     | ^^^^^^^^^^^^^
+> 35 |             const permission = await Audio.requestPermissionsAsync();
+     ΓÇª
+     | ^^^^^^^^^^^^^
+> 52 |         }
+     | ^^^^^^^^^^^^^
+> 53 |     }
+     | ^^^^^^ `startRecording` is declared here
+  54 |
+  55 |     async function stopRecording() {
+  56 |         if (!recording) return;  react-hooks/immutability
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\GlassCard.tsx
+  18:20  warning  '_glassmorphism' is defined but never used  @typescript-eslint/no-unused-vars
+  19:13  warning  '_shadow' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx
+   2:31  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  37:28  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx:37:28
+  35 |     const [isFocused, setIsFocused] = useState(false);
+  36 |     // Use useRef for stable animated value, initializing based on value presence
+> 37 |     const labelAnimation = useRef(new Animated.Value(value ? 1 : 0)).current;
+     |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  38 |
+  39 |     useEffect(() => {
+  40 |         Animated.timing(labelAnimation, {                           react-hooks/refs
+  37:28  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx:37:28
+  35 |     const [isFocused, setIsFocused] = useState(false);
+  36 |     // Use useRef for stable animated value, initializing based on value presence
+> 37 |     const labelAnimation = useRef(new Animated.Value(value ? 1 : 0)).current;
+     |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  38 |
+  39 |     useEffect(() => {
+  40 |         Animated.timing(labelAnimation, {                           react-hooks/refs
+  48:14  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx:48:14
+  46 |
+  47 |     const labelStyle = {
+> 48 |         top: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }),
+     |              ^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  49 |         fontSize: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [16, 12] }),
+  50 |     };
+  51 |                                                                                                                        react-hooks/refs
+  48:14  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx:48:14
+  46 |
+  47 |     const labelStyle = {
+> 48 |         top: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }),
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  49 |         fontSize: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [16, 12] }),
+  50 |     };
+  51 |                                                                                                            react-hooks/refs
+  49:19  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx:49:19
+  47 |     const labelStyle = {
+  48 |         top: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }),
+> 49 |         fontSize: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [16, 12] }),
+     |                   ^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  50 |     };
+  51 |
+  52 |     const borderColor = error ? 'border-error' : isFocused ? 'border-neon-blue' : 'border-white/10';              react-hooks/refs
+  49:19  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx:49:19
+  47 |     const labelStyle = {
+  48 |         top: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }),
+> 49 |         fontSize: labelAnimation.interpolate({ inputRange: [0, 1], outputRange: [16, 12] }),
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  50 |     };
+  51 |
+  52 |     const borderColor = error ? 'border-error' : isFocused ? 'border-neon-blue' : 'border-white/10';  react-hooks/refs
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx
+   1:21  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  10:29  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx:10:29
+   8 |
+   9 | export default function Loader({ size = 'md', color = 'blue' }: LoaderProps) {
+> 10 |     const rotateAnimation = useRef(new Animated.Value(0)).current;
+     |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  11 |
+  12 |     useEffect(() => {
+  13 |         Animated.loop(  react-hooks/refs
+  10:29  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx:10:29
+   8 |
+   9 | export default function Loader({ size = 'md', color = 'blue' }: LoaderProps) {
+> 10 |     const rotateAnimation = useRef(new Animated.Value(0)).current;
+     |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  11 |
+  12 |     useEffect(() => {
+  13 |         Animated.loop(  react-hooks/refs
+  22:20  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx:22:20
+  20 |     }, [rotateAnimation]);
+  21 |
+> 22 |     const rotate = rotateAnimation.interpolate({
+     |                    ^^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  23 |         inputRange: [0, 1],
+  24 |         outputRange: ['0deg', '360deg'],
+  25 |     });                                                react-hooks/refs
+  22:20  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx:22:20
+  20 |     }, [rotateAnimation]);
+  21 |
+> 22 |     const rotate = rotateAnimation.interpolate({
+     |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  23 |         inputRange: [0, 1],
+  24 |         outputRange: ['0deg', '360deg'],
+  25 |     });                                    react-hooks/refs
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\MapMock.tsx
+   4:35  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  12:24  warning  '_props' is defined but never used        @typescript-eslint/no-unused-vars
+  13:25  warning  '_props' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\OTPInput.tsx
+   1:27  warning  'NativeSyntheticEvent' is defined but never used        @typescript-eslint/no-unused-vars
+   1:49  warning  'TextInputKeyPressEventData' is defined but never used  @typescript-eslint/no-unused-vars
+  53:32  error    Unexpected any. Specify a different type                @typescript-eslint/no-explicit-any
+
+Γ£û 36 problems (16 errors, 20 warnings)
+

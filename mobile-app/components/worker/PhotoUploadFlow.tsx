@@ -9,7 +9,7 @@ interface PhotoUploadFlowProps {
     jobId: string;
 }
 
-export default function PhotoUploadFlow({ onComplete, jobId }: PhotoUploadFlowProps) {
+export default function PhotoUploadFlow({ onComplete }: PhotoUploadFlowProps) {
     const [beforePhoto, setBeforePhoto] = useState<string | null>(null);
     const [afterPhoto, setAfterPhoto] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);

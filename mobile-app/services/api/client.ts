@@ -191,7 +191,7 @@ class APIClient {
      */
     async post<T>(
         endpoint: string,
-        body?: any,
+        body?: unknown,
         config?: RequestConfig
     ): Promise<APIResponse<T>> {
         return this.request<T>(endpoint, {
@@ -206,7 +206,7 @@ class APIClient {
      */
     async put<T>(
         endpoint: string,
-        body?: any,
+        body?: unknown,
         config?: RequestConfig
     ): Promise<APIResponse<T>> {
         return this.request<T>(endpoint, {
@@ -229,7 +229,7 @@ class APIClient {
     async upload<T>(
         endpoint: string,
         file: File | Blob,
-        additionalData?: Record<string, any>
+        additionalData?: Record<string, string | number | boolean>
     ): Promise<APIResponse<T>> {
         const formData = new FormData();
         formData.append('file', file);

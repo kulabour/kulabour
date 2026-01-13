@@ -40,6 +40,7 @@ export default function Avatar({ name, imageUrl, size = 'md', online }: AvatarPr
                     className={`${sizes[size]} rounded-full`}
                     contentFit="cover"
                     transition={200}
+                    alt={name}
                 />
             ) : (
                 <View className={`${sizes[size]} rounded-full bg-neon-blue/20 border-2 border-neon-blue items-center justify-center`}>

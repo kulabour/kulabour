@@ -1,4 +1,4 @@
-import { View, TextInput, TouchableOpacity, Text, Keyboard } from 'react-native';
+import { View, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 

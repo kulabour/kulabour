@@ -8,7 +8,7 @@ interface PaymentResult {
 }
 
 export const mockPaymentService = {
-    initiatePayment: async (amount: number, method: string): Promise<PaymentResult> => {
+    initiatePayment: async (_amount: number, _method: string): Promise<PaymentResult> => {
         return new Promise((resolve) => {
             // Simulate network delay
             setTimeout(() => {

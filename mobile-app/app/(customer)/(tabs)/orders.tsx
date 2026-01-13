@@ -86,7 +86,7 @@ export default function Orders() {
     const renderItem = ({ item }: { item: typeof ordersData[0] }) => (
         <View className="px-6 mb-4">
             <TouchableOpacity activeOpacity={0.8}>
-                <Card variant="elevated" shadow="md">
+                <Card variant="default" shadow="md">
                     {/* Header */}
                     <View className="flex-row justify-between items-start mb-4">
                         <View className="flex-1">
@@ -94,7 +94,7 @@ export default function Orders() {
                                 {item.service}
                             </Text>
                             <StatusBadge
-                                status={item.status as any}
+                                status={item.status as 'active' | 'completed' | 'cancelled'}
                                 size="sm"
                             />
                         </View>
@@ -174,6 +174,7 @@ export default function Orders() {
             <FlashList
                 data={filteredOrders}
                 renderItem={renderItem}
+                // @ts-expect-error -- FlashList estimatedItemSize match issue
                 estimatedItemSize={300}
                 ListHeaderComponent={renderHeader}
                 ListEmptyComponent={renderEmpty}

@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, TouchableOpacity, Animated, Modal } from 'react-native';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import ChatBubble from './ChatBubble';
 import ChatInput from './ChatInput';
 import VoiceRecorder from './VoiceRecorder';
 import VoiceMessage from './VoiceMessage';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
-import { SUPPORTED_LANGUAGES, FAQ_TRANSLATIONS, LanguageCode, Language } from '../../utils/languages';
+import { SUPPORTED_LANGUAGES, FAQ_TRANSLATIONS, LanguageCode } from '../../utils/languages';
 import { getAIResponse as getOpenAIResponse, isAIEnabled } from '../../services/ai/openai';
 
 interface Message {
@@ -40,25 +40,28 @@ export default function AIChatbot({ userType = 'customer' }: AIChatbotProps) {
     const [isTyping, setIsTyping] = useState(false);
     const [isRecordingMode, setIsRecordingMode] = useState(false);
     const scrollViewRef = useRef<ScrollView>(null);
-    const typingDots = useRef(new Animated.Value(0)).current;
+
+    // Use useMemo for Animated.Value to avoid "ref access during render" lint error
+
+    const typingAnimation = useMemo(() => new Animated.Value(0), []);
 
     useEffect(() => {
         // Typing animation
         Animated.loop(
             Animated.sequence([
-                Animated.timing(typingDots, {
+                Animated.timing(typingAnimation, {
                     toValue: 1,
                     duration: 500,
                     useNativeDriver: true,
                 }),
-                Animated.timing(typingDots, {
+                Animated.timing(typingAnimation, {
                     toValue: 0,
                     duration: 500,
                     useNativeDriver: true,
                 }),
             ])
         ).start();
-    }, []);
+    }, [typingAnimation]);
 
     const handleLanguageChange = (langCode: LanguageCode) => {
         setSelectedLanguage(langCode);
@@ -336,10 +339,10 @@ export default function AIChatbot({ userType = 'customer' }: AIChatbotProps) {
                                 <View className="flex-row gap-1">
                                     <Animated.View
                                         style={{
-                                            opacity: typingDots,
+                                            opacity: typingAnimation,
                                             transform: [
                                                 {
-                                                    translateY: typingDots.interpolate({
+                                                    translateY: typingAnimation.interpolate({
                                                         inputRange: [0, 1],
                                                         outputRange: [0, -5],
                                                     }),
@@ -350,10 +353,10 @@ export default function AIChatbot({ userType = 'customer' }: AIChatbotProps) {
                                     />
                                     <Animated.View
                                         style={{
-                                            opacity: typingDots,
+                                            opacity: typingAnimation,
                                             transform: [
                                                 {
-                                                    translateY: typingDots.interpolate({
+                                                    translateY: typingAnimation.interpolate({
                                                         inputRange: [0, 1],
                                                         outputRange: [0, -5],
                                                     }),
@@ -364,10 +367,10 @@ export default function AIChatbot({ userType = 'customer' }: AIChatbotProps) {
                                     />
                                     <Animated.View
                                         style={{
-                                            opacity: typingDots,
+                                            opacity: typingAnimation,
                                             transform: [
                                                 {
-                                                    translateY: typingDots.interpolate({
+                                                    translateY: typingAnimation.interpolate({
                                                         inputRange: [0, 1],
                                                         outputRange: [0, -5],
                                                     }),

@@ -87,7 +87,7 @@ class SocketClient {
         }
     }
 
-    onBookingStatusChanged(callback: (data: any) => void) {
+    onBookingStatusChanged(callback: (data: unknown) => void) {
         if (this.socket) {
             this.socket.on('booking:status_changed', callback);
             return () => this.socket?.off('booking:status_changed', callback);
@@ -95,7 +95,7 @@ class SocketClient {
         return () => { };
     }
 
-    onWorkerLocationUpdate(callback: (location: any) => void) {
+    onWorkerLocationUpdate(callback: (location: unknown) => void) {
         if (this.socket) {
             this.socket.on('worker:location_update', callback);
             return () => this.socket?.off('worker:location_update', callback);
@@ -103,7 +103,7 @@ class SocketClient {
         return () => { };
     }
 
-    onWorkerAssigned(callback: (worker: any) => void) {
+    onWorkerAssigned(callback: (worker: unknown) => void) {
         if (this.socket) {
             this.socket.on('booking:assigned', callback);
             return () => this.socket?.off('booking:assigned', callback);
@@ -116,4 +116,5 @@ class SocketClient {
     }
 }
 
-export default new SocketClient();
+const socketClient = new SocketClient();
+export default socketClient;

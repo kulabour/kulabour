@@ -1,0 +1,165 @@
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\(tabs)\orders.tsx[24m[0m
+[0m   [2m97:56[22m  [31merror[39m  Unexpected any. Specify a different type                                                                             [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m177:17[22m  [31merror[39m  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  [2m@typescript-eslint/ban-ts-comment[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\auth\login.tsx[24m[0m
+[0m  [2m1:40[22m  [33mwarning[39m  'Image' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\auth\otp.tsx[24m[0m
+[0m  [2m31:51[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m46:18[22m  [33mwarning[39m  'error' is defined but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m55:51[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m63:18[22m  [33mwarning[39m  'error' is defined but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\auth\welcome.tsx[24m[0m
+[0m   [2m1:22[22m  [33mwarning[39m  'Image' is defined but never used                                [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m45:22[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\booking.tsx[24m[0m
+[0m   [2m62:51[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m69:18[22m  [33mwarning[39m  'error' is defined but never used                                                                            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m104:29[22m  [33mwarning[39m  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  [2mjsx-a11y/alt-text[22m[0m
+[0m  [2m105:41[22m  [31merror[39m    A `require()` style import is forbidden                                                                      [2m@typescript-eslint/no-require-imports[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\confirmation.tsx[24m[0m
+[0m  [2m29:8[22m  [33mwarning[39m  React Hook useEffect has missing dependencies: 'fadeAnim' and 'scaleAnim'. Either include them or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\index.tsx[24m[0m
+[0m    [2m1:81[22m  [33mwarning[39m  'Platform' is defined but never used                                                                         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m    [2m8:10[22m  [33mwarning[39m  'BlurView' is defined but never used                                                                         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m15:17[22m  [31merror[39m    A `require()` style import is forbidden                                                                      [2m@typescript-eslint/no-require-imports[22m[0m
+[0m   [2m16:17[22m  [31merror[39m    A `require()` style import is forbidden                                                                      [2m@typescript-eslint/no-require-imports[22m[0m
+[0m   [2m17:19[22m  [31merror[39m    A `require()` style import is forbidden                                                                      [2m@typescript-eslint/no-require-imports[22m[0m
+[0m   [2m18:17[22m  [31merror[39m    A `require()` style import is forbidden                                                                      [2m@typescript-eslint/no-require-imports[22m[0m
+[0m   [2m24:46[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m33:50[22m  [31merror[39m    Unexpected any. Specify a different type                                                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m148:53[22m  [33mwarning[39m  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  [2mjsx-a11y/alt-text[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\payment.tsx[24m[0m
+[0m  [2m20:23[22m  [33mwarning[39m  'setPromoCode' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(customer)\track.tsx[24m[0m
+[0m   [2m1:22[22m  [33mwarning[39m  'ScrollView' is defined but never used   [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m1:52[22m  [33mwarning[39m  'StyleSheet' is defined but never used   [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m11:7[22m   [31merror[39m    A `require()` style import is forbidden  [2m@typescript-eslint/no-require-imports[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\earnings.tsx[24m[0m
+[0m   [2m4:8[22m   [33mwarning[39m  'Card' is defined but never used          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m5:8[22m   [33mwarning[39m  'FilterChip' is defined but never used    [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m75:67[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\index.tsx[24m[0m
+[0m    [2m7:8[22m    [33mwarning[39m  'StatusBadge' is defined but never used                                                                              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m    [2m9:8[22m    [33mwarning[39m  'Card' is defined but never used                                                                                     [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m85:106[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                      [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m193:21[22m   [31merror[39m    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  [2m@typescript-eslint/ban-ts-comment[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\(tabs)\jobs.tsx[24m[0m
+[0m   [2m8:10[22m  [33mwarning[39m  'BlurView' is defined but never used              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m40:15[22m  [33mwarning[39m  'isCompleted' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m41:15[22m  [33mwarning[39m  'isCancelled' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\chat\[customerId].tsx[24m[0m
+[0m  [2m46:11[22m  [33mwarning[39m  'params' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\job\[id].tsx[24m[0m
+[0m   [2m1:52[22m  [33mwarning[39m  'Image' is defined but never used            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m4:8[22m   [33mwarning[39m  'Card' is defined but never used             [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m29:11[22m  [33mwarning[39m  'params' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\onboarding\face-auth.tsx[24m[0m
+[0m  [2m10:86[22m  [31merror[39m  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\onboarding\index.tsx[24m[0m
+[0m  [2m1:40[22m  [33mwarning[39m  'ScrollView' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\app\(worker)\onboarding\skills.tsx[24m[0m
+[0m  [2m1:40[22m  [33mwarning[39m  'ScrollView' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\payment\PaymentModal.tsx[24m[0m
+[0m  [2m37:13[22m  [31merror[39m  Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\payment\PaymentModal.tsx:37:13[0m
+[0m  35 |     useEffect(() => {[0m
+[0m  36 |         if (visible) {[0m
+[0m> 37 |             setStatus('processing');[0m
+[0m     |             ^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  38 |             // Simulate processing time[0m
+[0m  39 |             const timer = setTimeout(() => {[0m
+[0m  40 |                 const isSuccess = true; // Force success for demo  [2mreact-hooks/set-state-in-effect[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\AIChatbot.tsx[24m[0m
+[0m  [2m9:63[22m  [33mwarning[39m  'Language' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\ChatBubble.tsx[24m[0m
+[0m  [2m14:5[22m  [33mwarning[39m  'avatar' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\ChatInput.tsx[24m[0m
+[0m  [2m1:45[22m  [33mwarning[39m  'Text' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\FloatingSupportButton.tsx[24m[0m
+[0m  [2m13:49[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\PhotoPicker.tsx[24m[0m
+[0m  [2m93:21[22m  [33mwarning[39m  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  [2mjsx-a11y/alt-text[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceMessage.tsx[24m[0m
+[0m  [2m44:45[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\shared\VoiceRecorder.tsx[24m[0m
+[0m  [2m26:20[22m  [33mwarning[39m  'startRecording' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Avatar.tsx[24m[0m
+[0m  [2m38:17[22m  [33mwarning[39m  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  [2mjsx-a11y/alt-text[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\GlassCard.tsx[24m[0m
+[0m  [2m18:5[22m  [33mwarning[39m  'glassmorphism' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m19:5[22m  [33mwarning[39m  'shadow' is defined but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Input.tsx[24m[0m
+[0m  [2m36:77[22m  [33mwarning[39m  React Hook useMemo has a missing dependency: 'value'. Either include it or remove the dependency array             [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m44:8[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'labelAnimation'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\Loader.tsx[24m[0m
+[0m  [2m20:8[22m  [33mwarning[39m  React Hook useEffect has a missing dependency: 'rotateAnimation'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\MapMock.tsx[24m[0m
+[0m   [2m4:25[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m12:24[22m  [33mwarning[39m  'props' is defined but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m12:31[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m13:25[22m  [33mwarning[39m  'props' is defined but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m13:32[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\ui\OTPInput.tsx[24m[0m
+[0m  [2m53:32[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\worker\JobCard.tsx[24m[0m
+[0m  [2m1:40[22m  [33mwarning[39m  'Image' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\components\worker\JobRequestModal.tsx[24m[0m
+[0m  [2m58:8[22m  [33mwarning[39m  React Hook useEffect has missing dependencies: 'autoRejectTime', 'onReject', 'slideAnim', and 'timerAnim'. Either include them or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\services\api\client.ts[24m[0m
+[0m  [2m194:16[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m209:16[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m232:41[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\services\payments\mockPayment.ts[24m[0m
+[0m  [2m11:29[22m  [33mwarning[39m  'amount' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m11:45[22m  [33mwarning[39m  'method' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\JADAV ANIL\OneDrive\Desktop\kuli_labour_app\kulabour\mobile-app\services\websocket\socketClient.ts[24m[0m
+[0m   [2m90:45[22m  [31merror[39m    Unexpected any. Specify a different type                          [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m98:49[22m  [31merror[39m    Unexpected any. Specify a different type                          [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m106:41[22m  [31merror[39m    Unexpected any. Specify a different type                          [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m119:1[22m   [33mwarning[39m  Assign instance to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[31m[1m✖ 75 problems (31 errors, 44 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m
