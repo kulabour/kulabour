@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-=======
 import { KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';

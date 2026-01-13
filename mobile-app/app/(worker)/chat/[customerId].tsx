@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-<<<<<<< HEAD
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import ChatBubble from '../../../components/shared/ChatBubble';
-import ChatInput from '../../../components/shared/ChatInput';
-=======
-import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 // Design System
 import { Box } from '../../../components/primitives/Box';
 import { Text } from '../../../components/primitives/Text';
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
 import Avatar from '../../../components/ui/Avatar';
 import { ChatBubble } from '../../../components/design-system/ChatBubble';
 import { ChatInput } from '../../../components/design-system/ChatInput';
@@ -49,7 +42,7 @@ const initialMessages = [
 
 export default function WorkerChat() {
     const router = useRouter();
-    const router = useRouter();
+
     const [messages, setMessages] = useState(initialMessages);
 
     const handleSend = (message: string) => {

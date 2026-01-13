@@ -7,7 +7,7 @@ import Card from '../../../components/ui/GlassCard';
 import StatusBadge from '../../../components/ui/StatusBadge';
 import { WorkerAvatar3D } from '../../../components/WorkerAvatar3D'; // Updated import
 import FilterChip from '../../../components/ui/FilterChip';
-import Pressable3D from '../../../components/3d/Pressable3D';
+
 import Layout3D from '../../../components/3d/Layout3D'; // New import
 import '../../../global.css';
 
@@ -182,29 +182,19 @@ export default function Orders() {
     );
 
     return (
-<<<<<<< HEAD
-        <SafeAreaView className="flex-1 bg-dark-navy">
-            <FlashList
-                data={filteredOrders}
-                renderItem={renderItem}
-                // @ts-expect-error -- FlashList estimatedItemSize match issue
-                estimatedItemSize={300}
-                ListHeaderComponent={renderHeader}
-                ListEmptyComponent={renderEmpty}
-                contentContainerStyle={{ paddingBottom: 24 }}
-            />
-=======
         <SafeAreaView className="flex-1 bg-black/30">
             <Layout3D>
                 <FlashList
                     data={filteredOrders}
                     renderItem={renderItem}
+                    // @ts-expect-error -- FlashList estimatedItemSize match issue
+                    estimatedItemSize={300}
                     ListHeaderComponent={renderHeader}
                     ListEmptyComponent={renderEmpty}
                     contentContainerStyle={{ paddingBottom: 24 }}
                 />
             </Layout3D>
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
         </SafeAreaView>
+
     );
 }

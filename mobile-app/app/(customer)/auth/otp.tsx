@@ -28,11 +28,7 @@ export default function OTP() {
         setIsLoading(true);
 
         try {
-<<<<<<< HEAD
-            const response = await apiClient.post<{ accessToken: string }>('/api/auth/verify-otp', {
-=======
             const response = await apiClient.post<OtpVerifyResponse>('/api/auth/verify-otp', {
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
                 mobile,
                 otp,
                 userType: 'customer',
@@ -56,11 +52,7 @@ export default function OTP() {
 
     const handleResend = async () => {
         try {
-<<<<<<< HEAD
-            const response = await apiClient.post<{ debug?: { otp: string } }>('/api/auth/send-otp', { mobile });
-=======
             const response = await apiClient.post<OtpVerifyResponse>('/api/auth/send-otp', { mobile });
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
             if (response.success) {
                 setTimer(30);
                 // Show OTP in development

@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-/* eslint-disable @typescript-eslint/no-require-imports */
-import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useState, useEffect } from 'react';
-=======
-import { View, Platform, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
 // Design System
@@ -16,7 +9,6 @@ import { Box } from '../../components/primitives/Box';
 import { Text } from '../../components/primitives/Text';
 import { Card } from '../../components/design-system/Card';
 import Avatar from '../../components/ui/Avatar';
->>>>>>> a1da97853617b063e925290de903e16ff3c3c152
 import '../../global.css';
 
 // Services
@@ -28,20 +20,20 @@ import io, { Socket } from 'socket.io-client';
 // Only import map on native platforms
 const LiveTrackingMap = Platform.OS === 'web'
     ? null
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     : require('../../components/maps/LiveTrackingMap').default;
 
 export default function TrackScreen() {
     const router = useRouter();
-    const [eta, setEta] = useState(15);
-    const [status, setStatus] = useState('Worker on the way');
+    const [eta] = useState(15);
 
     // Tracking Socket
-    const [socket, setSocket] = useState<Socket | null>(null);
+    const socketRef = useRef<Socket | null>(null);
 
     // Mock Customer Location (Indiranagar, Bangalore)
     const customerLocation = { latitude: 12.9716, longitude: 77.5946 };
 
-    const [workerLocation, setWorkerLocation] = useState<any>({
+    const [workerLocation, setWorkerLocation] = useState<{ latitude: number; longitude: number; heading: number }>({
         latitude: 12.9650, // Slightly south
         longitude: 77.5900,
         heading: 45
@@ -59,7 +51,7 @@ export default function TrackScreen() {
             // newSocket.emit('join_booking', 'booking_id_123');
         });
 
-        newSocket.on('location_update', (payload: any) => {
+        newSocket.on('location_update', (payload: { latitude: number; longitude: number; heading?: number }) => {
             // Determine payload structure match
             if (payload.latitude && payload.longitude) {
                 setWorkerLocation({
@@ -70,7 +62,7 @@ export default function TrackScreen() {
             }
         });
 
-        setSocket(newSocket);
+        socketRef.current = newSocket;
 
         return () => {
             newSocket.disconnect();
