@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Kuli",
+    "slug": "kuli-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "kuli",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kuli.app"
+    },
+    "android": {
+      "package": "com.kuli.app",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA",
+        "VIBRATE"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

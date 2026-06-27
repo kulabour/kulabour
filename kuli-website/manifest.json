@@ -1,0 +1,75 @@
+{
+  "name": "Kuli — कुली",
+  "short_name": "Kuli",
+  "description": "Hire verified local workers instantly. Painters, plumbers, electricians & more near you.",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#E65100",
+  "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "scope": "/",
+  "categories": ["lifestyle", "utilities", "business"],
+  "screenshots": [
+    {
+      "src": "/assets/screenshot-home.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Kuli Home Screen — Browse Workers"
+    },
+    {
+      "src": "/assets/screenshot-booking.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Kuli Booking — Confirm & Track"
+    }
+  ],
+  "icons": [
+    { "src": "/assets/icon-72x72.png",   "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-96x96.png",   "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-128x128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-144x144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-152x152.png", "sizes": "152x152", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/assets/icon-384x384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book a Painter",
+      "short_name": "Painter",
+      "description": "Find and book a verified painter near you",
+      "url": "/services/painting?source=shortcut",
+      "icons": [{ "src": "/assets/shortcut-paint.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Book a Plumber",
+      "short_name": "Plumber",
+      "description": "Find and book a verified plumber near you",
+      "url": "/services/plumbing?source=shortcut",
+      "icons": [{ "src": "/assets/shortcut-plumb.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Join as Worker",
+      "short_name": "Join",
+      "description": "Register as a Kuli worker and start earning",
+      "url": "/workers?source=shortcut",
+      "icons": [{ "src": "/assets/shortcut-worker.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.kuli.app",
+      "id": "com.kuli.app"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/kuli/id0000000000"
+    }
+  ],
+  "prefer_related_applications": true
+}

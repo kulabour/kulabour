@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum BookingStatus {
+  DRAFT
+  PENDING
+  REASSIGNING
+  ACCEPTED
+  EN_ROUTE
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+  PAYMENT_PROCESSING
+  PAID
+  RATED
+  DISPUTED
+  CLOSED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum PaymentMethod {
+  UPI
+  CARD
+  CASH
+}
+
+model User {
+  id           String         @id @default(uuid())
+  phoneNumber  String         @unique
+  name         String?
+  role         Role           @default(CUSTOMER)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  
+  // Relations
+  workerProfile WorkerProfile?
+  bookings      Booking[]      @relation("CustomerBookings")
+  reviews       Review[]       @relation("CustomerReviews")
+}
+
+model WorkerProfile {
+  id              String         @id @default(uuid())
+  userId          String         @unique
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skills          String[]       // Array of skills/services offered
+  ratePerHour     Float
+  experienceYears Int            @default(0)
+  isVerified      Boolean        @default(false)
+  isOnline        Boolean        @default(false)
+  currentLat      Float?
+  currentLng      Float?
+  rating          Float          @default(0.0)
+  reviewCount     Int            @default(0)
+  responseRate    Float          @default(100.0)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  // Relations
+  bookings        Booking[]      @relation("WorkerBookings")
+  reviews         Review[]       @relation("WorkerReviews")
+}
+
+model ServiceCategory {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  nameHi    String    // Vernacular name in Hindi
+  iconName  String    // Vector icon name
+  basePrice Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relations
+  bookings  Booking[]
+}
+
+model Booking {
+  id             String          @id @default(uuid())
+  customerId     String
+  customer       User            @relation("CustomerBookings", fields: [customerId], references: [id])
+  workerId       String?
+  worker         WorkerProfile?  @relation("WorkerBookings", fields: [workerId], references: [id])
+  categoryId     String
+  category       ServiceCategory @relation(fields: [categoryId], references: [id])
+  status         BookingStatus   @default(PENDING)
+  description    String?
+  address        String
+  latitude       Float
+  longitude      Float
+  estimatedHours Float?
+  totalAmount    Float
+  scheduledAt    DateTime?       @default(now())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  // Relations
+  review         Review?         @relation("BookingReview")
+  payments       Payment[]
+}
+
+model Review {
+  id         String        @id @default(uuid())
+  bookingId  String        @unique
+  booking    Booking       @relation("BookingReview", fields: [bookingId], references: [id])
+  customerId String
+  customer   User          @relation("CustomerReviews", fields: [customerId], references: [id])
+  workerId   String
+  worker     WorkerProfile @relation("WorkerReviews", fields: [workerId], references: [id])
+  stars      Int           // 1-5 stars
+  comment    String?
+  createdAt  DateTime      @default(now())
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  bookingId     String
+  booking       Booking       @relation(fields: [bookingId], references: [id])
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  method        PaymentMethod
+  transactionId String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
