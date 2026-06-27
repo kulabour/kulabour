@@ -1,30 +1,37 @@
-# Dependencies
+# ─── Dependencies ─────────────────────────────────────────────────────────────
 node_modules/
 .pnp
 .pnp.js
+package-lock.json
 
-# Build outputs
+# ─── Build outputs ────────────────────────────────────────────────────────────
 dist/
 build/
 .next/
 out/
+*.tsbuildinfo
 
-# Environment files
+# ─── Environment / Secrets ───────────────────────────────────────────────────
 .env
-.env.local
-.env.production
+.env.*
+!.env.example
 
-# IDE
+# ─── IDE / Editor ─────────────────────────────────────────────────────────────
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 
-# OS
+# ─── OS Files ─────────────────────────────────────────────────────────────────
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Expo
+# ─── Expo / React Native ─────────────────────────────────────────────────────
 .expo/
 *.jks
 *.p8
@@ -33,13 +40,36 @@ Thumbs.db
 *.mobileprovision
 *.orig.*
 
-# Logs
+# ─── Android ──────────────────────────────────────────────────────────────────
+# Debug keystore (auto-generated, should NOT be in repo)
+**/debug.keystore
+
+# JVM crash logs
+hs_err_pid*.log
+replay_pid*.log
+
+# Gradle caches
+.gradle/
+**/gradle/wrapper/gradle-wrapper.jar
+local.properties
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Testing
+# ─── Testing ──────────────────────────────────────────────────────────────────
 coverage/
+.nyc_output/
 
-# Prisma
+# ─── Prisma ───────────────────────────────────────────────────────────────────
 kuli-backend/prisma/*.db
+
+# ─── Misc ─────────────────────────────────────────────────────────────────────
+*.tgz
+*.tar.gz
+*.zip
+.cache/
+tmp/
+temp/
