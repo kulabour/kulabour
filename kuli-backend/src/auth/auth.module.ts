@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
+import { DeviceTrustService } from './device-trust.service';
 import { RedisModule } from '../redis/redis.module';
 
 @Module({
@@ -21,8 +22,8 @@ import { RedisModule } from '../redis/redis.module';
       }),
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, DeviceTrustService],
   controllers: [AuthController],
-  exports: [AuthService, JwtModule, PassportModule],
+  exports: [AuthService, DeviceTrustService, JwtModule, PassportModule],
 })
 export class AuthModule {}

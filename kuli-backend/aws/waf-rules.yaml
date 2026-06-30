@@ -1,0 +1,136 @@
+# ─── AWS WAF Configuration for Kuli ─────────────────────────────────────────
+# Deploy via AWS CLI or CloudFormation
+# This blocks OTP abuse, bot attacks, and enforces India-only access
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Kuli App — AWS WAF Rules for API Protection'
+
+Resources:
+
+  # ─── IP Rate Limiting (Global) ──────────────────────────────────────────────
+  KuliWafIPSet:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: kuli-api-protection
+      Scope: REGIONAL
+      DefaultAction:
+        Allow: {}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: KuliWAFMetrics
+
+      Rules:
+        # Rule 1: Rate limit ALL requests — 2000 per 5 minutes per IP
+        - Name: rate-limit-global
+          Priority: 1
+          Action:
+            Block: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: RateLimitGlobal
+          Statement:
+            RateBasedStatement:
+              Limit: 2000
+              AggregateKeyType: IP
+
+        # Rule 2: Rate limit OTP endpoint — 10 per 5 minutes per IP
+        - Name: rate-limit-otp
+          Priority: 2
+          Action:
+            Block:
+              CustomResponse:
+                ResponseCode: 429
+                CustomResponseBodyKey: too-many-otp
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: RateLimitOTP
+          Statement:
+            RateBasedStatement:
+              Limit: 10
+              AggregateKeyType: IP
+              ScopeDownStatement:
+                ByteMatchStatement:
+                  SearchString: '/api/v1/auth/send-otp'
+                  FieldToMatch:
+                    UriPath: {}
+                  TextTransformations:
+                    - Priority: 0
+                      Type: LOWERCASE
+                  PositionalConstraint: CONTAINS
+
+        # Rule 3: Block requests NOT from India (geo-restriction)
+        - Name: geo-restrict-india
+          Priority: 3
+          Action:
+            Block:
+              CustomResponse:
+                ResponseCode: 403
+                CustomResponseBodyKey: geo-blocked
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: GeoRestrict
+          Statement:
+            NotStatement:
+              Statement:
+                GeoMatchStatement:
+                  CountryCodes:
+                    - IN  # India only
+
+        # Rule 4: AWS Managed Rule — SQL injection protection
+        - Name: aws-sql-injection
+          Priority: 4
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: SQLInjection
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesSQLiRuleSet
+
+        # Rule 5: AWS Managed Rule — Known bad inputs
+        - Name: aws-known-bad-inputs
+          Priority: 5
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: KnownBadInputs
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesKnownBadInputsRuleSet
+
+        # Rule 6: AWS Managed Rule — Bot control
+        - Name: aws-bot-control
+          Priority: 6
+          OverrideAction:
+            None: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: BotControl
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesBotControlRuleSet
+
+      CustomResponseBodies:
+        too-many-otp:
+          ContentType: APPLICATION_JSON
+          Content: '{"error": "Too many OTP requests. Please wait 5 minutes.", "code": "RATE_LIMITED"}'
+        geo-blocked:
+          ContentType: APPLICATION_JSON
+          Content: '{"error": "Kuli is currently available only in India.", "code": "GEO_RESTRICTED"}'
+
+Outputs:
+  WebACLArn:
+    Description: WAF Web ACL ARN — attach to API Gateway or App Runner
+    Value: !GetAtt KuliWafIPSet.Arn

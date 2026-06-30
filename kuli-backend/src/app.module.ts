@@ -4,18 +4,26 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RedisModule } from './redis/redis.module';
 import { AuthModule } from './auth/auth.module';
+import { SmsModule } from './sms/sms.module';
+import { TrackingModule } from './tracking/tracking.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
-    // Load .env globally across all modules
+    // Global config — loads .env
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // Global Redis module — available everywhere
+
+    // Core infrastructure
     RedisModule,
-    // Auth module — OTP, JWT, sessions
+
+    // Feature modules
     AuthModule,
+    SmsModule,
+    TrackingModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
