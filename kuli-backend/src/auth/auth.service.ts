@@ -7,7 +7,9 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { RedisService } from '../redis/redis.service';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { SmsGatewayService } from '../sms/sms-gateway.service';
+import { DeviceTrustService } from './device-trust.service';
 import * as crypto from 'crypto';
 import { SendOtpDto, VerifyOtpDto, RefreshTokenDto, LogoutDto } from './dto/auth.dto';
 
@@ -16,15 +18,14 @@ const OTP_EXPIRY_SECONDS = 300;
 
 @Injectable()
 export class AuthService {
-  private readonly prisma: PrismaClient;
-
   constructor(
     private readonly redis: RedisService,
     private readonly jwtService: JwtService,
     private readonly config: ConfigService,
-  ) {
-    this.prisma = new PrismaClient();
-  }
+    private readonly prisma: PrismaService,
+    private readonly smsGateway: SmsGatewayService,
+    private readonly deviceTrust: DeviceTrustService,
+  ) {}
 
   // ─── Generate a cryptographically random 4-digit OTP ──────────────────────
 
@@ -36,8 +37,27 @@ export class AuthService {
 
   // ─── Send OTP ──────────────────────────────────────────────────────────────
 
-  async sendOTP(dto: SendOtpDto): Promise<{ message: string; expiresIn: number }> {
-    const { phone } = dto;
+  async sendOTP(dto: SendOtpDto, clientIp: string): Promise<{ message: string; expiresIn?: number; bypassed?: boolean; accessToken?: string; refreshToken?: string; user?: any }> {
+    const { phone, deviceId, deviceToken } = dto;
+
+    // Device trust check (Skip OTP if trusted)
+    if (deviceId && deviceToken) {
+      const trust = await this.deviceTrust.verifyDeviceTrust(phone, deviceId, deviceToken);
+      if (trust.trusted) {
+        let user = await this.prisma.user.findUnique({ where: { phoneNumber: phone } });
+        if (!user) {
+          user = await this.prisma.user.create({ data: { phoneNumber: phone } });
+        }
+        const { accessToken, refreshToken } = await this.issueTokens(user.id, user.role, deviceId);
+        return {
+          message: 'Device trusted. Login successful.',
+          bypassed: true,
+          accessToken,
+          refreshToken,
+          user: { id: user.id, phone: user.phoneNumber, role: user.role, isNewUser: false },
+        };
+      }
+    }
 
     // Rate-limit check: max 5 attempts per 10 minutes
     const attempts = await this.redis.getOTPAttempts(phone);
@@ -51,14 +71,11 @@ export class AuthService {
 
     // Store OTP in Redis with TTL
     await this.redis.setOTP(phone, otp);
-    // Track attempt count
-    await this.redis.trackOTPAttempt(phone);
 
-    // ─── In Production: Send SMS via MSG91 / Twilio ────────────────────────
-    // await this.smsService.send(phone, `Your Kuli OTP is ${otp}. Valid for 5 minutes.`);
-
-    // ─── Development: Log OTP to console ──────────────────────────────────
-    console.log(`\n📱 OTP for ${phone}: ${otp}\n`);
+    const smsResult = await this.smsGateway.sendOTP(phone, otp, clientIp);
+    if (!smsResult.success && smsResult.channel !== 'console') {
+      throw new BadRequestException(smsResult.error || 'Failed to send OTP.');
+    }
 
     return {
       message: `OTP sent to ${phone}. Valid for ${OTP_EXPIRY_SECONDS / 60} minutes.`,
@@ -71,6 +88,7 @@ export class AuthService {
   async verifyOTP(dto: VerifyOtpDto): Promise<{
     accessToken: string;
     refreshToken: string;
+    deviceToken: string;
     user: {
       id: string;
       phone: string;
@@ -78,7 +96,7 @@ export class AuthService {
       isNewUser: boolean;
     };
   }> {
-    const { phone, otp, deviceId } = dto;
+    const { phone, otp, deviceId, deviceName, platform } = dto;
 
     // Retrieve stored OTP from Redis
     const storedOTP = await this.redis.getOTP(phone);
@@ -107,10 +125,19 @@ export class AuthService {
 
     // Issue JWTs
     const { accessToken, refreshToken } = await this.issueTokens(user.id, user.role, deviceId);
+    
+    // Register trusted device
+    const { deviceToken } = await this.deviceTrust.registerTrustedDevice(
+      phone,
+      deviceId,
+      deviceName || 'Unknown Device',
+      platform || 'android',
+    );
 
     return {
       accessToken,
       refreshToken,
+      deviceToken,
       user: {
         id: user.id,
         phone: user.phoneNumber,
@@ -129,7 +156,7 @@ export class AuthService {
     let payload: { sub: string; role: string };
     try {
       payload = this.jwtService.verify(refreshToken, {
-        secret: this.config.get<string>('JWT_REFRESH_SECRET'),
+        secret: this.config.get<string>('JWT_REFRESH_SECRET', 'kuli-refresh-secret-dev'),
       });
     } catch {
       throw new UnauthorizedException('Invalid or expired refresh token.');
@@ -147,7 +174,7 @@ export class AuthService {
     const accessToken = this.jwtService.sign(
       { sub: payload.sub, role: payload.role },
       {
-        secret: this.config.get<string>('JWT_ACCESS_SECRET'),
+        secret: this.config.get<string>('JWT_ACCESS_SECRET', 'kuli-access-secret-dev'),
         expiresIn: '15m',
       },
     );
@@ -172,12 +199,12 @@ export class AuthService {
     const payload = { sub: userId, role };
 
     const accessToken = this.jwtService.sign(payload, {
-      secret: this.config.get<string>('JWT_ACCESS_SECRET'),
+      secret: this.config.get<string>('JWT_ACCESS_SECRET', 'kuli-access-secret-dev'),
       expiresIn: '15m',
     });
 
     const refreshToken = this.jwtService.sign(payload, {
-      secret: this.config.get<string>('JWT_REFRESH_SECRET'),
+      secret: this.config.get<string>('JWT_REFRESH_SECRET', 'kuli-refresh-secret-dev'),
       expiresIn: '7d',
     });
 

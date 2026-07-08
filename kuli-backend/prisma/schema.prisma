@@ -16,6 +16,7 @@ enum Role {
 
 enum BookingStatus {
   DRAFT
+  MATCHING
   PENDING
   REASSIGNING
   ACCEPTED
@@ -44,6 +45,33 @@ enum PaymentMethod {
   CASH
 }
 
+enum NotificationType {
+  BOOKING_CREATED
+  WORKER_MATCHED
+  WORKER_ACCEPTED
+  WORKER_DECLINED
+  WORKER_EN_ROUTE
+  WORKER_ARRIVED
+  JOB_COMPLETED
+  PAYMENT_RECEIVED
+  MATCHING_FAILED
+  PROMOTION
+}
+
+enum NotificationChannel {
+  PUSH
+  SMS
+  WEBSOCKET
+  IN_APP
+}
+
+enum MatchStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  TIMEOUT
+}
+
 model User {
   id           String         @id @default(uuid())
   phoneNumber  String         @unique
@@ -53,9 +81,11 @@ model User {
   updatedAt    DateTime       @updatedAt
   
   // Relations
-  workerProfile WorkerProfile?
-  bookings      Booking[]      @relation("CustomerBookings")
-  reviews       Review[]       @relation("CustomerReviews")
+  workerProfile     WorkerProfile?
+  bookings          Booking[]              @relation("CustomerBookings")
+  reviews           Review[]               @relation("CustomerReviews")
+  notificationPrefs NotificationPreference?
+  notifications     Notification[]
 }
 
 model WorkerProfile {
@@ -76,8 +106,9 @@ model WorkerProfile {
   updatedAt       DateTime       @updatedAt
 
   // Relations
-  bookings        Booking[]      @relation("WorkerBookings")
-  reviews         Review[]       @relation("WorkerReviews")
+  bookings         Booking[]         @relation("WorkerBookings")
+  reviews          Review[]          @relation("WorkerReviews")
+  matchingAttempts MatchingAttempt[]
 }
 
 model ServiceCategory {
@@ -113,8 +144,9 @@ model Booking {
   updatedAt      DateTime        @updatedAt
 
   // Relations
-  review         Review?         @relation("BookingReview")
-  payments       Payment[]
+  review           Review?           @relation("BookingReview")
+  payments         Payment[]
+  matchingAttempts MatchingAttempt[]
 }
 
 model Review {
@@ -140,4 +172,48 @@ model Payment {
   transactionId String?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+}
+
+model NotificationPreference {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pushEnabled      Boolean  @default(true)
+  smsEnabled       Boolean  @default(true)
+  bookingAlerts    Boolean  @default(true)
+  paymentAlerts    Boolean  @default(true)
+  promotionAlerts  Boolean  @default(false)
+  quietHoursStart  Int?
+  quietHoursEnd    Int?
+  fcmToken         String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Notification {
+  id      String              @id @default(uuid())
+  userId  String
+  user    User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type    NotificationType
+  title   String
+  body    String
+  data    Json?
+  channel NotificationChannel
+  isRead  Boolean             @default(false)
+  sentAt  DateTime            @default(now())
+  readAt  DateTime?
+}
+
+model MatchingAttempt {
+  id            String        @id @default(uuid())
+  bookingId     String
+  booking       Booking       @relation(fields: [bookingId], references: [id])
+  workerId      String
+  worker        WorkerProfile @relation(fields: [workerId], references: [id])
+  score         Float
+  distanceKm    Float
+  status        MatchStatus   @default(PENDING)
+  sentAt        DateTime      @default(now())
+  respondedAt   DateTime?
+  declineReason String?
 }

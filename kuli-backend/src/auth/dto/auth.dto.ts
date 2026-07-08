@@ -1,4 +1,4 @@
-import { IsString, IsMobilePhone, Length, Matches } from 'class-validator';
+import { IsString, Length, Matches, IsOptional, IsIn } from 'class-validator';
 
 export class SendOtpDto {
   @IsString()
@@ -6,6 +6,14 @@ export class SendOtpDto {
     message: 'Phone must be a valid Indian mobile number in format +91XXXXXXXXXX',
   })
   phone: string;
+
+  @IsOptional()
+  @IsString()
+  deviceId?: string;
+
+  @IsOptional()
+  @IsString()
+  deviceToken?: string;
 }
 
 export class VerifyOtpDto {
@@ -23,6 +31,14 @@ export class VerifyOtpDto {
   /** Device fingerprint for session management */
   @IsString()
   deviceId: string;
+
+  @IsOptional()
+  @IsString()
+  deviceName?: string;
+
+  @IsOptional()
+  @IsIn(['android', 'ios', 'web'])
+  platform?: 'android' | 'ios' | 'web';
 }
 
 export class RefreshTokenDto {

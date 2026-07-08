@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RedisService } from '../redis/redis.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 /**
  * SMART RADIUS SEARCH SERVICE
@@ -82,7 +83,10 @@ export class SmartSearchService {
   private readonly MIN_RESULTS = 3;
   private readonly DEFAULT_MAX_RESULTS = 20;
 
-  constructor(private readonly redis: RedisService) {}
+  constructor(
+    private readonly redis: RedisService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   // ─── Smart Radius Search ───────────────────────────────────────────────────
 
@@ -175,11 +179,11 @@ export class SmartSearchService {
     const gridKey = `demand:grid:${query.city}:${gridLat}:${gridLng}:${query.category}`;
 
     // Increment demand counters (TTL: 24 hours)
-    await this.redis.incr(hourKey);
-    await this.redis.setWithTTL(hourKey, '1', 86400);
+    const hCount = await this.redis.incr(hourKey);
+    if (hCount === 1) await this.redis.expire(hourKey, 86400);
 
-    await this.redis.incr(gridKey);
-    await this.redis.setWithTTL(gridKey, '1', 86400);
+    const gCount = await this.redis.incr(gridKey);
+    if (gCount === 1) await this.redis.expire(gridKey, 86400);
   }
 
   /**
@@ -327,15 +331,52 @@ export class SmartSearchService {
     query: SearchQuery,
     radiusKm: number,
   ): Promise<SearchResult[]> {
-    // In production: PostgreSQL + PostGIS query:
-    // SELECT * FROM worker_profiles
-    // WHERE ST_DWithin(location, ST_Point($lng, $lat)::geography, $radius * 1000)
-    //   AND category = $category AND is_online = true
-    // ORDER BY ST_Distance(location, ST_Point($lng, $lat)::geography)
-    // LIMIT $maxResults;
+    // Haversine bounding box approximation
+    const latDelta = radiusKm / 111;
+    const lngDelta = radiusKm / (111 * Math.cos(query.lat * (Math.PI / 180)));
 
-    // For now: return empty (will be connected to real DB in next sprint)
-    return [];
+    const minLat = query.lat - latDelta;
+    const maxLat = query.lat + latDelta;
+    const minLng = query.lng - lngDelta;
+    const maxLng = query.lng + lngDelta;
+
+    const workers = await this.prisma.workerProfile.findMany({
+      where: {
+        isOnline: true,
+        currentLat: { gte: minLat, lte: maxLat },
+        currentLng: { gte: minLng, lte: maxLng },
+        skills: { has: query.category },
+      },
+      include: { user: true },
+    });
+
+    const results: SearchResult[] = [];
+
+    for (const worker of workers) {
+      if (!worker.currentLat || !worker.currentLng) continue;
+
+      const distance = this.haversineKm(
+        query.lat,
+        query.lng,
+        worker.currentLat,
+        worker.currentLng,
+      );
+
+      if (distance <= radiusKm) {
+        results.push({
+          workerId: worker.id,
+          name: worker.user?.name || 'Worker',
+          distance: Math.round(distance * 10) / 10,
+          actualRadius: radiusKm,
+          rating: worker.rating,
+          isVerified: worker.isVerified,
+          estimatedETA: Math.ceil((distance / 20) * 60) + 10,
+        });
+      }
+    }
+
+    results.sort((a, b) => a.distance - b.distance);
+    return results.slice(0, query.maxResults || 20);
   }
 
   private haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {

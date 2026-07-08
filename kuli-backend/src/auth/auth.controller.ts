@@ -6,6 +6,7 @@ import {
   HttpStatus,
   UseGuards,
   Request,
+  Ip,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
@@ -22,8 +23,8 @@ export class AuthController {
    */
   @Post('send-otp')
   @HttpCode(HttpStatus.OK)
-  async sendOTP(@Body() dto: SendOtpDto) {
-    return this.authService.sendOTP(dto);
+  async sendOTP(@Body() dto: SendOtpDto, @Ip() ip: string) {
+    return this.authService.sendOTP(dto, ip);
   }
 
   /**

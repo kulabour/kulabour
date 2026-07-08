@@ -7,11 +7,13 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { DeviceTrustService } from './device-trust.service';
 import { RedisModule } from '../redis/redis.module';
+import { SmsModule } from '../sms/sms.module';
 
 @Module({
   imports: [
     ConfigModule,
     RedisModule,
+    SmsModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],

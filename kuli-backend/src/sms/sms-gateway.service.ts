@@ -296,17 +296,17 @@ export class SmsGatewayService {
     // Increment daily cost (store as paise for precision)
     const costPaise = Math.round(result.cost * 100);
     if (costPaise > 0) {
-      await this.redis.incr(costKey);
-      // Set 48h TTL on daily metrics
-      const exists = await this.redis.exists(costKey);
-      if (exists) {
-        await this.redis.setWithTTL(costKey, String(costPaise), 172800);
+      const currentCost = await this.redis.incrby(costKey, costPaise);
+      if (currentCost === costPaise) {
+        await this.redis.expire(costKey, 172800);
       }
     }
 
     // Increment channel counter
-    await this.redis.incr(countKey);
-    await this.redis.setWithTTL(countKey, '1', 172800);
+    const channelCount = await this.redis.incr(countKey);
+    if (channelCount === 1) {
+      await this.redis.expire(countKey, 172800);
+    }
 
     console.log(`📤 SMS sent via ${result.channel}: ${phone} (₹${result.cost})`);
   }

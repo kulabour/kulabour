@@ -2,11 +2,15 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from '../redis/redis.module';
 import { AdaptiveTrackingService } from './adaptive-tracking.service';
-import { TrackingService } from './tracking.service';
+import { TrackingGateway } from './tracking.gateway';
+import { JwtModule } from '@nestjs/jwt';
+
+import { TrackingController } from './tracking.controller';
 
 @Module({
-  imports: [ConfigModule, RedisModule],
-  providers: [AdaptiveTrackingService, TrackingService],
-  exports: [AdaptiveTrackingService, TrackingService],
+  imports: [RedisModule, JwtModule, ConfigModule],
+  controllers: [TrackingController],
+  providers: [AdaptiveTrackingService, TrackingGateway],
+  exports: [AdaptiveTrackingService, TrackingGateway],
 })
 export class TrackingModule {}

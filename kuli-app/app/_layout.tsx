@@ -1,10 +1,12 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
+import { AuthProvider } from '../src/context/AuthContext';
 
 export default function RootLayout() {
   return (
-    <View style={styles.container}>
+    <AuthProvider>
+      <View style={styles.container}>
       <StatusBar style="dark" />
       <Stack
         screenOptions={{
@@ -23,8 +25,9 @@ export default function RootLayout() {
           name="booking/confirm"
           options={{ animation: 'slide_from_bottom', presentation: 'modal' }}
         />
-      </Stack>
-    </View>
+        </Stack>
+      </View>
+    </AuthProvider>
   );
 }
 

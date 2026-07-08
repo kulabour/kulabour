@@ -52,6 +52,22 @@ export class RedisService {
     return this.redis.incr(key);
   }
 
+  async incrby(key: string, increment: number): Promise<number> {
+    return this.redis.incrby(key, increment);
+  }
+
+  async expire(key: string, seconds: number): Promise<void> {
+    await this.redis.expire(key, seconds);
+  }
+
+  async sadd(key: string, value: string): Promise<void> {
+    await this.redis.sadd(key, value);
+  }
+
+  async srem(key: string, value: string): Promise<void> {
+    await this.redis.srem(key, value);
+  }
+
   // ─── OTP Store ─────────────────────────────────────────────────────────────
 
   /** Store a 4-digit OTP for a phone number (expires in 5 minutes) */

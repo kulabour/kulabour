@@ -1,0 +1,7 @@
+feat: Kuli MVP Release
+
+- Smart Worker Auto-Matching Engine
+- Real-time WebSocket Notifications
+- FCM Push Notification Service
+- Production Deployment Pipeline (Docker, CloudFormation, GitHub Actions)
+- Comprehensive documentation overhaul

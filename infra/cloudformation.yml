@@ -1,0 +1,171 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Kuli Platform MVP Infrastructure
+  Provisions an EC2 instance with Docker for running the Kuli Backend API.
+
+# ─── Parameters ──────────────────────────────────────────────────────────
+Parameters:
+  KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 key pair for SSH access.
+
+  InstanceType:
+    Type: String
+    Default: t3.small
+    AllowedValues: [t3.micro, t3.small, t3.medium, t3.large]
+    Description: EC2 instance type. t3.small is recommended for MVP.
+
+  AllowedSSHCidr:
+    Type: String
+    Default: 0.0.0.0/0
+    Description: CIDR range allowed to SSH in. Restrict to your IP for security.
+
+# ─── Resources ───────────────────────────────────────────────────────────
+Resources:
+
+  # VPC & Networking
+  KuliVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: kuli-vpc
+
+  KuliSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref KuliVPC
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: kuli-public-subnet
+
+  KuliIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: kuli-igw
+
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref KuliVPC
+      InternetGatewayId: !Ref KuliIGW
+
+  KuliRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref KuliVPC
+      Tags:
+        - Key: Name
+          Value: kuli-rt
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachIGW
+    Properties:
+      RouteTableId: !Ref KuliRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref KuliIGW
+
+  SubnetRouteTableAssoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref KuliSubnet
+      RouteTableId: !Ref KuliRouteTable
+
+  # Security Group
+  KuliSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Kuli API Security Group
+      VpcId: !Ref KuliVPC
+      SecurityGroupIngress:
+        # SSH
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowedSSHCidr
+        # HTTP (API)
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: 0.0.0.0/0
+        # HTTPS (future)
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        # HTTP redirect (future Nginx)
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: kuli-sg
+
+  # EC2 Instance
+  KuliInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyPairName
+      ImageId: ami-0dee22c13ea7a9a67  # Ubuntu 24.04 LTS (ap-south-1, Mumbai)
+      SubnetId: !Ref KuliSubnet
+      SecurityGroupIds:
+        - !Ref KuliSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+      Tags:
+        - Key: Name
+          Value: kuli-api-server
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          set -euxo pipefail
+
+          # ── System Updates ──
+          apt-get update -y
+          apt-get upgrade -y
+
+          # ── Install Docker ──
+          curl -fsSL https://get.docker.com | sh
+          systemctl enable docker
+          systemctl start docker
+
+          # ── Install Docker Compose v2 ──
+          apt-get install -y docker-compose-plugin
+
+          # ── Add ubuntu user to docker group ──
+          usermod -aG docker ubuntu
+
+          # ── Create app directory ──
+          mkdir -p /opt/kuli
+          chown ubuntu:ubuntu /opt/kuli
+
+          # ── Signal that setup is complete ──
+          echo "Kuli EC2 setup complete at $(date)" > /opt/kuli/setup-complete.txt
+
+# ─── Outputs ─────────────────────────────────────────────────────────────
+Outputs:
+  InstancePublicIP:
+    Description: Public IP of the Kuli API server. Use this as your API_URL.
+    Value: !GetAtt KuliInstance.PublicIp
+
+  SSHCommand:
+    Description: SSH command to connect to the server.
+    Value: !Sub "ssh -i ${KeyPairName}.pem ubuntu@${KuliInstance.PublicIp}"
+
+  APIEndpoint:
+    Description: The API endpoint for the Kuli Backend.
+    Value: !Sub "http://${KuliInstance.PublicIp}:3000"

@@ -1,0 +1,80 @@
+# ─── Kuli Backend Production Docker Compose ──────────────────────────────
+# Usage: docker compose -f docker-compose.prod.yml up -d
+#
+# Required Environment Variables (set in .env or export before running):
+#   DATABASE_URL=postgresql://kuli:YOUR_PASSWORD@postgres:5432/kuli_prod
+#   REDIS_URL=redis://redis:6379
+#   JWT_SECRET=your-jwt-secret
+#   RAZORPAY_KEY_ID=your-key
+#   RAZORPAY_KEY_SECRET=your-secret
+#   RAZORPAY_WEBHOOK_SECRET=your-webhook-secret
+
+services:
+  # ─── PostgreSQL ──────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: kuli-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kuli_prod
+      POSTGRES_USER: kuli
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kuli_secure_password_2026}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kuli -d kuli_prod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Redis ───────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: kuli-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Kuli API ────────────────────────────────────────────────────────
+  api:
+    image: ${DOCKER_IMAGE:-kulilabour/kuli-backend:latest}
+    container_name: kuli-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://kuli:${POSTGRES_PASSWORD:-kuli_secure_password_2026}@postgres:5432/kuli_prod
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID:-}
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
